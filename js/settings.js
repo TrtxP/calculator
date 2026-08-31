@@ -38,16 +38,23 @@ function setSettingsDefaultAngle(val) {
     updateDisplay();
 }
 
+function applyGlassIntensity(val = state.glassIntensity) {
+    const card = document.querySelector('.app-container');
+    if (!card) return;
+    if (document.documentElement.classList.contains('perf-lite') || val === 'solid') {
+        card.style.backdropFilter = 'none';
+        card.style.webkitBackdropFilter = 'none';
+        return;
+    }
+    if (val === 'ultra') card.style.backdropFilter = 'blur(40px)';
+    else if (val === 'subtle') card.style.backdropFilter = 'blur(10px)';
+    else card.style.backdropFilter = 'blur(24px)';
+}
+
 function setSettingsGlassIntensity(val) {
     state.glassIntensity = val;
     localStorage.setItem('calc_glass', val);
-    const card = document.querySelector('.app-container');
-    if (card) {
-        if (val === 'ultra') card.style.backdropFilter = 'blur(40px)';
-        else if (val === 'subtle') card.style.backdropFilter = 'blur(10px)';
-        else if (val === 'solid') card.style.backdropFilter = 'none';
-        else card.style.backdropFilter = 'blur(24px)';
-    }
+    applyGlassIntensity(val);
     audio.playAction();
 }
 

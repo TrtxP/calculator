@@ -2,6 +2,8 @@
 // Ініціалізація (DOM Ready)
 // ==========================================================================
 document.addEventListener('DOMContentLoaded', () => {
+    applyMobilePerfOptimizations();
+
     // Тема
     if (state.currentTheme) {
         document.body.setAttribute('data-theme', state.currentTheme);
@@ -35,6 +37,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Застосування шпалер
     applyWallpaperToDom();
+    applyGlassIntensity(state.glassIntensity);
 
     // Слайдери
     const bSlider = document.getElementById('wp-blur-slider');
@@ -60,8 +63,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Безпечне розблокування AudioContext при першому натисканні
     window.addEventListener('pointerdown', () => {
-        if (audioCtx && audioCtx.state === 'suspended') {
-            audioCtx.resume().catch(() => { });
+        if (audio && audio.ctx && audio.ctx.state === 'suspended') {
+            audio.ctx.resume().catch(() => { });
+        } else if (audio && !audio.ctx) {
+            audio.init();
         }
     }, { once: true });
 

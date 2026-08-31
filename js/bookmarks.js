@@ -15,10 +15,10 @@ function renderBookmarks() {
         const card = document.createElement('div');
         card.className = 'bookmark-card';
         card.innerHTML = `
-            <div style="flex-grow:1;">
+            <div class="bookmark-card-body">
                 <span class="bookmark-tag-chip">${bm.tag || 'Збережено'}</span>
-                <div style="font-weight:700; color:var(--text-primary); font-size:0.9rem;">${bm.title}</div>
-                <div style="font-family:'JetBrains Mono', monospace; color:var(--accent-operator); font-size:0.95rem; font-weight:800;">${bm.val}</div>
+                <div style="font-weight:700; color:var(--text-primary); font-size:0.9rem; line-height:1.35;">${bm.title}</div>
+                <div class="bookmark-card-value">${bm.val}</div>
             </div>
             <div class="bookmark-actions">
                 <button class="btn-secondary" style="padding:4px 8px; font-size:0.75rem;" onclick="insertBookmarkVal('${bm.val}')" title="Вставити в калькулятор">📥 Вставити</button>

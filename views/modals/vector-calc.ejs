@@ -2,13 +2,13 @@
         <div class="modal-content" style="max-width: 680px;">
             <h3>📐 3D Векторний Калькулятор (Vector Math 3D)</h3>
             <p style="font-size:0.85rem; color:var(--text-muted); margin-bottom:8px;">
-                Введіть просторові координати для векторів $\vec{u} = (x_1, y_1, z_1)$ та $\vec{v} = (x_2, y_2, z_2)$:
+                Введіть просторові координати для векторів u = (x₁, y₁, z₁) та v = (x₂, y₂, z₂):
             </p>
 
             <div class="vector-calc-layout">
                 <div class="vector-pairs-row">
                     <div class="vector-box">
-                        <div class="vector-box-title">Вектор 1: $\vec{u}$</div>
+                        <div class="vector-box-title">Вектор 1: <strong>u</strong></div>
                         <div class="vector-coords-row">
                             <div class="vector-coord-input">
                                 <label>X₁:</label>
@@ -26,7 +26,7 @@
                     </div>
 
                     <div class="vector-box">
-                        <div class="vector-box-title">Вектор 2: $\vec{v}$</div>
+                        <div class="vector-box-title">Вектор 2: <strong>v</strong></div>
                         <div class="vector-coords-row">
                             <div class="vector-coord-input">
                                 <label>X₂:</label>
@@ -46,34 +46,34 @@
 
                 <div class="vector-results-grid">
                     <div class="vector-res-card">
-                        <small>Скалярний добуток ($\vec{u} \cdot \vec{v}$):</small>
+                        <small>Скалярний добуток (u · v):</small>
                         <strong id="vec-res-dot">26.00</strong>
                     </div>
                     <div class="vector-res-card">
-                        <small>Векторний добуток ($\vec{u} \times \vec{v}$):</small>
+                        <small>Векторний добуток (u × v):</small>
                         <strong id="vec-res-cross">(-18, 2, 5)</strong>
                     </div>
                     <div class="vector-res-card">
-                        <small>Довжина $|\vec{u}|$ (Модуль):</small>
+                        <small>Довжина |u| (Модуль):</small>
                         <strong id="vec-res-len-u">7.000</strong>
                     </div>
                     <div class="vector-res-card">
-                        <small>Довжина $|\vec{v}|$ (Модуль):</small>
+                        <small>Довжина |v| (Модуль):</small>
                         <strong id="vec-res-len-v">4.583</strong>
                     </div>
                     <div class="vector-res-card">
-                        <small>Кут $\theta$ між векторами:</small>
+                        <small>Кут θ між векторами:</small>
                         <strong id="vec-res-angle">35.8° (0.62 rad)</strong>
                     </div>
                     <div class="vector-res-card">
-                        <small>Відстань $d(\vec{u}, \vec{v})$:</small>
+                        <small>Відстань d(u, v):</small>
                         <strong id="vec-res-dist">4.243</strong>
                     </div>
                 </div>
 
                 <div class="converter-quick-actions" style="margin-top:4px;">
                     <button class="btn-secondary" onclick="insertVectorDotToCalc()">📥 Вставити скалярний добуток</button>
-                    <button class="btn-secondary" onclick="insertVectorMagUToCalc()">📥 Вставити модуль $|\vec{u}|$</button>
+                    <button class="btn-secondary" onclick="insertVectorMagUToCalc()">📥 Вставити модуль |u|</button>
                 </div>
             </div>
 

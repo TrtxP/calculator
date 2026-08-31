@@ -12,7 +12,8 @@
    -------------------------------------------------------------------------- */
 
 /* 1. Bordeaux Imperial Wine (Флагманська бордова тема) */
-body[data-theme="bordeaux_luxury"], body {
+body[data-theme="bordeaux_luxury"],
+body {
     --bg-body: #0d0205;
     --bg-card: rgba(30, 5, 12, 0.88);
     --bg-display: rgba(16, 2, 6, 0.94);
@@ -540,28 +541,29 @@ body[data-theme="sakura"] {
     --badge-border: rgba(236, 72, 153, 0.35);
 }
 
-/* 24. Frost Glassmorphism */
+/* 24. Frost Glass */
 body[data-theme="glass"] {
-    --bg-body: #090e17;
-    --bg-card: rgba(255, 255, 255, 0.08);
-    --bg-display: rgba(0, 0, 0, 0.35);
-    --bg-sidebar: rgba(255, 255, 255, 0.05);
-    --bg-btn: rgba(255, 255, 255, 0.1);
-    --bg-btn-hover: rgba(255, 255, 255, 0.2);
+    --bg-body: #070e18;
+    --bg-card: rgba(255, 255, 255, 0.12);
+    --bg-display: rgba(0, 0, 0, 0.45);
+    --bg-sidebar: rgba(255, 255, 255, 0.10);
+    --bg-btn: rgba(255, 255, 255, 0.14);
+    --bg-btn-hover: rgba(255, 255, 255, 0.26);
     --text-primary: #ffffff;
-    --text-muted: #94a3b8;
+    --text-muted: #bae6fd;
     --accent-operator: #38bdf8;
-    --accent-equals: #a855f7;
-    --accent-sci: rgba(255, 255, 255, 0.15);
-    --accent-sci-text: #f8fafc;
-    --accent-action: rgba(0, 0, 0, 0.25);
+    --accent-equals: #818cf8;
+    --accent-sci: rgba(56, 189, 248, 0.20);
+    --accent-sci-text: #f0f9ff;
+    --accent-action: rgba(0, 0, 0, 0.30);
     --accent-clear: #ef4444;
-    --accent-memory: #0284c7;
-    --border-color: rgba(255, 255, 255, 0.22);
-    --shadow-color: rgba(0, 0, 0, 0.5);
-    --badge-bg: rgba(255, 255, 255, 0.15);
-    --badge-border: rgba(255, 255, 255, 0.3);
+    --accent-memory: #38bdf8;
+    --border-color: rgba(255, 255, 255, 0.35);
+    --shadow-color: rgba(0, 0, 0, 0.50);
+    --badge-bg: rgba(56, 189, 248, 0.25);
+    --badge-border: rgba(255, 255, 255, 0.45);
 }
+
 
 /* 25. Amethyst Crimson Royal */
 body[data-theme="amethyst_crimson"] {
@@ -746,4 +748,3 @@ body[data-theme="emerald_platinum"] {
     --badge-bg: rgba(16, 185, 129, 0.16);
     --badge-border: rgba(16, 185, 129, 0.45);
 }
-

@@ -221,9 +221,6 @@ ${readView('partials/toast.html')}
     
 ${modalsHtml}
 
-    <!-- Мобільна нижня панель швидких дій (Mobile Bottom Bar) -->
-${readView('partials/mobile-bottom-bar.html')}
-
     <!-- Головний скрипт застосунку (Master Application Script) -->
     <script src="app.js"></script>
 </body>
@@ -232,11 +229,11 @@ ${readView('partials/mobile-bottom-bar.html')}
 
 fs.writeFileSync(OUTPUT_HTML, html, 'utf8');
 const htmlSize = (fs.statSync(OUTPUT_HTML).size / 1024).toFixed(1);
-console.log(`📄 [3/3] index.html згенеровано: ${htmlSize} KB (${MODALS.length} модалок, 9 partial-ів)`);
+console.log(`📄 [3/3] index.html згенеровано: ${htmlSize} KB (${MODALS.length} модалок, 8 partial-ів)`);
 
 console.log('\n✅ Переструктурування та збирання успішно завершено!');
 console.log(`📊 Загальна статистика проекту:`);
 console.log(`   - index.html: ${htmlSize} KB`);
 console.log(`   - style.css:  ${cssSize} KB`);
 console.log(`   - app.js:     ${jsSize} KB`);
-console.log(`   - Всього модулів: ${CSS_MODULES.length} CSS + ${JS_MODULES.length} JS + ${MODALS.length} Modals + 9 Partials = ${CSS_MODULES.length + JS_MODULES.length + MODALS.length + 9} файлів.`);
+console.log(`   - Всього модулів: ${CSS_MODULES.length} CSS + ${JS_MODULES.length} JS + ${MODALS.length} Modals + 8 Partials = ${CSS_MODULES.length + JS_MODULES.length + MODALS.length + 8} файлів.`);

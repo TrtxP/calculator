@@ -3,22 +3,23 @@
    -------------------------------------------------------------------------- */
 .formula-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 260px), 1fr));
     gap: 12px;
     margin-top: 10px;
     max-height: 480px;
     overflow-y: auto;
-    padding-right: 4px;
+    padding: 2px 4px 2px 2px;
 }
 
 .formula-card {
     background: rgba(0, 0, 0, 0.3);
     border: 1px solid var(--border-color);
     border-radius: 14px;
-    padding: 12px;
+    padding: 12px 14px;
     display: flex;
     flex-direction: column;
     gap: 8px;
+    min-width: 0;
     transition: transform 0.2s ease, border-color 0.2s ease;
 }
 
@@ -30,48 +31,66 @@
 .formula-card-header {
     display: flex;
     justify-content: space-between;
-    align-items: center;
+    align-items: flex-start;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+.formula-card-header .nav-chip {
+    margin-left: 0;
+    flex-shrink: 0;
 }
 
 .formula-card-title {
+    flex: 1 1 auto;
+    min-width: 0;
     font-weight: 700;
     font-size: 0.92rem;
     color: var(--text-primary);
+    line-height: 1.35;
 }
 
 .formula-math-preview {
     background: var(--bg-display);
-    padding: 4px 8px;
+    padding: 6px 10px;
     border-radius: 8px;
     font-family: 'JetBrains Mono', monospace;
-    font-size: 0.88rem;
+    font-size: 0.84rem;
     color: var(--accent-equals);
     text-align: center;
     border: 1px dashed var(--border-color);
+    overflow-wrap: anywhere;
+    word-break: break-word;
+    line-height: 1.45;
 }
 
 .formula-inputs-grid {
     display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 6px;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 8px;
 }
 
 .formula-input-item {
     display: flex;
     flex-direction: column;
-    gap: 2px;
+    gap: 3px;
+    min-width: 0;
 }
 
 .formula-input-item label {
     font-size: 0.72rem;
     color: var(--text-muted);
+    line-height: 1.3;
 }
 
 .formula-input-item input {
+    width: 100%;
+    box-sizing: border-box;
+    min-width: 0;
     background: var(--bg-card);
     border: 1px solid var(--border-color);
     color: var(--text-primary);
-    padding: 5px 8px;
+    padding: 6px 8px;
     border-radius: 6px;
     font-size: 0.85rem;
     outline: none;
@@ -79,18 +98,44 @@
 
 .formula-result-row {
     display: flex;
-    justify-content: space-between;
-    align-items: center;
+    flex-direction: column;
+    gap: 6px;
     background: rgba(0, 0, 0, 0.25);
-    padding: 6px 10px;
+    padding: 8px 10px;
     border-radius: 8px;
     margin-top: 4px;
 }
 
+.formula-result-label {
+    font-size: 0.72rem;
+    color: var(--text-muted);
+    line-height: 1.35;
+}
+
+.formula-result-value-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
 .formula-res-val {
+    flex: 1 1 auto;
+    min-width: 0;
     font-weight: 800;
-    font-size: 1rem;
+    font-size: 0.98rem;
     color: var(--accent-operator);
+    word-break: break-word;
+    overflow-wrap: anywhere;
+    font-family: 'JetBrains Mono', monospace;
+}
+
+.formula-insert-btn {
+    flex-shrink: 0;
+    padding: 4px 10px !important;
+    font-size: 0.75rem !important;
+    white-space: nowrap;
 }
 
 /* --------------------------------------------------------------------------
@@ -245,9 +290,23 @@
     padding: 10px 14px;
     display: flex;
     justify-content: space-between;
-    align-items: center;
+    align-items: flex-start;
+    flex-wrap: wrap;
     gap: 10px;
     transition: transform 0.2s ease;
+}
+
+.bookmark-card-body {
+    flex: 1 1 160px;
+    min-width: 0;
+}
+
+.bookmark-card-value {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.88rem;
+    color: var(--accent-operator);
+    overflow-wrap: anywhere;
+    word-break: break-word;
 }
 
 .bookmark-card:hover {
@@ -486,11 +545,11 @@
 
 .constants-extended-list {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 240px), 1fr));
     gap: 8px;
     max-height: 380px;
     overflow-y: auto;
-    padding-right: 4px;
+    padding: 2px 4px 2px 2px;
 }
 
 .const-ext-card {
@@ -499,11 +558,13 @@
     border-radius: 12px;
     padding: 8px 12px;
     display: flex;
-    align-items: center;
+    align-items: flex-start;
     justify-content: space-between;
+    flex-wrap: wrap;
     gap: 8px;
     cursor: pointer;
     transition: transform 0.15s ease, border-color 0.15s ease;
+    min-width: 0;
 }
 
 .const-ext-card:hover {
@@ -521,7 +582,8 @@
 }
 
 .const-ext-info {
-    flex-grow: 1;
+    flex: 1 1 auto;
+    min-width: 0;
     display: flex;
     flex-direction: column;
 }
@@ -529,12 +591,15 @@
 .const-ext-info strong {
     font-size: 0.84rem;
     color: var(--text-primary);
+    line-height: 1.35;
 }
 
 .const-ext-info span {
     font-size: 0.74rem;
     color: var(--text-muted);
     font-family: 'JetBrains Mono', monospace;
+    overflow-wrap: anywhere;
+    word-break: break-word;
 }
 
 /* --------------------------------------------------------------------------
@@ -608,20 +673,25 @@
     background: rgba(0, 0, 0, 0.25);
     border: 1px solid var(--border-color);
     border-radius: 8px;
-    padding: 6px 8px;
+    padding: 8px 10px;
     display: flex;
     flex-direction: column;
+    gap: 2px;
+    min-width: 0;
 }
 
 .vector-res-card small {
     font-size: 0.68rem;
     color: var(--text-muted);
+    line-height: 1.3;
 }
 
 .vector-res-card strong {
     font-size: 0.95rem;
     color: var(--accent-operator);
     font-family: 'JetBrains Mono', monospace;
+    overflow-wrap: anywhere;
+    word-break: break-word;
 }
 
 /* --------------------------------------------------------------------------
@@ -653,11 +723,14 @@
 .complex-input-row {
     display: flex;
     align-items: center;
+    flex-wrap: wrap;
     gap: 6px;
 }
 
 .complex-input-row input {
-    width: 80px;
+    flex: 1 1 72px;
+    min-width: 0;
+    max-width: 120px;
     padding: 6px 8px;
     border-radius: 6px;
     border: 1px solid var(--border-color);
@@ -677,20 +750,25 @@
     background: rgba(0, 0, 0, 0.25);
     border: 1px solid var(--border-color);
     border-radius: 8px;
-    padding: 6px 8px;
+    padding: 8px 10px;
     display: flex;
     flex-direction: column;
+    gap: 2px;
+    min-width: 0;
 }
 
 .complex-card small {
     font-size: 0.68rem;
     color: var(--text-muted);
+    line-height: 1.3;
 }
 
 .complex-card strong {
     font-size: 0.95rem;
     color: var(--accent-equals);
     font-family: 'JetBrains Mono', monospace;
+    overflow-wrap: anywhere;
+    word-break: break-word;
 }
 
 /* --------------------------------------------------------------------------
@@ -710,11 +788,12 @@
     background: rgba(0, 0, 0, 0.3);
     border: 1px solid var(--border-color);
     border-radius: 10px;
-    padding: 8px 12px;
+    padding: 10px 12px;
     display: flex;
     justify-content: space-between;
-    align-items: center;
-    gap: 8px;
+    align-items: flex-start;
+    gap: 10px;
+    flex-wrap: wrap;
     transition: transform 0.12s ease, border-color 0.12s ease;
 }
 
@@ -723,17 +802,34 @@
     border-color: var(--accent-operator);
 }
 
+.math-ref-content {
+    flex: 1 1 180px;
+    min-width: 0;
+}
+
 .math-ref-title {
     font-size: 0.84rem;
     font-weight: 700;
     color: var(--text-primary);
+    line-height: 1.35;
 }
 
 .math-ref-formula {
-    font-size: 0.90rem;
+    font-size: 0.88rem;
     font-family: 'JetBrains Mono', monospace;
     color: var(--accent-operator);
     font-weight: 800;
+    overflow-wrap: anywhere;
+    word-break: break-word;
+    margin-top: 2px;
+    line-height: 1.45;
+}
+
+.math-ref-copy-btn {
+    flex-shrink: 0;
+    padding: 4px 10px !important;
+    font-size: 0.75rem !important;
+    white-space: nowrap;
 }
 
 /* Кнопка мобільного меню (Mobile Toggle Bar) */

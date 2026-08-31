@@ -2,6 +2,10 @@
 // Хвильова Ripple-Анімація при кліках на кнопки
 // ==========================================================================
 document.addEventListener('click', (e) => {
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    if (window.matchMedia('(pointer: coarse)').matches) return;
+    if (document.documentElement.classList.contains('perf-lite')) return;
+
     const btn = e.target.closest('.buttons button, .footer-btn, .conv-tab, .sidebar-nav button');
     if (!btn) return;
 

@@ -21,11 +21,11 @@ function renderMathRefList() {
         const card = document.createElement('div');
         card.className = 'math-ref-item';
         card.innerHTML = `
-            <div>
+            <div class="math-ref-content">
                 <div class="math-ref-title">${item.title}</div>
                 <div class="math-ref-formula">${item.formula}</div>
             </div>
-            <button class="btn-secondary" style="padding:4px 8px; font-size:0.75rem;" onclick="copyFormulaText('${item.formula.replace(/'/g, "\\'")}')">📋 Копіювати</button>
+            <button class="btn-secondary math-ref-copy-btn" onclick="copyFormulaText('${item.formula.replace(/'/g, "\\'")}')">📋 Копіювати</button>
         `;
         container.appendChild(card);
     });

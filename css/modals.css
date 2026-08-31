@@ -23,8 +23,13 @@
 }
 
 @keyframes fadeIn {
-    from { opacity: 0; }
-    to { opacity: 1; }
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
 }
 
 .modal-content {
@@ -50,6 +55,8 @@
     gap: 8px;
     position: relative;
     padding-bottom: 8px;
+    line-height: 1.35;
+    word-break: break-word;
 }
 
 .modal-content h3::after {
@@ -65,20 +72,23 @@
 
 .close-btn {
     width: 100%;
-    padding: 11px;
+    padding: 12px;
     margin-top: 14px;
     background: var(--accent-operator);
-    border: none;
+    border: 1px solid var(--border-color);
     border-radius: 12px;
-    color: #fff;
+    color: #ffffff;
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.6);
     font-size: 0.95rem;
     font-weight: 800;
     cursor: pointer;
-    transition: filter 0.2s ease;
+    transition: filter 0.2s ease, transform 0.15s ease;
+    box-shadow: 0 4px 14px var(--shadow-color);
 }
 
 .close-btn:hover {
     filter: brightness(1.15);
+    transform: translateY(-1px);
 }
 
 .btn-secondary {

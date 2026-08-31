@@ -1,62 +1,62 @@
     <div class="modal-overlay" id="complex-calc-modal">
         <div class="modal-content" style="max-width: 680px;">
-            <h3>⚛️ Комплексні Числа $\mathbb{C}$ ($z = a + bi$)</h3>
+            <h3>⚛️ Комплексні Числа ℂ (z = a + bi)</h3>
             <p style="font-size:0.85rem; color:var(--text-muted); margin-bottom:8px;">
-                Арифметика комплексних чисел, модуль $|z|$, аргумент $\arg(z)$ та тригонометрична форма:
+                Арифметика комплексних чисел, модуль |z|, аргумент arg(z) та тригонометрична форма:
             </p>
 
             <div class="complex-calc-body">
                 <div class="complex-pairs-row">
                     <div class="complex-input-box">
-                        <span style="font-weight:700; font-size:0.84rem; color:var(--accent-operator);">Число $z_1 = a + bi$:</span>
+                        <span style="font-weight:700; font-size:0.84rem; color:var(--accent-operator);">Число z₁ = a + bi:</span>
                         <div class="complex-input-row">
                             <input type="number" id="cplx-a" value="3" oninput="solveComplexMath()">
                             <span>+</span>
                             <input type="number" id="cplx-b" value="4" oninput="solveComplexMath()">
-                            <span>$i$</span>
+                            <span>i</span>
                         </div>
                     </div>
 
                     <div class="complex-input-box">
-                        <span style="font-weight:700; font-size:0.84rem; color:var(--accent-operator);">Число $z_2 = c + di$:</span>
+                        <span style="font-weight:700; font-size:0.84rem; color:var(--accent-operator);">Число z₂ = c + di:</span>
                         <div class="complex-input-row">
                             <input type="number" id="cplx-c" value="1" oninput="solveComplexMath()">
                             <span>+</span>
                             <input type="number" id="cplx-d" value="2" oninput="solveComplexMath()">
-                            <span>$i$</span>
+                            <span>i</span>
                         </div>
                     </div>
                 </div>
 
                 <div class="complex-results-grid">
                     <div class="complex-card">
-                        <small>Сума ($z_1 + z_2$):</small>
+                        <small>Сума (z₁ + z₂):</small>
                         <strong id="cplx-res-add">4 + 6i</strong>
                     </div>
                     <div class="complex-card">
-                        <small>Різниця ($z_1 - z_2$):</small>
+                        <small>Різниця (z₁ − z₂):</small>
                         <strong id="cplx-res-sub">2 + 2i</strong>
                     </div>
                     <div class="complex-card">
-                        <small>Добуток ($z_1 \times z_2$):</small>
+                        <small>Добуток (z₁ × z₂):</small>
                         <strong id="cplx-res-mul">-5 + 10i</strong>
                     </div>
                     <div class="complex-card">
-                        <small>Частка ($z_1 / z_2$):</small>
+                        <small>Частка (z₁ / z₂):</small>
                         <strong id="cplx-res-div">2.2 - 0.4i</strong>
                     </div>
                     <div class="complex-card">
-                        <small>Модуль $|z_1| = \sqrt{a^2 + b^2}$:</small>
+                        <small>Модуль |z₁| = √(a² + b²):</small>
                         <strong id="cplx-res-mod1">5.000</strong>
                     </div>
                     <div class="complex-card">
-                        <small>Аргумент $\arg(z_1)$ (Кут):</small>
+                        <small>Аргумент arg(z₁) (Кут):</small>
                         <strong id="cplx-res-arg1">53.13° (0.93 rad)</strong>
                     </div>
                 </div>
 
                 <div class="converter-quick-actions" style="margin-top:4px;">
-                    <button class="btn-secondary" onclick="insertComplexModToCalc()">📥 Вставити модуль $|z_1|$ у калькулятор</button>
+                    <button class="btn-secondary" onclick="insertComplexModToCalc()">📥 Вставити модуль |z₁| у калькулятор</button>
                 </div>
             </div>
 
