@@ -449,6 +449,24 @@
     color: var(--text-muted);
 }
 
+/* Палітра команд на мобільних: центруємо по вертикалі як на ПК,
+   замість bottom-sheet поведінки загальних модалок */
+@media (max-width: 768px) {
+    #command-palette-modal {
+        align-items: center;
+        justify-content: center;
+        padding: 16px;
+    }
+
+    #command-palette-modal .modal-content {
+        max-width: 580px !important;
+        max-height: 84vh !important;
+        border-radius: 18px !important;
+        padding: 0 !important;
+        animation: fadeIn 0.2s ease !important;
+    }
+}
+
 /* --------------------------------------------------------------------------
    17. Довідник Гарячих Клавіш (Keyboard Shortcuts)
    -------------------------------------------------------------------------- */
