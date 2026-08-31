@@ -1,0 +1,148 @@
+    <div class="modal-overlay" id="theme-modal">
+        <div class="modal-content theme-modal-content">
+            <h3>🎨 Каталог Колірних Тем (32 теми)</h3>
+            <p style="font-size:0.86rem; color:var(--text-muted); margin-bottom:12px;">
+                Оберіть стиль оформлення. Всі теми повністю підтримують glassmorphism та анімації:
+            </p>
+
+            <div class="theme-grid">
+                <!-- 4 Нові флагманські теми v1.8.5 Titanium -->
+                <button class="theme-card" data-theme="titanium_ruby" onclick="setTheme('titanium_ruby')">
+                    <span class="theme-preview" style="background: linear-gradient(135deg, #0a0b0e, #e11d48);"></span>
+                    <div class="theme-info"><strong>🛡️ Titanium Ruby</strong><small>Титан & лазерний рубін</small></div>
+                </button>
+                <button class="theme-card" data-theme="crimson_supernova" onclick="setTheme('crimson_supernova')">
+                    <span class="theme-preview" style="background: linear-gradient(135deg, #080003, #ff1e56);"></span>
+                    <div class="theme-info"><strong>💥 Crimson Supernova</strong><small>Космічний багрянець & золото</small></div>
+                </button>
+                <button class="theme-card" data-theme="cyberpunk_neon" onclick="setTheme('cyberpunk_neon')">
+                    <span class="theme-preview" style="background: linear-gradient(135deg, #040810, #d946ef);"></span>
+                    <div class="theme-info"><strong>🌃 Cyberpunk Neon</strong><small>Кібер-бордо & неоновий циан</small></div>
+                </button>
+                <button class="theme-card" data-theme="emerald_platinum" onclick="setTheme('emerald_platinum')">
+                    <span class="theme-preview" style="background: linear-gradient(135deg, #020c08, #10b981);"></span>
+                    <div class="theme-info"><strong>🌲 Emerald Platinum</strong><small>Смарагд & платина</small></div>
+                </button>
+
+                <!-- Флагманські теми v1.8.4 -->
+                <button class="theme-card" data-theme="amethyst_crimson" onclick="setTheme('amethyst_crimson')">
+                    <span class="theme-preview" style="background: linear-gradient(135deg, #0d010e, #c026d3);"></span>
+                    <div class="theme-info"><strong>🔮 Amethyst Crimson</strong><small>Аметист & рубіновий спарк</small></div>
+                </button>
+                <button class="theme-card" data-theme="cyber_ruby" onclick="setTheme('cyber_ruby')">
+                    <span class="theme-preview" style="background: linear-gradient(135deg, #050002, #ff0055);"></span>
+                    <div class="theme-info"><strong>⚡ Cyber Ruby Neon</strong><small>Неонова магма & кібер-рубін</small></div>
+                </button>
+                <button class="theme-card" data-theme="golden_bordeaux" onclick="setTheme('golden_bordeaux')">
+                    <span class="theme-preview" style="background: linear-gradient(135deg, #0c0205, #d97706);"></span>
+                    <div class="theme-info"><strong>👑 Golden Bordeaux</strong><small>Бордовий оксамит & золото</small></div>
+                </button>
+                <button class="theme-card" data-theme="midnight_sapphire" onclick="setTheme('midnight_sapphire')">
+                    <span class="theme-preview" style="background: linear-gradient(135deg, #020617, #38bdf8);"></span>
+                    <div class="theme-info"><strong>💎 Midnight Sapphire</strong><small>Опівнічний сапфір & рубін</small></div>
+                </button>
+
+                <!-- Бордові флагманські теми -->
+                <button class="theme-card active" data-theme="bordeaux_luxury" onclick="setTheme('bordeaux_luxury')">
+                    <span class="theme-preview bordeaux-prev"></span>
+                    <div class="theme-info"><strong>🍷 Bordeaux Imperial</strong><small>Бордовий оксамит & золото</small></div>
+                </button>
+                <button class="theme-card" data-theme="velvet_burgundy" onclick="setTheme('velvet_burgundy')">
+                    <span class="theme-preview velvet-prev"></span>
+                    <div class="theme-info"><strong>🍇 Velvet Burgundy</strong><small>Ультратемний винний нуар</small></div>
+                </button>
+                <button class="theme-card" data-theme="autumn_crimson" onclick="setTheme('autumn_crimson')">
+                    <span class="theme-preview autumn-prev"></span>
+                    <div class="theme-info"><strong>🍁 Autumn Crimson</strong><small>Осінній багрянець</small></div>
+                </button>
+                <button class="theme-card" data-theme="volcanic_magma" onclick="setTheme('volcanic_magma')">
+                    <span class="theme-preview magma-prev"></span>
+                    <div class="theme-info"><strong>🌋 Volcanic Magma</strong><small>Палаюча лава & рубін</small></div>
+                </button>
+
+                <!-- Інші 20 преміальних тем -->
+                <button class="theme-card" data-theme="redstone2" onclick="setTheme('redstone2')">
+                    <span class="theme-preview redstone2-prev"></span>
+                    <div class="theme-info"><strong>⚡ Redstone 2 Pulse</strong><small>Квантовий неон</small></div>
+                </button>
+                <button class="theme-card" data-theme="deep_space" onclick="setTheme('deep_space')">
+                    <span class="theme-preview deepspace-prev"></span>
+                    <div class="theme-info"><strong>🌌 Deep Space</strong><small>Космічна небула</small></div>
+                </button>
+                <button class="theme-card" data-theme="cyber_lime" onclick="setTheme('cyber_lime')">
+                    <span class="theme-preview lime-prev"></span>
+                    <div class="theme-info"><strong>🧪 Cyber Lime</strong><small>Кислотно-лаймовий</small></div>
+                </button>
+                <button class="theme-card" data-theme="royal_amethyst" onclick="setTheme('royal_amethyst')">
+                    <span class="theme-preview amethyst-prev"></span>
+                    <div class="theme-info"><strong>🔮 Royal Amethyst</strong><small>Королівський аметист</small></div>
+                </button>
+                <button class="theme-card" data-theme="redstone" onclick="setTheme('redstone')">
+                    <span class="theme-preview redstone-prev"></span>
+                    <div class="theme-info"><strong>🔴 Redstone 1 Flux</strong><small>Червоний кристал</small></div>
+                </button>
+                <button class="theme-card" data-theme="cyber_amber" onclick="setTheme('cyber_amber')">
+                    <span class="theme-preview cyber-amber-prev"></span>
+                    <div class="theme-info"><strong>🔶 Amber Cyber</strong><small>Бурштиновий термінал</small></div>
+                </button>
+                <button class="theme-card" data-theme="nordic_frost" onclick="setTheme('nordic_frost')">
+                    <span class="theme-preview nordic-frost-prev"></span>
+                    <div class="theme-info"><strong>❄️ Nordic Glacier</strong><small>Арктичний льодовик</small></div>
+                </button>
+                <button class="theme-card" data-theme="vintage_retro" onclick="setTheme('vintage_retro')">
+                    <span class="theme-preview vintage-prev"></span>
+                    <div class="theme-info"><strong>📼 80s Synthwave</strong><small>Ретро-вейв неон</small></div>
+                </button>
+                <button class="theme-card" data-theme="matrix_terminal" onclick="setTheme('matrix_terminal')">
+                    <span class="theme-preview matrix-prev"></span>
+                    <div class="theme-info"><strong>🟩 Matrix Terminal</strong><small>Хакерський зелений</small></div>
+                </button>
+                <button class="theme-card" data-theme="obsidian_gold" onclick="setTheme('obsidian_gold')">
+                    <span class="theme-preview obsidian-prev"></span>
+                    <div class="theme-info"><strong>👑 Obsidian Gold</strong><small>Чорне золото</small></div>
+                </button>
+                <button class="theme-card" data-theme="dark" onclick="setTheme('dark')">
+                    <span class="theme-preview dark-prev"></span>
+                    <div class="theme-info"><strong>🌑 Dark Charcoal</strong><small>Темний мінімалізм</small></div>
+                </button>
+                <button class="theme-card" data-theme="light" onclick="setTheme('light')">
+                    <span class="theme-preview light-prev"></span>
+                    <div class="theme-info"><strong>☀️ Clean Porcelain</strong><small>Світла порцеляна</small></div>
+                </button>
+                <button class="theme-card" data-theme="neon" onclick="setTheme('neon')">
+                    <span class="theme-preview neon-prev"></span>
+                    <div class="theme-info"><strong>⚡ Cyberpunk Glow</strong><small>Кіберпанк неон</small></div>
+                </button>
+                <button class="theme-card" data-theme="purple" onclick="setTheme('purple')">
+                    <span class="theme-preview purple-prev"></span>
+                    <div class="theme-info"><strong>🟣 Midnight Purple</strong><small>Опівнічний фіолетовий</small></div>
+                </button>
+                <button class="theme-card" data-theme="emerald" onclick="setTheme('emerald')">
+                    <span class="theme-preview emerald-prev"></span>
+                    <div class="theme-info"><strong>🌲 Emerald Forest</strong><small>Смарагдовий ліс</small></div>
+                </button>
+                <button class="theme-card" data-theme="sunset" onclick="setTheme('sunset')">
+                    <span class="theme-preview sunset-prev"></span>
+                    <div class="theme-info"><strong>🌅 Sunset Aura</strong><small>Захід сонця</small></div>
+                </button>
+                <button class="theme-card" data-theme="ocean" onclick="setTheme('ocean')">
+                    <span class="theme-preview ocean-prev"></span>
+                    <div class="theme-info"><strong>🌊 Nordic Ocean</strong><small>Глибокий океан</small></div>
+                </button>
+                <button class="theme-card" data-theme="coffee" onclick="setTheme('coffee')">
+                    <span class="theme-preview coffee-prev"></span>
+                    <div class="theme-info"><strong>☕ Mocha Latte</strong><small>Кава мокко</small></div>
+                </button>
+                <button class="theme-card" data-theme="sakura" onclick="setTheme('sakura')">
+                    <span class="theme-preview sakura-prev"></span>
+                    <div class="theme-info"><strong>🌸 Sakura Bloom</strong><small>Цвіт сакури</small></div>
+                </button>
+                <button class="theme-card" data-theme="glass" onclick="setTheme('glass')">
+                    <span class="theme-preview glass-prev"></span>
+                    <div class="theme-info"><strong>🪟 Frost Glass</strong><small>Кришталеве скло</small></div>
+                </button>
+            </div>
+
+            <button class="close-btn" onclick="closeModal('theme-modal')">Закрити</button>
+        </div>
+    </div>

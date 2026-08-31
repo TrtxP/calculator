@@ -1,0 +1,52 @@
+    <div class="modal-overlay" id="memory-modal">
+        <div class="modal-content memory-modal-content">
+            <h3>🗄️ Матриця Пам'яті (Слоти M1–M4)</h3>
+            <p style="font-size:0.86rem; color:var(--text-muted); margin-bottom:12px;">
+                Зберігайте до 4 окремих проміжних чисел у незалежних комірках:
+            </p>
+
+            <div class="memory-slots-list">
+                <div class="memory-slot-row">
+                    <span class="slot-badge">M1</span>
+                    <span class="slot-val" id="mem-slot-val-0">0</span>
+                    <div class="slot-actions">
+                        <button class="btn-secondary" onclick="memorySlotStore(0)">MS</button>
+                        <button class="btn-secondary" onclick="memorySlotRecall(0)">MR</button>
+                        <button class="btn-secondary btn-danger" onclick="memorySlotClear(0)">MC</button>
+                    </div>
+                </div>
+                <div class="memory-slot-row">
+                    <span class="slot-badge">M2</span>
+                    <span class="slot-val" id="mem-slot-val-1">0</span>
+                    <div class="slot-actions">
+                        <button class="btn-secondary" onclick="memorySlotStore(1)">MS</button>
+                        <button class="btn-secondary" onclick="memorySlotRecall(1)">MR</button>
+                        <button class="btn-secondary btn-danger" onclick="memorySlotClear(1)">MC</button>
+                    </div>
+                </div>
+                <div class="memory-slot-row">
+                    <span class="slot-badge">M3</span>
+                    <span class="slot-val" id="mem-slot-val-2">0</span>
+                    <div class="slot-actions">
+                        <button class="btn-secondary" onclick="memorySlotStore(2)">MS</button>
+                        <button class="btn-secondary" onclick="memorySlotRecall(2)">MR</button>
+                        <button class="btn-secondary btn-danger" onclick="memorySlotClear(2)">MC</button>
+                    </div>
+                </div>
+                <div class="memory-slot-row">
+                    <span class="slot-badge">M4</span>
+                    <span class="slot-val" id="mem-slot-val-3">0</span>
+                    <div class="slot-actions">
+                        <button class="btn-secondary" onclick="memorySlotStore(3)">MS</button>
+                        <button class="btn-secondary" onclick="memorySlotRecall(3)">MR</button>
+                        <button class="btn-secondary btn-danger" onclick="memorySlotClear(3)">MC</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal-actions" style="margin-top:14px;">
+                <button class="btn-secondary btn-danger" onclick="clearAllMemorySlots()">Очистити всі M1–M4</button>
+                <button class="close-btn" style="margin-top:0;" onclick="closeModal('memory-modal')">Закрити</button>
+            </div>
+        </div>
+    </div>

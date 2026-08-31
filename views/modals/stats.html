@@ -1,0 +1,52 @@
+    <div class="modal-overlay" id="stats-modal">
+        <div class="modal-content stats-modal-content">
+            <h3>📊 Статистичний Аналізатор Даних</h3>
+            <p style="font-size:0.88rem; color:var(--text-muted); margin-bottom:10px;">
+                Введіть набір чисел через кому або пробіл (наприклад: <code>12, 15, 18, 22, 15, 30</code>):
+            </p>
+
+            <textarea id="stats-data-input" rows="3" placeholder="10, 20, 30, 40, 50..." oninput="calculateStatistics()"></textarea>
+
+            <div class="stats-results-grid">
+                <div class="stats-card">
+                    <span>Середнє (x̄):</span>
+                    <strong id="stat-mean">0</strong>
+                </div>
+                <div class="stats-card">
+                    <span>Медіана:</span>
+                    <strong id="stat-median">0</strong>
+                </div>
+                <div class="stats-card">
+                    <span>Мода:</span>
+                    <strong id="stat-mode">0</strong>
+                </div>
+                <div class="stats-card">
+                    <span>Сума (Σx):</span>
+                    <strong id="stat-sum">0</strong>
+                </div>
+                <div class="stats-card">
+                    <span>Стандартне відхилення (σ):</span>
+                    <strong id="stat-std">0</strong>
+                </div>
+                <div class="stats-card">
+                    <span>Дисперсія (σ²):</span>
+                    <strong id="stat-var">0</strong>
+                </div>
+                <div class="stats-card">
+                    <span>Мінімум (Min):</span>
+                    <strong id="stat-min">0</strong>
+                </div>
+                <div class="stats-card">
+                    <span>Максимум (Max):</span>
+                    <strong id="stat-max">0</strong>
+                </div>
+            </div>
+
+            <div class="converter-quick-actions" style="margin-top:12px;">
+                <button class="btn-secondary" onclick="insertStatMeanToCalc()">📥 Вставити середнє в калькулятор</button>
+                <button class="btn-secondary btn-danger" onclick="clearStatsInput()">Очистити дані</button>
+            </div>
+
+            <button class="close-btn" onclick="closeModal('stats-modal')">Закрити</button>
+        </div>
+    </div>

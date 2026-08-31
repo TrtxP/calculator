@@ -1,0 +1,66 @@
+    <div class="modal-overlay" id="prime-gcd-modal">
+        <div class="modal-content prime-gcd-modal-content">
+            <h3>🔢 НСД, НСК та Розклад на Прості Множники</h3>
+            
+            <div class="prime-sections-wrapper">
+                <div class="prime-calc-block">
+                    <span class="matrix-label">1. Розклад числа n на прості множники:</span>
+                    <div class="prime-input-row">
+                        <label>Число n:</label>
+                        <input type="number" id="prime-num-input" value="360" min="1" oninput="solvePrimeFactorization()">
+                        <button class="btn-secondary" onclick="setPrimeFromCalc()">З дисплея</button>
+                    </div>
+                    <div class="prime-res-box">
+                        <div class="prime-res-line">
+                            <span>Канонічний розклад:</span>
+                            <strong id="prime-factor-res" style="color:var(--accent-operator);">2³ × 3² × 5</strong>
+                        </div>
+                        <div class="prime-res-line">
+                            <span>Статус числа:</span>
+                            <span id="prime-is-prime-badge" class="nav-chip">Складене число</span>
+                        </div>
+                        <div class="prime-res-line">
+                            <span>Всі дільники (кількість: <span id="divisors-count">24</span>):</span>
+                        </div>
+                        <div class="divisors-chips-list" id="divisors-chips-list">
+                            <!-- Дільники -->
+                        </div>
+                    </div>
+                </div>
+
+                <div class="prime-calc-block" style="margin-top:12px;">
+                    <span class="matrix-label">2. НСД (GCD) та НСК (LCM) для пари чисел:</span>
+                    <div class="prime-pair-inputs">
+                        <div class="prime-pair-col">
+                            <label>Число A:</label>
+                            <input type="number" id="gcd-num-a" value="48" oninput="solveGcdLcm()">
+                        </div>
+                        <div class="prime-pair-col">
+                            <label>Число B:</label>
+                            <input type="number" id="gcd-num-b" value="180" oninput="solveGcdLcm()">
+                        </div>
+                    </div>
+                    <div class="prime-res-box" style="margin-top:8px;">
+                        <div class="prime-res-line">
+                            <span>Найбільший спільний дільник (НСД / GCD):</span>
+                            <strong id="gcd-val-res" style="color:var(--accent-equals); font-size:1.2rem;">12</strong>
+                        </div>
+                        <div class="prime-res-line">
+                            <span>Найменше спільне кратне (НСК / LCM):</span>
+                            <strong id="lcm-val-res" style="color:var(--accent-operator); font-size:1.2rem;">720</strong>
+                        </div>
+                        <div class="prime-res-line" style="font-size:0.8rem; color:var(--text-muted);">
+                            <span>Кроки алгоритму Евкліда:</span>
+                            <span id="euclid-steps-count">4 кроки</span>
+                        </div>
+                    </div>
+                    <div class="converter-quick-actions" style="margin-top:8px;">
+                        <button class="btn-secondary" onclick="insertGcdToCalc()">📥 Вставити НСД в калькулятор</button>
+                        <button class="btn-secondary" onclick="insertLcmToCalc()">📥 Вставити НСК в калькулятор</button>
+                    </div>
+                </div>
+            </div>
+
+            <button class="close-btn" onclick="closeModal('prime-gcd-modal')">Закрити</button>
+        </div>
+    </div>

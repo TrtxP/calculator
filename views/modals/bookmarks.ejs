@@ -1,0 +1,23 @@
+    <div class="modal-overlay" id="bookmarks-modal">
+        <div class="modal-content bookmarks-modal-content">
+            <h3>🔖 Блокнот Обраних Виразів та Констант</h3>
+            <p style="font-size:0.86rem; color:var(--text-muted); margin-bottom:10px;">
+                Зберігайте важливі формули або проміжні суми із власними тегами:
+            </p>
+
+            <div class="bookmark-add-row" style="display:flex; gap:8px; margin-bottom:12px;">
+                <input type="text" id="bm-title-input" placeholder="Назва (наприклад: Оренда офісу, π × r²)..." style="flex-grow:1; padding:8px 12px; border-radius:8px; border:1px solid var(--border-color); background:var(--bg-card); color:var(--text-primary);">
+                <input type="text" id="bm-val-input" placeholder="Значення..." style="width:120px; padding:8px 12px; border-radius:8px; border:1px solid var(--border-color); background:var(--bg-card); color:var(--text-primary);">
+                <button class="btn-secondary" onclick="addCurrentAsBookmark()">➕ Зберегти</button>
+            </div>
+
+            <div class="bookmarks-list-box" id="bookmarks-list-box">
+                <!-- Динамічні картки закладок -->
+            </div>
+
+            <div class="modal-actions" style="margin-top:12px;">
+                <button class="btn-secondary btn-danger" onclick="clearAllBookmarks()">Очистити всі закладки</button>
+                <button class="close-btn" style="margin-top:0;" onclick="closeModal('bookmarks-modal')">Закрити</button>
+            </div>
+        </div>
+    </div>

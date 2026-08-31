@@ -1,0 +1,20 @@
+    <div class="modal-overlay" id="export-modal">
+        <div class="modal-content">
+            <h3>📥 Експорт історії розрахунків</h3>
+            <div class="export-options">
+                <button class="btn-secondary export-type-btn" onclick="exportHistoryFormat('txt')">
+                    <strong>📄 Текстовий звіт (.txt)</strong>
+                    <small>Форматований документ</small>
+                </button>
+                <button class="btn-secondary export-type-btn" onclick="exportHistoryFormat('csv')">
+                    <strong>📊 Таблиця Excel (.csv)</strong>
+                    <small>Для Excel / Google Sheets</small>
+                </button>
+                <button class="btn-secondary export-type-btn" onclick="exportHistoryFormat('json')">
+                    <strong>📦 Структурований JSON (.json)</strong>
+                    <small>Для розробників</small>
+                </button>
+            </div>
+            <button class="close-btn" onclick="closeModal('export-modal')">Скасувати</button>
+        </div>
+    </div>

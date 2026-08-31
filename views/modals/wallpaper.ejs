@@ -1,0 +1,114 @@
+    <div class="modal-overlay" id="wallpaper-modal">
+        <div class="modal-content wallpaper-modal-content">
+            <h3>🖼️ Студія Шпалер & Фону (12 HD фонів)</h3>
+            <p style="font-size:0.88rem; color:var(--text-muted); margin-bottom:12px;">
+                Оберіть якісне фото для фону інтерфейсу або завантажте власне:
+            </p>
+
+            <div class="wallpaper-presets-grid">
+                <!-- 3 Нові шпалери v1.8.5 -->
+                <div class="wallpaper-card" data-wp="titanium_ruby" onclick="setWallpaper('titanium_ruby')">
+                    <div class="wp-thumb" style="background-image:url('images/titanium_ruby.jpg');"></div>
+                    <span>🛡️ Titanium Ruby Laser <small>NEW</small></span>
+                </div>
+                <div class="wallpaper-card" data-wp="crimson_supernova" onclick="setWallpaper('crimson_supernova')">
+                    <div class="wp-thumb" style="background-image:url('images/crimson_supernova.jpg');"></div>
+                    <span>💥 Crimson Supernova <small>NEW</small></span>
+                </div>
+                <div class="wallpaper-card" data-wp="cyberpunk_bordeaux" onclick="setWallpaper('cyberpunk_bordeaux')">
+                    <div class="wp-thumb" style="background-image:url('images/cyberpunk_bordeaux.jpg');"></div>
+                    <span>🌃 Cyberpunk Bordeaux <small>NEW</small></span>
+                </div>
+
+                <!-- 3 Шпалери v1.8.4 -->
+                <div class="wallpaper-card" data-wp="amethyst_crystal" onclick="setWallpaper('amethyst_crystal')">
+                    <div class="wp-thumb" style="background-image:url('images/amethyst_crystal.jpg');"></div>
+                    <span>🔮 Аметистовий Кристал</span>
+                </div>
+                <div class="wallpaper-card" data-wp="cyber_matrix_red" onclick="setWallpaper('cyber_matrix_red')">
+                    <div class="wp-thumb" style="background-image:url('images/cyber_matrix_red.jpg');"></div>
+                    <span>⚡ Бордова Кібер-Сітка</span>
+                </div>
+                <div class="wallpaper-card" data-wp="aurora_ruby" onclick="setWallpaper('aurora_ruby')">
+                    <div class="wp-thumb" style="background-image:url('images/aurora_ruby.jpg');"></div>
+                    <span>🌌 Рубінове Сяйво</span>
+                </div>
+
+                <!-- Попередні класичні шпалери -->
+                <div class="wallpaper-card active" data-wp="burgundy" onclick="setWallpaper('burgundy')">
+                    <div class="wp-thumb wp-thumb-burgundy"></div>
+                    <span>🍷 Bordeaux Velvet</span>
+                </div>
+                <div class="wallpaper-card" data-wp="nebula_wine" onclick="setWallpaper('nebula_wine')">
+                    <div class="wp-thumb wp-thumb-nebula-wine"></div>
+                    <span>🌌 Wine Nebula</span>
+                </div>
+                <div class="wallpaper-card" data-wp="cyber_redstone3" onclick="setWallpaper('cyber_redstone3')">
+                    <div class="wp-thumb wp-thumb-cyber-redstone3"></div>
+                    <span>⚡ Redstone 3 Cyber</span>
+                </div>
+                <div class="wallpaper-card" data-wp="cyber" onclick="setWallpaper('cyber')">
+                    <div class="wp-thumb wp-thumb-cyber"></div>
+                    <span>🏙️ Кіберсітка</span>
+                </div>
+                <div class="wallpaper-card" data-wp="sunset" onclick="setWallpaper('sunset')">
+                    <div class="wp-thumb wp-thumb-sunset"></div>
+                    <span>🌅 Захід Сонця</span>
+                </div>
+                <div class="wallpaper-card" data-wp="emerald" onclick="setWallpaper('emerald')">
+                    <div class="wp-thumb wp-thumb-emerald"></div>
+                    <span>🌲 Смарагд Небула</span>
+                </div>
+                <div class="wallpaper-card" data-wp="stars" onclick="setWallpaper('stars')">
+                    <div class="wp-thumb wp-thumb-stars"></div>
+                    <span>✨ Космічні Зорі</span>
+                </div>
+                <div class="wallpaper-card" data-wp="grid" onclick="setWallpaper('grid')">
+                    <div class="wp-thumb wp-thumb-grid"></div>
+                    <span>📐 Blueprint Сітка</span>
+                </div>
+                <div class="wallpaper-card" data-wp="default" onclick="setWallpaper('default')">
+                    <div class="wp-thumb wp-thumb-default"></div>
+                    <span>🎨 Без зображення</span>
+                </div>
+            </div>
+
+            <!-- Регулювання динаміки частинок Canvas -->
+            <div class="wallpaper-controls-box" style="margin-top:10px;">
+                <label style="font-size:0.85rem; font-weight:700; color:var(--text-primary); display:block; margin-bottom:6px;">✨ Динаміка Частинок Canvas (Швидкість & Стиль):</label>
+                <div class="particle-presets-row">
+                    <button class="particle-preset-btn active" id="part-btn-standard" onclick="setParticleSpeedMode('standard')">Стандарт (Calm)</button>
+                    <button class="particle-preset-btn" id="part-btn-aurora" onclick="setParticleSpeedMode('aurora')">🌌 Aurora Flow</button>
+                    <button class="particle-preset-btn" id="part-btn-starlight" onclick="setParticleSpeedMode('starlight')">⭐ Starlight</button>
+                    <button class="particle-preset-btn" id="part-btn-warp" onclick="setParticleSpeedMode('warp')">⚡ Warp Speed</button>
+                </div>
+            </div>
+
+            <div class="wallpaper-controls-box">
+                <div class="control-row">
+                    <label>Розмиття фону (Blur): <span id="wp-blur-val">12px</span></label>
+                    <input type="range" id="wp-blur-slider" min="0" max="30" value="12" oninput="adjustWallpaperBlur(this.value)">
+                </div>
+                <div class="control-row">
+                    <label>Затемнення фону (Overlay): <span id="wp-opacity-val">60%</span></label>
+                    <input type="range" id="wp-opacity-slider" min="10" max="90" value="60" oninput="adjustWallpaperOverlay(this.value)">
+                </div>
+            </div>
+
+            <div class="custom-wallpaper-section">
+                <label>Завантажити власне зображення або вставити посилання:</label>
+                <div class="custom-wp-inputs">
+                    <input type="file" id="wallpaper-file-input" accept="image/*" onchange="handleWallpaperUpload(event)">
+                    <div class="url-input-group">
+                        <input type="text" id="wallpaper-url-input" placeholder="https://example.com/wallpaper.jpg">
+                        <button class="btn-secondary" onclick="applyWallpaperUrl()">Встановити URL</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal-actions">
+                <button class="btn-secondary btn-danger" onclick="resetWallpaper()">Скинути фон</button>
+                <button class="close-btn" style="margin-top:0;" onclick="closeModal('wallpaper-modal')">Закрити</button>
+            </div>
+        </div>
+    </div>

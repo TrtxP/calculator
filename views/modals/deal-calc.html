@@ -1,0 +1,63 @@
+    <div class="modal-overlay" id="deal-calc-modal">
+        <div class="modal-content deal-modal-content">
+            <h3>⚖️ Порівняння Вигідності Цін за Одиницю (1 кг / 1 л / 1 шт)</h3>
+            <p style="font-size:0.86rem; color:var(--text-muted); margin-bottom:10px;">
+                Дізнайтеся, яка фасовка чи упаковка товару є насправді дешевшою:
+            </p>
+
+            <div class="deal-comparison-grid">
+                <div class="deal-card" id="deal-card-a">
+                    <div class="deal-card-title">📦 Товар А</div>
+                    <div class="deal-input-row">
+                        <label>Ціна (₴):</label>
+                        <input type="number" id="deal-a-price" value="85" oninput="calculateUnitDeal()">
+                    </div>
+                    <div class="deal-input-row">
+                        <label>Кількість / Вага:</label>
+                        <input type="number" id="deal-a-qty" value="400" oninput="calculateUnitDeal()">
+                        <select id="deal-a-unit" onchange="calculateUnitDeal()">
+                            <option value="g">грами (г)</option>
+                            <option value="kg">кілограми (кг)</option>
+                            <option value="ml">мілілітри (мл)</option>
+                            <option value="l">літри (л)</option>
+                            <option value="pcs">штуки (од)</option>
+                        </select>
+                    </div>
+                    <div class="deal-res-badge">
+                        <span>Ціна за 1 кг/л/од:</span>
+                        <strong id="deal-a-unit-price">212.50 ₴</strong>
+                    </div>
+                </div>
+
+                <div class="deal-card" id="deal-card-b">
+                    <div class="deal-card-title">🛍️ Товар B</div>
+                    <div class="deal-input-row">
+                        <label>Ціна (₴):</label>
+                        <input type="number" id="deal-b-price" value="180" oninput="calculateUnitDeal()">
+                    </div>
+                    <div class="deal-input-row">
+                        <label>Кількість / Вага:</label>
+                        <input type="number" id="deal-b-qty" value="1000" oninput="calculateUnitDeal()">
+                        <select id="deal-b-unit" onchange="calculateUnitDeal()">
+                            <option value="g">грами (г)</option>
+                            <option value="kg" selected>кілограми (кг)</option>
+                            <option value="ml">мілілітри (мл)</option>
+                            <option value="l">літри (л)</option>
+                            <option value="pcs">штуки (од)</option>
+                        </select>
+                    </div>
+                    <div class="deal-res-badge">
+                        <span>Ціна за 1 кг/л/од:</span>
+                        <strong id="deal-b-unit-price">180.00 ₴</strong>
+                    </div>
+                </div>
+            </div>
+
+            <div class="deal-verdict-box" id="deal-verdict-box">
+                <div class="deal-winner-text" id="deal-winner-text">Товар B вигідніший на 15.29%!</div>
+                <div class="deal-savings-detail" id="deal-savings-detail">Економія становить 32.50 ₴ на кожному кілограмі.</div>
+            </div>
+
+            <button class="close-btn" onclick="closeModal('deal-calc-modal')">Закрити</button>
+        </div>
+    </div>

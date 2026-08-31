@@ -1,0 +1,156 @@
+    <div class="modal-overlay" id="formula-solver-modal">
+        <div class="modal-content" style="max-width: 680px;">
+            <h3>⚡ Фізико-Математичний Формулатор</h3>
+            <p style="font-size:0.86rem; color:var(--text-muted); margin-bottom:10px;">
+                Швидкий розрахунок базових фізичних законів з миттєвою передачею результату в калькулятор:
+            </p>
+
+            <div class="formula-grid">
+                <!-- Формула 1: Кінетична енергія -->
+                <div class="formula-card">
+                    <div class="formula-card-header">
+                        <span class="formula-card-title">1. Кінетична Енергія (Ek)</span>
+                        <span class="nav-chip">Механіка</span>
+                    </div>
+                    <div class="formula-math-preview">Ek = (m × v²) / 2</div>
+                    <div class="formula-inputs-grid">
+                        <div class="formula-input-item">
+                            <label>Маса m (кг):</label>
+                            <input type="number" id="f-ek-m" value="10" oninput="solvePhysicsFormula('ek')">
+                        </div>
+                        <div class="formula-input-item">
+                            <label>Швидкість v (м/с):</label>
+                            <input type="number" id="f-ek-v" value="5" oninput="solvePhysicsFormula('ek')">
+                        </div>
+                    </div>
+                    <div class="formula-result-row">
+                        <span>Енергія Ek:</span>
+                        <strong class="formula-res-val" id="f-ek-res">125 Дж</strong>
+                        <button class="btn-secondary" style="padding:2px 8px; font-size:0.75rem;" onclick="insertFormulaValToCalc('f-ek-res')">Вставити</button>
+                    </div>
+                </div>
+
+                <!-- Формула 2: Закон Ома -->
+                <div class="formula-card">
+                    <div class="formula-card-header">
+                        <span class="formula-card-title">2. Закон Ома та Потужність</span>
+                        <span class="nav-chip">Електрика</span>
+                    </div>
+                    <div class="formula-math-preview">I = U / R, P = U × I</div>
+                    <div class="formula-inputs-grid">
+                        <div class="formula-input-item">
+                            <label>Напруга U (В):</label>
+                            <input type="number" id="f-ohm-u" value="220" oninput="solvePhysicsFormula('ohm')">
+                        </div>
+                        <div class="formula-input-item">
+                            <label>Опір R (Ом):</label>
+                            <input type="number" id="f-ohm-r" value="44" oninput="solvePhysicsFormula('ohm')">
+                        </div>
+                    </div>
+                    <div class="formula-result-row">
+                        <span>Струм I / Потужність P:</span>
+                        <strong class="formula-res-val" id="f-ohm-res">5 А (1100 Вт)</strong>
+                        <button class="btn-secondary" style="padding:2px 8px; font-size:0.75rem;" onclick="insertFormulaValToCalc('f-ohm-res')">Вставити</button>
+                    </div>
+                </div>
+
+                <!-- Формула 3: Вільне падіння -->
+                <div class="formula-card">
+                    <div class="formula-card-header">
+                        <span class="formula-card-title">3. Вільне Падіння (Висота & Швидкість)</span>
+                        <span class="nav-chip">Гравітація</span>
+                    </div>
+                    <div class="formula-math-preview">h = (g × t²) / 2, v = g × t</div>
+                    <div class="formula-inputs-grid">
+                        <div class="formula-input-item">
+                            <label>Час падіння t (с):</label>
+                            <input type="number" id="f-fall-t" value="3" oninput="solvePhysicsFormula('fall')">
+                        </div>
+                        <div class="formula-input-item">
+                            <label>Прискорення g (м/с²):</label>
+                            <input type="number" id="f-fall-g" value="9.806" oninput="solvePhysicsFormula('fall')">
+                        </div>
+                    </div>
+                    <div class="formula-result-row">
+                        <span>Висота h / Швидкість v:</span>
+                        <strong class="formula-res-val" id="f-fall-res">44.13 м (29.42 м/с)</strong>
+                        <button class="btn-secondary" style="padding:2px 8px; font-size:0.75rem;" onclick="insertFormulaValToCalc('f-fall-res')">Вставити</button>
+                    </div>
+                </div>
+
+                <!-- Формула 4: Густина речовини -->
+                <div class="formula-card">
+                    <div class="formula-card-header">
+                        <span class="formula-card-title">4. Густина Речовини (ρ)</span>
+                        <span class="nav-chip">Гідро/Аеро</span>
+                    </div>
+                    <div class="formula-math-preview">ρ = m / V</div>
+                    <div class="formula-inputs-grid">
+                        <div class="formula-input-item">
+                            <label>Маса m (кг):</label>
+                            <input type="number" id="f-rho-m" value="7800" oninput="solvePhysicsFormula('rho')">
+                        </div>
+                        <div class="formula-input-item">
+                            <label>Об'єм V (м³):</label>
+                            <input type="number" id="f-rho-v" value="1" oninput="solvePhysicsFormula('rho')">
+                        </div>
+                    </div>
+                    <div class="formula-result-row">
+                        <span>Густина ρ:</span>
+                        <strong class="formula-res-val" id="f-rho-res">7800 кг/м³</strong>
+                        <button class="btn-secondary" style="padding:2px 8px; font-size:0.75rem;" onclick="insertFormulaValToCalc('f-rho-res')">Вставити</button>
+                    </div>
+                </div>
+
+                <!-- Формула 5: Гравітаційне тяжіння Ньютона -->
+                <div class="formula-card">
+                    <div class="formula-card-header">
+                        <span class="formula-card-title">5. Гравітаційна Сила (F)</span>
+                        <span class="nav-chip">Астрофізика</span>
+                    </div>
+                    <div class="formula-math-preview">F = G × (m1 × m2) / r²</div>
+                    <div class="formula-inputs-grid">
+                        <div class="formula-input-item">
+                            <label>m1 (кг):</label>
+                            <input type="number" id="f-grav-m1" value="5.972e24" oninput="solvePhysicsFormula('grav')">
+                        </div>
+                        <div class="formula-input-item">
+                            <label>m2 (кг):</label>
+                            <input type="number" id="f-grav-m2" value="70" oninput="solvePhysicsFormula('grav')">
+                        </div>
+                    </div>
+                    <div class="formula-result-row">
+                        <span>Сила тяжіння F:</span>
+                        <strong class="formula-res-val" id="f-grav-res">686.5 Н</strong>
+                        <button class="btn-secondary" style="padding:2px 8px; font-size:0.75rem;" onclick="insertFormulaValToCalc('f-grav-res')">Вставити</button>
+                    </div>
+                </div>
+
+                <!-- Формула 6: Рівняння Менделєєва-Клапейрона -->
+                <div class="formula-card">
+                    <div class="formula-card-header">
+                        <span class="formula-card-title">6. Ідеальний Газ (Тиск P)</span>
+                        <span class="nav-chip">Термодинаміка</span>
+                    </div>
+                    <div class="formula-math-preview">P = (n × R × T) / V</div>
+                    <div class="formula-inputs-grid">
+                        <div class="formula-input-item">
+                            <label>К-сть речовини n (моль):</label>
+                            <input type="number" id="f-gas-n" value="1" oninput="solvePhysicsFormula('gas')">
+                        </div>
+                        <div class="formula-input-item">
+                            <label>Температура T (К):</label>
+                            <input type="number" id="f-gas-t" value="293.15" oninput="solvePhysicsFormula('gas')">
+                        </div>
+                    </div>
+                    <div class="formula-result-row">
+                        <span>Тиск P (при V=0.0224 м³):</span>
+                        <strong class="formula-res-val" id="f-gas-res">108801 Па</strong>
+                        <button class="btn-secondary" style="padding:2px 8px; font-size:0.75rem;" onclick="insertFormulaValToCalc('f-gas-res')">Вставити</button>
+                    </div>
+                </div>
+            </div>
+
+            <button class="close-btn" onclick="closeModal('formula-solver-modal')">Закрити</button>
+        </div>
+    </div>

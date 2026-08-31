@@ -1,0 +1,50 @@
+    <div class="modal-overlay" id="quadratic-modal">
+        <div class="modal-content quadratic-modal-content">
+            <h3>📐 Розв'язувач Квадратних Рівнянь</h3>
+            <p style="font-size:0.88rem; color:var(--text-muted); margin-bottom:12px;">
+                Введіть коефіцієнти для рівняння вигляду <strong>a·x² + b·x + c = 0</strong>:
+            </p>
+
+            <div class="quadratic-inputs-row">
+                <div class="quad-input-group">
+                    <label>a (x²):</label>
+                    <input type="number" id="quad-a" value="1" oninput="solveQuadraticEquation()">
+                </div>
+                <div class="quad-input-group">
+                    <label>b (x):</label>
+                    <input type="number" id="quad-b" value="-5" oninput="solveQuadraticEquation()">
+                </div>
+                <div class="quad-input-group">
+                    <label>c (вільний):</label>
+                    <input type="number" id="quad-c" value="6" oninput="solveQuadraticEquation()">
+                </div>
+            </div>
+
+            <div class="quad-solution-box">
+                <div class="quad-sol-header">
+                    <span>Дискримінант (D = b² - 4ac):</span>
+                    <strong id="quad-disc-val">D = 1</strong>
+                </div>
+                <div class="quad-roots-grid">
+                    <div class="quad-root-item">
+                        <span>Корінь x₁:</span>
+                        <strong id="quad-x1-val">3</strong>
+                    </div>
+                    <div class="quad-root-item">
+                        <span>Корінь x₂:</span>
+                        <strong id="quad-x2-val">2</strong>
+                    </div>
+                </div>
+                <div class="quad-vertex-info" id="quad-vertex-info">
+                    Вершина параболи: <code>(2.5; -0.25)</code>
+                </div>
+            </div>
+
+            <div class="converter-quick-actions" style="margin-top:12px;">
+                <button class="btn-secondary" onclick="insertQuadRootToCalc(1)">📥 Вставити x₁ в калькулятор</button>
+                <button class="btn-secondary" onclick="insertQuadRootToCalc(2)">📥 Вставити x₂ в калькулятор</button>
+            </div>
+
+            <button class="close-btn" onclick="closeModal('quadratic-modal')">Закрити</button>
+        </div>
+    </div>

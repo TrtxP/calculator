@@ -1,0 +1,55 @@
+    <div class="modal-overlay" id="currency-modal">
+        <div class="modal-content currency-modal-content">
+            <h3>💱 Конвертер Валют та Криптовалют</h3>
+            <div class="currency-converter-body">
+                <div class="converter-input-block">
+                    <label>Сума та вихідна валюта:</label>
+                    <div class="conv-input-row">
+                        <input type="number" id="curr-from-val" value="100" oninput="runCurrencyConversion('from')">
+                        <select id="curr-from-unit" onchange="runCurrencyConversion('from')">
+                            <option value="USD">USD ($ - Долар США)</option>
+                            <option value="UAH" selected>UAH (₴ - Гривня)</option>
+                            <option value="EUR">EUR (€ - Євро)</option>
+                            <option value="GBP">GBP (£ - Фунт)</option>
+                            <option value="PLN">PLN (zł - Злотий)</option>
+                            <option value="BTC">BTC (₿ - Bitcoin)</option>
+                            <option value="ETH">ETH (Ξ - Ethereum)</option>
+                            <option value="SOL">SOL (◎ - Solana)</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="converter-swap-btn" onclick="swapCurrencyUnits()" title="Поміняти місцями">
+                    <span>⇅</span>
+                </div>
+
+                <div class="converter-input-block">
+                    <label>Отримана сума у цільовій валюті:</label>
+                    <div class="conv-input-row">
+                        <input type="number" id="curr-to-val" oninput="runCurrencyConversion('to')">
+                        <select id="curr-to-unit" onchange="runCurrencyConversion('from')">
+                            <option value="USD" selected>USD ($ - Долар США)</option>
+                            <option value="UAH">UAH (₴ - Гривня)</option>
+                            <option value="EUR">EUR (€ - Євро)</option>
+                            <option value="GBP">GBP (£ - Фунт)</option>
+                            <option value="PLN">PLN (zł - Злотий)</option>
+                            <option value="BTC">BTC (₿ - Bitcoin)</option>
+                            <option value="ETH">ETH (Ξ - Ethereum)</option>
+                            <option value="SOL">SOL (◎ - Solana)</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="currency-rates-info">
+                    <small>Базові орієнтовні курси: 1 USD ≈ 41.50 ₴ | 1 EUR ≈ 44.80 ₴ | 1 BTC ≈ $95,000</small>
+                </div>
+            </div>
+
+            <div class="converter-quick-actions" style="margin-top:12px;">
+                <button class="btn-secondary" onclick="insertCurrencyToCalc()">📥 Вставити результат у калькулятор</button>
+                <button class="btn-secondary" onclick="copyCurrencyVal()">📋 Скопіювати</button>
+            </div>
+
+            <button class="close-btn" onclick="closeModal('currency-modal')">Закрити</button>
+        </div>
+    </div>

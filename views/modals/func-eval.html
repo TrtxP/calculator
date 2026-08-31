@@ -1,0 +1,57 @@
+    <div class="modal-overlay" id="func-eval-modal">
+        <div class="modal-content func-eval-content">
+            <h3>📈 Обчислювач Функцій f(x) та Таблиця Значень</h3>
+            
+            <div class="func-formula-row">
+                <label>Вираз функції f(x):</label>
+                <input type="text" id="func-expr-input" value="x^2 - 2*x + 1" placeholder="x^2, sin(x), 2*x + 5..." oninput="evaluateCustomFunc()">
+            </div>
+
+            <div class="func-single-calc-box">
+                <div class="deal-input-row">
+                    <label>Обчислити f(x) для точки x:</label>
+                    <input type="number" id="func-single-x" value="5" oninput="evaluateCustomFunc()">
+                </div>
+                <div class="func-single-res-badge">
+                    <span>f(x) =</span>
+                    <strong id="func-single-res">16</strong>
+                </div>
+                <button class="btn-secondary" onclick="insertFuncResToCalc()">📥 Вставити f(x) в калькулятор</button>
+            </div>
+
+            <div class="func-range-box" style="margin-top:12px;">
+                <span class="matrix-label">Таблиця значень на відрізку [Start, End]:</span>
+                <div class="func-range-inputs">
+                    <div>
+                        <label>Start (x):</label>
+                        <input type="number" id="func-range-start" value="-3" oninput="buildFuncTable()">
+                    </div>
+                    <div>
+                        <label>End (x):</label>
+                        <input type="number" id="func-range-end" value="3" oninput="buildFuncTable()">
+                    </div>
+                    <div>
+                        <label>Крок (Δx):</label>
+                        <input type="number" id="func-range-step" value="1" min="0.1" oninput="buildFuncTable()">
+                    </div>
+                </div>
+
+                <div class="func-table-wrapper">
+                    <table class="func-values-table">
+                        <thead>
+                            <tr>
+                                <th>x</th>
+                                <th>f(x)</th>
+                                <th>Дія</th>
+                            </tr>
+                        </thead>
+                        <tbody id="func-table-tbody">
+                            <!-- Динамічні рядки -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <button class="close-btn" onclick="closeModal('func-eval-modal')">Закрити</button>
+        </div>
+    </div>

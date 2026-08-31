@@ -1,0 +1,49 @@
+    <div class="modal-overlay" id="finance-modal">
+        <div class="modal-content finance-modal-content">
+            <h3>💰 Фінансовий Калькулятор (Знижки & Чайові & Податки)</h3>
+            <div class="finance-body">
+                <div class="finance-input-row">
+                    <label>Початкова сума рахунку (₴):</label>
+                    <input type="number" id="fin-amount" value="1000" oninput="calculateFinance()">
+                </div>
+                <div class="finance-input-row">
+                    <label>Знижка (%):</label>
+                    <input type="number" id="fin-discount" value="10" oninput="calculateFinance()">
+                </div>
+                <div class="finance-input-row">
+                    <label>Податок / ПДВ (%):</label>
+                    <input type="number" id="fin-tax" value="20" oninput="calculateFinance()">
+                </div>
+                <div class="finance-input-row">
+                    <label>Чайові (%):</label>
+                    <input type="number" id="fin-tip" value="5" oninput="calculateFinance()">
+                </div>
+
+                <div class="finance-results-box">
+                    <div class="fin-res-line">
+                        <span>Сума зі знижкою:</span>
+                        <strong id="fin-discounted-val">900.00 ₴</strong>
+                    </div>
+                    <div class="fin-res-line">
+                        <span>Податок:</span>
+                        <strong id="fin-tax-val">+ 180.00 ₴</strong>
+                    </div>
+                    <div class="fin-res-line">
+                        <span>Чайові:</span>
+                        <strong id="fin-tip-val">+ 45.00 ₴</strong>
+                    </div>
+                    <div class="fin-res-line total-line">
+                        <span>РАЗОМ ДО СПЛАТИ:</span>
+                        <strong id="fin-total-val">1125.00 ₴</strong>
+                    </div>
+                </div>
+            </div>
+
+            <div class="converter-quick-actions" style="margin-top:14px;">
+                <button class="btn-secondary" onclick="insertFinanceToCalc()">📥 Вставити підсумок у калькулятор</button>
+                <button class="btn-secondary" onclick="copyFinanceTotal()">📋 Скопіювати</button>
+            </div>
+
+            <button class="close-btn" onclick="closeModal('finance-modal')">Закрити</button>
+        </div>
+    </div>

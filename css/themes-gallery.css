@@ -1,0 +1,176 @@
+/* --------------------------------------------------------------------------
+   11. Студія Шрифтів
+   -------------------------------------------------------------------------- */
+.font-options-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    margin-bottom: 14px;
+}
+
+.font-card {
+    background: var(--bg-display);
+    border: 1px solid var(--border-color);
+    border-radius: 14px;
+    padding: 12px;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    transition: all 0.2s ease;
+}
+
+.font-card:hover {
+    border-color: var(--accent-operator);
+    transform: translateY(-2px);
+}
+
+.font-card.active {
+    border-color: var(--accent-operator);
+    background: var(--badge-bg);
+    box-shadow: 0 0 14px var(--badge-border);
+}
+
+.font-sample {
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: var(--accent-operator);
+}
+
+.font-meta strong {
+    display: block;
+    font-size: 0.88rem;
+    color: var(--text-primary);
+}
+
+.font-meta small {
+    font-size: 0.72rem;
+    color: var(--text-muted);
+}
+
+/* Font Scaling Controller & Studio Enhancements */
+.font-scale-control-box {
+    background: var(--bg-display);
+    border: 1px solid var(--border-color);
+    border-radius: 14px;
+    padding: 14px;
+    margin-bottom: 14px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.font-scale-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.font-scale-header h4 {
+    font-size: 0.92rem;
+    color: var(--text-primary);
+    margin: 0;
+}
+
+.font-scale-badge-val {
+    font-size: 0.88rem;
+    font-weight: 800;
+    background: var(--accent-operator);
+    color: #fff;
+    padding: 2px 8px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px var(--shadow-color);
+}
+
+.font-scale-slider-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.font-scale-slider-row input[type="range"] {
+    flex-grow: 1;
+    accent-color: var(--accent-operator);
+    cursor: pointer;
+}
+
+.scale-label-min, .scale-label-max {
+    font-size: 0.76rem;
+    color: var(--text-muted);
+    font-weight: 700;
+}
+
+.font-scale-presets-row {
+    display: flex;
+    gap: 6px;
+    flex-wrap: wrap;
+}
+
+.font-scale-preset-btn {
+    flex: 1 1 auto;
+    padding: 6px 8px;
+    font-size: 0.76rem;
+    font-weight: 700;
+    border: 1px solid var(--border-color);
+    background: var(--bg-btn);
+    color: var(--text-primary);
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.15s ease;
+    text-align: center;
+}
+
+.font-scale-preset-btn:hover {
+    background: var(--bg-btn-hover);
+    border-color: var(--accent-operator);
+}
+
+.font-scale-preset-btn.active {
+    background: var(--accent-operator);
+    color: #fff;
+    border-color: var(--accent-operator);
+    box-shadow: 0 2px 8px var(--shadow-color);
+}
+
+.font-scale-live-preview {
+    background: var(--bg-card);
+    border: 1px dashed var(--border-color);
+    border-radius: 10px;
+    padding: 10px 12px;
+    margin-top: 4px;
+}
+
+.font-scale-live-preview span {
+    display: block;
+    font-size: 0.72rem;
+    color: var(--text-muted);
+    margin-bottom: 4px;
+}
+
+.font-scale-preview-text {
+    font-size: calc(1rem * var(--font-scale, 1));
+    font-weight: 700;
+    color: var(--accent-operator);
+    word-break: break-all;
+    transition: font-size 0.15s ease;
+}
+
+.font-scale-badge {
+    font-size: 0.62rem;
+    font-weight: 800;
+    padding: 1px 5px;
+    border-radius: 5px;
+    background: var(--badge-bg);
+    border: 1px solid var(--badge-border);
+    color: var(--accent-operator);
+    cursor: pointer;
+    transition: all 0.12s ease;
+    user-select: none;
+}
+
+.font-scale-badge:hover {
+    background: var(--accent-operator);
+    color: var(--bg-body);
+}
+
+/* --------------------------------------------------------------------------

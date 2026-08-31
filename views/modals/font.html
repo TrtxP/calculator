@@ -1,0 +1,70 @@
+    <div class="modal-overlay" id="font-modal">
+        <div class="modal-content font-modal-content">
+            <!-- Масштабування розміру шрифтів (Font Size Scaling) -->
+            <div class="font-scale-control-box">
+                <div class="font-scale-header">
+                    <h4>🔠 Масштаб розміру шрифтів (Font Scale):</h4>
+                    <span class="font-scale-badge-val" id="font-scale-display-val">100%</span>
+                </div>
+                
+                <div class="font-scale-slider-row">
+                    <span class="scale-label-min">85%</span>
+                    <input type="range" id="font-scale-slider" min="85" max="150" step="5" value="100" oninput="setFontScale(this.value)">
+                    <span class="scale-label-max">150%</span>
+                </div>
+
+                <div class="font-scale-presets-row">
+                    <button class="font-scale-preset-btn" data-scale="90" onclick="setFontScale(90)">90% (Компакт)</button>
+                    <button class="font-scale-preset-btn active" data-scale="100" onclick="setFontScale(100)">100% (Стандарт)</button>
+                    <button class="font-scale-preset-btn" data-scale="115" onclick="setFontScale(115)">115% (Збільшений)</button>
+                    <button class="font-scale-preset-btn" data-scale="130" onclick="setFontScale(130)">130% (Великий Pro)</button>
+                    <button class="font-scale-preset-btn" data-scale="145" onclick="setFontScale(145)">145% (Максимум)</button>
+                </div>
+
+                <div class="font-scale-live-preview">
+                    <span>Живий зразок тексту дисплею:</span>
+                    <div class="font-scale-preview-text" id="font-scale-preview-text">
+                        f(x) = sin(45°) + 3.1415 × 10² = 314.85
+                    </div>
+                </div>
+            </div>
+
+            <h4 style="font-size:0.9rem; margin-bottom:8px;">Гарнітури шрифтів (8 Типографічних стилів):</h4>
+            <div class="font-options-grid">
+                <div class="font-card active" data-font="font-inter" onclick="setFontFamily('font-inter')">
+                    <div class="font-sample">1234.56 + Inter</div>
+                    <div class="font-meta"><strong>Inter Pro</strong><small>Універсальний сучасний</small></div>
+                </div>
+                <div class="font-card" data-font="font-jetbrains" onclick="setFontFamily('font-jetbrains')">
+                    <div class="font-sample" style="font-family:'JetBrains Mono';">1234.56 + JetBrains</div>
+                    <div class="font-meta"><strong>JetBrains Mono</strong><small>Моноширинний розробника</small></div>
+                </div>
+                <div class="font-card" data-font="font-orbitron" onclick="setFontFamily('font-orbitron')">
+                    <div class="font-sample" style="font-family:'Orbitron';">1234.56 + Orbitron</div>
+                    <div class="font-meta"><strong>Orbitron Digital</strong><small>Футуристичний сай-фай</small></div>
+                </div>
+                <div class="font-card" data-font="font-rajdhani" onclick="setFontFamily('font-rajdhani')">
+                    <div class="font-sample" style="font-family:'Rajdhani';">1234.56 + Rajdhani</div>
+                    <div class="font-meta"><strong>Rajdhani Mecha</strong><small>Компактний інженерний</small></div>
+                </div>
+                <div class="font-card" data-font="font-spacegrotesk" onclick="setFontFamily('font-spacegrotesk')">
+                    <div class="font-sample" style="font-family:'Space Grotesk';">1234.56 + Space</div>
+                    <div class="font-meta"><strong>Space Grotesk</strong><small>Геометричний бруталізм</small></div>
+                </div>
+                <div class="font-card" data-font="font-silkscreen" onclick="setFontFamily('font-silkscreen')">
+                    <div class="font-sample" style="font-family:'Silkscreen';">1234.56 8-BIT</div>
+                    <div class="font-meta"><strong>Silkscreen Pixel</strong><small>Ретро піксельний 8-Bit</small></div>
+                </div>
+                <div class="font-card" data-font="font-outfit" onclick="setFontFamily('font-outfit')">
+                    <div class="font-sample" style="font-family:'Outfit';">1234.56 + Outfit</div>
+                    <div class="font-meta"><strong>Outfit Neo</strong><small>Елегантний мінімалізм</small></div>
+                </div>
+                <div class="font-card" data-font="font-firacode" onclick="setFontFamily('font-firacode')">
+                    <div class="font-sample" style="font-family:'Fira Code';">1234.56 + Fira</div>
+                    <div class="font-meta"><strong>Fira Code</strong><small>Технічний термінальний</small></div>
+                </div>
+            </div>
+
+            <button class="close-btn" onclick="closeModal('font-modal')">Закрити</button>
+        </div>
+    </div>

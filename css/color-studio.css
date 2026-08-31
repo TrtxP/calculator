@@ -1,0 +1,766 @@
+/* --------------------------------------------------------------------------
+   19. НОВЕ v1.8.3: Фізико-Математичний Формулатор (Formula Solver)
+   -------------------------------------------------------------------------- */
+.formula-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 12px;
+    margin-top: 10px;
+    max-height: 480px;
+    overflow-y: auto;
+    padding-right: 4px;
+}
+
+.formula-card {
+    background: rgba(0, 0, 0, 0.3);
+    border: 1px solid var(--border-color);
+    border-radius: 14px;
+    padding: 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    transition: transform 0.2s ease, border-color 0.2s ease;
+}
+
+.formula-card:hover {
+    transform: translateY(-2px);
+    border-color: var(--accent-operator);
+}
+
+.formula-card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.formula-card-title {
+    font-weight: 700;
+    font-size: 0.92rem;
+    color: var(--text-primary);
+}
+
+.formula-math-preview {
+    background: var(--bg-display);
+    padding: 4px 8px;
+    border-radius: 8px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.88rem;
+    color: var(--accent-equals);
+    text-align: center;
+    border: 1px dashed var(--border-color);
+}
+
+.formula-inputs-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 6px;
+}
+
+.formula-input-item {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.formula-input-item label {
+    font-size: 0.72rem;
+    color: var(--text-muted);
+}
+
+.formula-input-item input {
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    color: var(--text-primary);
+    padding: 5px 8px;
+    border-radius: 6px;
+    font-size: 0.85rem;
+    outline: none;
+}
+
+.formula-result-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: rgba(0, 0, 0, 0.25);
+    padding: 6px 10px;
+    border-radius: 8px;
+    margin-top: 4px;
+}
+
+.formula-res-val {
+    font-weight: 800;
+    font-size: 1rem;
+    color: var(--accent-operator);
+}
+
+/* --------------------------------------------------------------------------
+   20. НОВЕ v1.8.3: Геометричний Розв'язувач Трикутників (Triangle Solver)
+   -------------------------------------------------------------------------- */
+.triangle-sections-wrapper {
+    display: grid;
+    grid-template-columns: 1.1fr 1fr;
+    gap: 16px;
+    margin-top: 12px;
+}
+
+.triangle-canvas-box {
+    background: var(--bg-display);
+    border: 1px solid var(--border-color);
+    border-radius: 14px;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 220px;
+}
+
+.triangle-data-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+}
+
+.triangle-stat-card {
+    background: rgba(0, 0, 0, 0.25);
+    border: 1px solid var(--border-color);
+    border-radius: 10px;
+    padding: 8px 10px;
+}
+
+.triangle-stat-card small {
+    display: block;
+    font-size: 0.72rem;
+    color: var(--text-muted);
+}
+
+.triangle-stat-card strong {
+    font-size: 0.95rem;
+    color: var(--accent-operator);
+}
+
+.triangle-badge-type {
+    display: inline-block;
+    padding: 4px 10px;
+    background: var(--badge-bg);
+    border: 1px solid var(--badge-border);
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: 700;
+    color: var(--accent-equals);
+    margin-top: 6px;
+}
+
+/* --------------------------------------------------------------------------
+   21. НОВЕ v1.8.3: Іпотечний та Кредитний Калькулятор (Loan Amortization)
+   -------------------------------------------------------------------------- */
+.loan-calc-grid {
+    display: grid;
+    grid-template-columns: 1fr 1.2fr;
+    gap: 16px;
+    margin-top: 10px;
+}
+
+.loan-inputs-box {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.loan-summary-cards {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+}
+
+.loan-summary-card {
+    background: rgba(0, 0, 0, 0.35);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    padding: 10px;
+    text-align: center;
+}
+
+.loan-summary-card.highlight {
+    border-color: var(--accent-equals);
+    background: rgba(0, 0, 0, 0.5);
+}
+
+.loan-summary-card small {
+    display: block;
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    margin-bottom: 2px;
+}
+
+.loan-summary-card strong {
+    font-size: 1.1rem;
+    color: var(--accent-operator);
+}
+
+.loan-table-wrapper {
+    max-height: 200px;
+    overflow-y: auto;
+    border: 1px solid var(--border-color);
+    border-radius: 10px;
+    margin-top: 10px;
+}
+
+.loan-amort-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.78rem;
+    text-align: right;
+}
+
+.loan-amort-table th, .loan-amort-table td {
+    padding: 6px 8px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.loan-amort-table th {
+    background: rgba(0, 0, 0, 0.6);
+    color: var(--text-muted);
+    position: sticky;
+    top: 0;
+}
+
+/* --------------------------------------------------------------------------
+   22. НОВЕ v1.8.3: Блокнот Обраних Виразів (Calculation Bookmarks)
+   -------------------------------------------------------------------------- */
+.bookmarks-list-box {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    max-height: 380px;
+    overflow-y: auto;
+    margin-top: 10px;
+    padding-right: 4px;
+}
+
+.bookmark-card {
+    background: rgba(0, 0, 0, 0.3);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    padding: 10px 14px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+    transition: transform 0.2s ease;
+}
+
+.bookmark-card:hover {
+    transform: translateX(4px);
+    border-color: var(--accent-operator);
+}
+
+.bookmark-tag-chip {
+    display: inline-block;
+    padding: 2px 8px;
+    border-radius: 12px;
+    font-size: 0.72rem;
+    font-weight: 700;
+    background: var(--badge-bg);
+    border: 1px solid var(--badge-border);
+    color: var(--accent-equals);
+    margin-bottom: 4px;
+}
+
+.bookmark-actions {
+    display: flex;
+    gap: 6px;
+}
+
+/* --------------------------------------------------------------------------
+   23. НОВЕ v1.8.3: Розширений 3-Канальний Color Studio Mixer
+   -------------------------------------------------------------------------- */
+.color-mixer-box {
+    background: rgba(0, 0, 0, 0.3);
+    border: 1px solid var(--border-color);
+    border-radius: 14px;
+    padding: 14px;
+    margin-top: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.color-channel-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+}
+
+.color-channel-row label {
+    font-size: 0.85rem;
+    font-weight: 600;
+    min-width: 140px;
+}
+
+.color-channel-slider {
+    flex-grow: 1;
+    cursor: pointer;
+}
+
+.harmony-presets-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+    gap: 8px;
+    margin-top: 8px;
+}
+
+.harmony-btn {
+    padding: 8px 10px;
+    font-size: 0.8rem;
+    font-weight: 700;
+    border-radius: 10px;
+    border: 1px solid var(--border-color);
+    background: var(--bg-card);
+    color: var(--text-primary);
+    cursor: pointer;
+    transition: transform 0.2s ease, border-color 0.2s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+}
+
+.harmony-btn:hover {
+    transform: scale(1.04);
+    border-color: var(--accent-equals);
+}
+
+/* Налаштування швидкості частинок */
+.particle-presets-row {
+    display: flex;
+    gap: 6px;
+    flex-wrap: wrap;
+    margin-top: 6px;
+}
+
+.particle-preset-btn {
+    padding: 5px 10px;
+    font-size: 0.78rem;
+    border-radius: 8px;
+    border: 1px solid var(--border-color);
+    background: var(--bg-card);
+    color: var(--text-primary);
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.particle-preset-btn.active {
+    border-color: var(--accent-operator);
+    background: var(--accent-operator);
+    color: #fff;
+}
+
+/* --------------------------------------------------------------------------
+   24. НОВЕ v1.8.4: Тригонометричне Коло (Trig Unit Circle Visualizer)
+   -------------------------------------------------------------------------- */
+.trig-circle-layout {
+    display: grid;
+    grid-template-columns: 280px 1fr;
+    gap: 16px;
+    align-items: center;
+    margin-top: 10px;
+}
+
+.trig-canvas-box {
+    background: rgba(0, 0, 0, 0.4);
+    border: 1px solid var(--border-color);
+    border-radius: 16px;
+    padding: 8px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.trig-info-box {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.trig-metrics-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+}
+
+.trig-metric-card {
+    background: rgba(0, 0, 0, 0.3);
+    border: 1px solid var(--border-color);
+    border-radius: 10px;
+    padding: 8px 10px;
+    display: flex;
+    flex-direction: column;
+}
+
+.trig-metric-card small {
+    font-size: 0.72rem;
+    color: var(--text-muted);
+}
+
+.trig-metric-card strong {
+    font-size: 1.05rem;
+    color: var(--accent-operator);
+    font-family: 'JetBrains Mono', monospace;
+}
+
+.trig-slider-row {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.trig-slider-row label {
+    font-size: 0.82rem;
+    font-weight: 700;
+    display: flex;
+    justify-content: space-between;
+}
+
+.trig-exact-table-box {
+    max-height: 140px;
+    overflow-y: auto;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    background: rgba(0, 0, 0, 0.25);
+    margin-top: 6px;
+}
+
+.trig-exact-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.74rem;
+    text-align: center;
+}
+
+.trig-exact-table th, .trig-exact-table td {
+    padding: 4px 6px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.trig-exact-table th {
+    background: rgba(0, 0, 0, 0.5);
+    color: var(--text-muted);
+    position: sticky;
+    top: 0;
+}
+
+/* --------------------------------------------------------------------------
+   25. НОВЕ v1.8.4: Розширений Пошук Наукових Констант
+   -------------------------------------------------------------------------- */
+.constants-search-box {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 8px;
+}
+
+.constants-filter-input {
+    width: 100%;
+    padding: 9px 14px;
+    border-radius: 10px;
+    border: 1px solid var(--border-color);
+    background: var(--bg-card);
+    color: var(--text-primary);
+    font-size: 0.9rem;
+}
+
+.constants-tabs-row {
+    display: flex;
+    gap: 6px;
+    overflow-x: auto;
+    padding-bottom: 4px;
+}
+
+.constants-tabs-row .conv-tab {
+    font-size: 0.75rem;
+    padding: 4px 8px;
+    white-space: nowrap;
+}
+
+.constants-extended-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 8px;
+    max-height: 380px;
+    overflow-y: auto;
+    padding-right: 4px;
+}
+
+.const-ext-card {
+    background: rgba(0, 0, 0, 0.3);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    padding: 8px 12px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    cursor: pointer;
+    transition: transform 0.15s ease, border-color 0.15s ease;
+}
+
+.const-ext-card:hover {
+    transform: translateY(-2px);
+    border-color: var(--accent-operator);
+}
+
+.const-ext-sym {
+    font-size: 1.25rem;
+    font-weight: 800;
+    font-family: 'JetBrains Mono', monospace;
+    color: var(--accent-equals);
+    min-width: 32px;
+    text-align: center;
+}
+
+.const-ext-info {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.const-ext-info strong {
+    font-size: 0.84rem;
+    color: var(--text-primary);
+}
+
+.const-ext-info span {
+    font-size: 0.74rem;
+    color: var(--text-muted);
+    font-family: 'JetBrains Mono', monospace;
+}
+
+/* --------------------------------------------------------------------------
+   26. НОВЕ v1.8.5: 3D Векторний Калькулятор (3D Vector Math)
+   -------------------------------------------------------------------------- */
+.vector-calc-layout {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 8px;
+}
+
+.vector-pairs-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+}
+
+.vector-box {
+    background: rgba(0, 0, 0, 0.3);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.vector-box-title {
+    font-size: 0.84rem;
+    font-weight: 800;
+    color: var(--accent-operator);
+}
+
+.vector-coords-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 6px;
+}
+
+.vector-coord-input {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.vector-coord-input label {
+    font-size: 0.70rem;
+    color: var(--text-muted);
+}
+
+.vector-coord-input input {
+    width: 100%;
+    padding: 5px 6px;
+    border-radius: 6px;
+    border: 1px solid var(--border-color);
+    background: var(--bg-card);
+    color: var(--text-primary);
+    font-size: 0.85rem;
+    font-weight: 700;
+    text-align: center;
+}
+
+.vector-results-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    gap: 6px;
+}
+
+.vector-res-card {
+    background: rgba(0, 0, 0, 0.25);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    padding: 6px 8px;
+    display: flex;
+    flex-direction: column;
+}
+
+.vector-res-card small {
+    font-size: 0.68rem;
+    color: var(--text-muted);
+}
+
+.vector-res-card strong {
+    font-size: 0.95rem;
+    color: var(--accent-operator);
+    font-family: 'JetBrains Mono', monospace;
+}
+
+/* --------------------------------------------------------------------------
+   27. НОВЕ v1.8.5: Комплексні Числа (Complex Numbers C)
+   -------------------------------------------------------------------------- */
+.complex-calc-body {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 8px;
+}
+
+.complex-pairs-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+}
+
+.complex-input-box {
+    background: rgba(0, 0, 0, 0.3);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.complex-input-row {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.complex-input-row input {
+    width: 80px;
+    padding: 6px 8px;
+    border-radius: 6px;
+    border: 1px solid var(--border-color);
+    background: var(--bg-card);
+    color: var(--text-primary);
+    font-weight: 700;
+    text-align: center;
+}
+
+.complex-results-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+}
+
+.complex-card {
+    background: rgba(0, 0, 0, 0.25);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    padding: 6px 8px;
+    display: flex;
+    flex-direction: column;
+}
+
+.complex-card small {
+    font-size: 0.68rem;
+    color: var(--text-muted);
+}
+
+.complex-card strong {
+    font-size: 0.95rem;
+    color: var(--accent-equals);
+    font-family: 'JetBrains Mono', monospace;
+}
+
+/* --------------------------------------------------------------------------
+   28. НОВЕ v1.8.5: Математичний Довідник (Interactive Formula Reference)
+   -------------------------------------------------------------------------- */
+.math-ref-list {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    max-height: 380px;
+    overflow-y: auto;
+    padding-right: 4px;
+    margin-top: 8px;
+}
+
+.math-ref-item {
+    background: rgba(0, 0, 0, 0.3);
+    border: 1px solid var(--border-color);
+    border-radius: 10px;
+    padding: 8px 12px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 8px;
+    transition: transform 0.12s ease, border-color 0.12s ease;
+}
+
+.math-ref-item:hover {
+    transform: translateX(2px);
+    border-color: var(--accent-operator);
+}
+
+.math-ref-title {
+    font-size: 0.84rem;
+    font-weight: 700;
+    color: var(--text-primary);
+}
+
+.math-ref-formula {
+    font-size: 0.90rem;
+    font-family: 'JetBrains Mono', monospace;
+    color: var(--accent-operator);
+    font-weight: 800;
+}
+
+/* Кнопка мобільного меню (Mobile Toggle Bar) */
+.mobile-header-bar {
+    display: none;
+    width: 100%;
+    align-items: center;
+    justify-content: space-between;
+    padding: 6px 12px;
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    margin-bottom: 4px;
+}
+
+.mobile-menu-btn {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 10px;
+    border-radius: 8px;
+    background: var(--badge-bg);
+    border: 1px solid var(--badge-border);
+    color: var(--text-primary);
+    font-weight: 700;
+    font-size: 0.82rem;
+    cursor: pointer;
+}
+
+/* --------------------------------------------------------------------------

@@ -1,0 +1,16 @@
+    <div class="modal-overlay" id="history-modal">
+        <div class="modal-content">
+            <h3>🕒 Історія обчислень</h3>
+            <div class="history-search-row">
+                <input type="text" id="history-search" placeholder="🔍 Пошук по історії..." oninput="filterHistory(this.value)">
+            </div>
+            <ul id="history-list">
+                <li style="text-align:center; color: var(--text-muted);">Історія порожня</li>
+            </ul>
+            <div class="history-actions">
+                <button class="btn-secondary" onclick="openModal('export-modal')">📥 Меню експорту</button>
+                <button class="btn-secondary btn-danger" onclick="clearHistory()">🗑️ Очистити</button>
+            </div>
+            <button class="close-btn" onclick="closeModal('history-modal')">Закрити</button>
+        </div>
+    </div>

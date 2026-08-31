@@ -1,0 +1,82 @@
+    <div class="modal-overlay" id="trig-circle-modal">
+        <div class="modal-content" style="max-width: 680px;">
+            <h3>⭕ Інтерактивне Тригонометричне Коло (Unit Circle)</h3>
+            <p style="font-size:0.85rem; color:var(--text-muted); margin-bottom:8px;">
+                Одиничне коло $x^2 + y^2 = 1$ з живими проекціями $(\cos \theta, \sin \theta)$, тангенсом та чвертями:
+            </p>
+
+            <div class="trig-circle-layout">
+                <div class="trig-canvas-box">
+                    <canvas id="trig-unit-circle-canvas" width="240" height="240"></canvas>
+                </div>
+
+                <div class="trig-info-box">
+                    <div class="trig-slider-row">
+                        <label>Кут $\theta$: <span id="trig-angle-val" style="color:var(--accent-operator);">45° (0.25π rad)</span></label>
+                        <input type="range" id="trig-angle-slider" min="0" max="360" value="45" oninput="updateTrigCircle(this.value)">
+                    </div>
+
+                    <div class="trig-metrics-grid">
+                        <div class="trig-metric-card">
+                            <small>Синус (sin θ = y):</small>
+                            <strong id="trig-res-sin">0.7071</strong>
+                        </div>
+                        <div class="trig-metric-card">
+                            <small>Косинус (cos θ = x):</small>
+                            <strong id="trig-res-cos">0.7071</strong>
+                        </div>
+                        <div class="trig-metric-card">
+                            <small>Тангенс (tan θ):</small>
+                            <strong id="trig-res-tan">1.0000</strong>
+                        </div>
+                        <div class="trig-metric-card">
+                            <small>Чверть (Quadrant):</small>
+                            <strong id="trig-res-quad">I Чверть (+, +)</strong>
+                        </div>
+                    </div>
+
+                    <div class="particle-presets-row" style="margin-top:2px;">
+                        <button class="particle-preset-btn" onclick="setTrigAngle(0)">0°</button>
+                        <button class="particle-preset-btn" onclick="setTrigAngle(30)">30°</button>
+                        <button class="particle-preset-btn" onclick="setTrigAngle(45)">45°</button>
+                        <button class="particle-preset-btn" onclick="setTrigAngle(60)">60°</button>
+                        <button class="particle-preset-btn" onclick="setTrigAngle(90)">90°</button>
+                        <button class="particle-preset-btn" onclick="setTrigAngle(180)">180°</button>
+                        <button class="particle-preset-btn" onclick="setTrigAngle(270)">270°</button>
+                        <button class="particle-preset-btn" onclick="setTrigAngle(360)">360°</button>
+                    </div>
+
+                    <div class="converter-quick-actions" style="margin-top:6px;">
+                        <button class="btn-secondary" onclick="insertTrigSinToCalc()">📥 Вставити sin(θ)</button>
+                        <button class="btn-secondary" onclick="insertTrigCosToCalc()">📥 Вставити cos(θ)</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="trig-exact-table-box">
+                <table class="trig-exact-table">
+                    <thead>
+                        <tr>
+                            <th>Кут</th>
+                            <th>Радіани</th>
+                            <th>sin(θ)</th>
+                            <th>cos(θ)</th>
+                            <th>tan(θ)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>0°</td><td>0</td><td>0</td><td>1</td><td>0</td></tr>
+                        <tr><td>30°</td><td>π/6</td><td>1/2 (0.5)</td><td>√3/2 (~0.866)</td><td>√3/3 (~0.577)</td></tr>
+                        <tr><td>45°</td><td>π/4</td><td>√2/2 (~0.707)</td><td>√2/2 (~0.707)</td><td>1</td></tr>
+                        <tr><td>60°</td><td>π/3</td><td>√3/2 (~0.866)</td><td>1/2 (0.5)</td><td>√3 (~1.732)</td></tr>
+                        <tr><td>90°</td><td>π/2</td><td>1</td><td>0</td><td>±∞</td></tr>
+                        <tr><td>180°</td><td>π</td><td>0</td><td>-1</td><td>0</td></tr>
+                        <tr><td>270°</td><td>3π/2</td><td>-1</td><td>0</td><td>±∞</td></tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <button class="close-btn" onclick="closeModal('trig-circle-modal')">Закрити</button>
+        </div>
+    </div>
+

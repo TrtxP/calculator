@@ -1,0 +1,29 @@
+/* --------------------------------------------------------------------------
+   1. Шрифтові гарнітури (8 Typography Engine Classes)
+   -------------------------------------------------------------------------- */
+body.font-inter {
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+}
+body.font-jetbrains {
+    font-family: 'JetBrains Mono', 'Fira Code', monospace;
+}
+body.font-orbitron {
+    font-family: 'Orbitron', 'Inter', sans-serif;
+}
+body.font-rajdhani {
+    font-family: 'Rajdhani', 'Inter', sans-serif;
+    letter-spacing: 0.5px;
+}
+body.font-spacegrotesk {
+    font-family: 'Space Grotesk', 'Inter', sans-serif;
+}
+body.font-silkscreen {
+    font-family: 'Silkscreen', cursive, monospace;
+}
+body.font-outfit {
+    font-family: 'Outfit', 'Inter', sans-serif;
+}
+body.font-firacode {
+    font-family: 'Fira Code', monospace;
+}
+

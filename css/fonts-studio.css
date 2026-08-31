@@ -1,0 +1,167 @@
+/* --------------------------------------------------------------------------
+   12. Теми та Шпалери
+   -------------------------------------------------------------------------- */
+.theme-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+    margin-bottom: 12px;
+}
+
+.theme-card {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px;
+    background: var(--bg-display);
+    border: 1px solid var(--border-color);
+    border-radius: 14px;
+    cursor: pointer;
+    text-align: left;
+    transition: all 0.2s ease;
+}
+
+.theme-card:hover {
+    border-color: var(--accent-operator);
+    transform: translateY(-2px);
+}
+
+.theme-card.active {
+    border-color: var(--accent-operator);
+    background: var(--badge-bg);
+}
+
+.theme-preview {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    flex-shrink: 0;
+    border: 2px solid rgba(255, 255, 255, 0.2);
+}
+
+.bordeaux-prev { background: linear-gradient(135deg, #0d0205, #8b1538); }
+.velvet-prev { background: linear-gradient(135deg, #080103, #6b0f24); }
+.autumn-prev { background: linear-gradient(135deg, #100204, #dc2626); }
+.magma-prev { background: linear-gradient(135deg, #0c0203, #b91c1c); }
+.redstone2-prev { background: linear-gradient(135deg, #0a0305, #ff2a5f); }
+.deepspace-prev { background: linear-gradient(135deg, #050814, #38bdf8); }
+.lime-prev { background: linear-gradient(135deg, #060b04, #84cc16); }
+.amethyst-prev { background: linear-gradient(135deg, #0e051a, #c084fc); }
+.redstone-prev { background: linear-gradient(135deg, #140507, #ef4444); }
+.cyber-amber-prev { background: linear-gradient(135deg, #120b02, #f59e0b); }
+.nordic-frost-prev { background: linear-gradient(135deg, #031317, #14b8a6); }
+.vintage-prev { background: linear-gradient(135deg, #160424, #d946ef); }
+.matrix-prev { background: linear-gradient(135deg, #020d04, #22c55e); }
+.obsidian-prev { background: linear-gradient(135deg, #0d0c08, #eab308); }
+.dark-prev { background: linear-gradient(135deg, #0f172a, #38bdf8); }
+.light-prev { background: linear-gradient(135deg, #f1f5f9, #0284c7); }
+.neon-prev { background: linear-gradient(135deg, #05050a, #00ffcc); }
+.purple-prev { background: linear-gradient(135deg, #180b2a, #a855f7); }
+.emerald-prev { background: linear-gradient(135deg, #031e17, #10b981); }
+.sunset-prev { background: linear-gradient(135deg, #200d14, #f97316); }
+.ocean-prev { background: linear-gradient(135deg, #0b192c, #0ea5e9); }
+.coffee-prev { background: linear-gradient(135deg, #1c1410, #d97706); }
+.sakura-prev { background: linear-gradient(135deg, #24111c, #ec4899); }
+.glass-prev { background: linear-gradient(135deg, #090e17, rgba(255,255,255,0.4)); }
+
+.theme-info strong {
+    display: block;
+    font-size: 0.88rem;
+    color: var(--text-primary);
+}
+
+.theme-info small {
+    font-size: 0.72rem;
+    color: var(--text-muted);
+}
+
+/* Wallpaper Studio */
+.wallpaper-presets-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+    margin-bottom: 14px;
+}
+
+.wallpaper-card {
+    background: var(--bg-display);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    padding: 8px;
+    cursor: pointer;
+    text-align: center;
+    transition: all 0.2s ease;
+}
+
+.wallpaper-card.active {
+    border-color: var(--accent-operator);
+    background: var(--badge-bg);
+}
+
+.wp-thumb {
+    height: 48px;
+    border-radius: 8px;
+    margin-bottom: 6px;
+    background-size: cover;
+    background-position: center;
+}
+
+.wp-thumb-burgundy { background-image: url('images/burgundy.jpg'); }
+.wp-thumb-nebula-wine { background-image: url('images/nebula_wine.jpg'); }
+.wp-thumb-cyber-redstone3 { background-image: url('images/cyber_redstone3.jpg'); }
+.wp-thumb-default { background: linear-gradient(135deg, #0d0205, #8b1538); }
+.wp-thumb-cyber { background-image: url('images/cyber.jpg'); }
+.wp-thumb-sunset { background-image: url('images/sunset.jpg'); }
+.wp-thumb-emerald { background-image: url('images/emerald.jpg'); }
+.wp-thumb-stars { background: #000 radial-gradient(circle, #fff 10%, transparent 20%); background-size: 10px 10px; }
+.wp-thumb-grid { background: #0b192c linear-gradient(to right, rgba(255,255,255,0.1) 1px, transparent 1px); background-size: 10px 10px; }
+
+.wallpaper-controls-box {
+    background: var(--bg-display);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    padding: 12px;
+    margin-bottom: 12px;
+}
+
+.control-row {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    margin-bottom: 8px;
+}
+
+.control-row input[type="range"] {
+    width: 100%;
+}
+
+.custom-wallpaper-section {
+    background: var(--bg-display);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    padding: 12px;
+    margin-bottom: 14px;
+}
+
+.custom-wp-inputs {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-top: 8px;
+}
+
+.url-input-group {
+    display: flex;
+    gap: 6px;
+}
+
+.url-input-group input {
+    flex-grow: 1;
+    background: var(--bg-btn);
+    border: 1px solid var(--border-color);
+    color: var(--text-primary);
+    padding: 6px 10px;
+    border-radius: 8px;
+}
+
+/* --------------------------------------------------------------------------

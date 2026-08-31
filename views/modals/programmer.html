@@ -1,0 +1,38 @@
+    <div class="modal-overlay" id="programmer-modal">
+        <div class="modal-content programmer-modal-content">
+            <h3>💻 Програмістські Системи Числення</h3>
+            
+            <div class="programmer-bases-list">
+                <div class="prog-base-item">
+                    <span class="prog-base-label">HEX (16)</span>
+                    <input type="text" id="prog-hex" oninput="syncProgrammerBase('HEX', this.value)">
+                </div>
+                <div class="prog-base-item">
+                    <span class="prog-base-label">DEC (10)</span>
+                    <input type="text" id="prog-dec" oninput="syncProgrammerBase('DEC', this.value)">
+                </div>
+                <div class="prog-base-item">
+                    <span class="prog-base-label">OCT (8)</span>
+                    <input type="text" id="prog-oct" oninput="syncProgrammerBase('OCT', this.value)">
+                </div>
+                <div class="prog-base-item">
+                    <span class="prog-base-label">BIN (2)</span>
+                    <input type="text" id="prog-bin" oninput="syncProgrammerBase('BIN', this.value)">
+                </div>
+            </div>
+
+            <div class="prog-bitwise-grid">
+                <button class="btn-secondary" onclick="progBitwise('AND')">AND</button>
+                <button class="btn-secondary" onclick="progBitwise('OR')">OR</button>
+                <button class="btn-secondary" onclick="progBitwise('XOR')">XOR</button>
+                <button class="btn-secondary" onclick="progBitwise('NOT')">NOT (~)</button>
+                <button class="btn-secondary" onclick="progBitwise('SHL')">&lt;&lt; Зсув</button>
+                <button class="btn-secondary" onclick="progBitwise('SHR')">&gt;&gt; Зсув</button>
+            </div>
+
+            <div class="converter-quick-actions" style="margin-top:14px;">
+                <button class="btn-secondary" onclick="insertProgValToCalc()">📥 Вставити DEC у калькулятор</button>
+                <button class="close-btn" style="margin-top:0;" onclick="closeModal('programmer-modal')">Закрити</button>
+            </div>
+        </div>
+    </div>

@@ -1,0 +1,51 @@
+    <div class="modal-overlay" id="percent-modal">
+        <div class="modal-content percent-modal-content">
+            <h3>📊 Розширений Калькулятор Відсотків Pro</h3>
+            <div class="percent-scenarios-list">
+                <div class="percent-scenario-card">
+                    <span class="p-title">1. Скільки становить <strong>P %</strong> від числа <strong>X</strong>?</span>
+                    <div class="p-inputs-row">
+                        <input type="number" id="p1-percent" value="15" oninput="calcPercent1()">
+                        <span>% від</span>
+                        <input type="number" id="p1-base" value="2500" oninput="calcPercent1()">
+                    </div>
+                    <div class="p-res-row">
+                        <span>Результат:</span>
+                        <strong id="p1-res">375.00</strong>
+                    </div>
+                </div>
+
+                <div class="percent-scenario-card">
+                    <span class="p-title">2. Відсоткова зміна від <strong>X₁</strong> до <strong>X₂</strong> (Зріст / Спад)</span>
+                    <div class="p-inputs-row">
+                        <input type="number" id="p2-val1" value="80" oninput="calcPercent2()">
+                        <span>до</span>
+                        <input type="number" id="p2-val2" value="120" oninput="calcPercent2()">
+                    </div>
+                    <div class="p-res-row">
+                        <span>Динаміка:</span>
+                        <strong id="p2-res">+50.00%</strong>
+                    </div>
+                </div>
+
+                <div class="percent-scenario-card">
+                    <span class="p-title">3. Збільшити або зменшити число на <strong>P %</strong></span>
+                    <div class="p-inputs-row">
+                        <input type="number" id="p3-base" value="1000" oninput="calcPercent3()">
+                        <select id="p3-op" onchange="calcPercent3()">
+                            <option value="add">+ Додати</option>
+                            <option value="sub">- Відняти</option>
+                        </select>
+                        <input type="number" id="p3-percent" value="20" oninput="calcPercent3()">
+                        <span>%</span>
+                    </div>
+                    <div class="p-res-row">
+                        <span>Підсумок:</span>
+                        <strong id="p3-res">1200.00</strong>
+                    </div>
+                </div>
+            </div>
+
+            <button class="close-btn" onclick="closeModal('percent-modal')">Закрити</button>
+        </div>
+    </div>

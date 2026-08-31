@@ -1,0 +1,68 @@
+                <!-- Клавіатура калькулятора -->
+                <div class="buttons">
+                    <!-- Ряд 1: Робота з пам'яттю -->
+                    <button class="memory" onclick="memoryClear()" title="Очистити активну пам'ять">MC</button>
+                    <button class="memory" onclick="memoryRecall()" title="Викликати з пам'яті">MR</button>
+                    <button class="memory" onclick="memoryAdd()" title="Додати до пам'яті">M+</button>
+                    <button class="memory" onclick="memorySubtract()" title="Відняти від пам'яті">M-</button>
+
+                    <!-- Ряд 2: 2nd Shift та Тригонометрія (DEG / RAD / GRAD) -->
+                    <button class="sci shift-btn" id="btn-2nd" onclick="toggleSecondMode()" title="Перемкнути додаткові функції (2nd)">2nd</button>
+                    <button class="sci" id="btn-sin" onclick="handleTrigOrSecondary('sin')" title="Синус / Арксинус">sin</button>
+                    <button class="sci" id="btn-cos" onclick="handleTrigOrSecondary('cos')" title="Косинус / Арккосинус">cos</button>
+                    <button class="sci" id="btn-tan" onclick="handleTrigOrSecondary('tan')" title="Тангенс / Арктангенс">tan</button>
+
+                    <!-- Ряд 3: Гіперболічні / Логарифми / Степені -->
+                    <button class="sci" id="btn-sinh" onclick="handleHyperbolicOrSecondary('sinh')" title="Гіперболічний синус / косинус">sinh</button>
+                    <button class="sci" id="btn-ln" onclick="handleLnOrLog2()" title="Натуральний ln / Двійковий log2">ln</button>
+                    <button class="sci" id="btn-log" onclick="handleLogOr10x()" title="Десятковий log10 / 10^x">log</button>
+                    <button class="action" id="btn-sqr" onclick="handleSquareOrCube()" title="Квадрат x² / Куб x³">x²</button>
+
+                    <!-- Ряд 4: Корені, Степені та Модуль -->
+                    <button class="action" id="btn-sqrt" onclick="handleSqrtOrCbrt()" title="Квадратний корінь √ / Кубічний ∛">√</button>
+                    <button class="action" id="btn-pow" onclick="handlePowerOrExp()" title="Піднесення до степеня xⁿ / eˣ">xⁿ</button>
+                    <button class="action" onclick="calculateAbs()" title="Модуль числа |x|">|x|</button>
+                    <button class="action" onclick="calculateInverse()" title="Обернене число 1/x">1/x</button>
+
+                    <!-- Ряд 5: Константи та Дужки -->
+                    <button class="action" onclick="insertPi()" title="Число Пі (3.14159...)">π</button>
+                    <button class="action" onclick="insertEuler()" title="Число Ейлера e (2.71828...)">e</button>
+                    <button class="action" onclick="appendBracket('(')" title="Відкрити дужку">(</button>
+                    <button class="action" onclick="appendBracket(')')" title="Закрити дужку">)</button>
+                    
+                    <!-- Ряд 6: Керування, Очищення, Modulo та Ділення -->
+                    <button class="clear" onclick="clearDisplay()" title="Очистити все">C</button>
+                    <button class="action" onclick="backspace()" title="Стерти символ" style="display:flex; align-items:center; justify-content:center;">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M21 4H8l-7 8 7 8h13a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2z"></path>
+                            <line x1="18" y1="9" x2="12" y2="15"></line>
+                            <line x1="12" y1="9" x2="18" y2="15"></line>
+                        </svg>
+                    </button>
+                    <button class="action" onclick="appendOperator('mod')" title="Остача від ділення (mod)">mod</button>
+                    <button class="operator" onclick="appendOperator('/')" title="Ділення">÷</button>
+                    
+                    <!-- Ряд 7: 7, 8, 9, Множення -->
+                    <button onclick="appendNumber('7')">7</button>
+                    <button onclick="appendNumber('8')">8</button>
+                    <button onclick="appendNumber('9')">9</button>
+                    <button class="operator" onclick="appendOperator('*')" title="Множення">×</button>
+                    
+                    <!-- Ряд 8: 4, 5, 6, Віднімання -->
+                    <button onclick="appendNumber('4')">4</button>
+                    <button onclick="appendNumber('5')">5</button>
+                    <button onclick="appendNumber('6')">6</button>
+                    <button class="operator" onclick="appendOperator('-')" title="Віднімання">−</button>
+                    
+                    <!-- Ряд 9: 1, 2, 3, Додавання -->
+                    <button onclick="appendNumber('1')">1</button>
+                    <button onclick="appendNumber('2')">2</button>
+                    <button onclick="appendNumber('3')">3</button>
+                    <button class="operator" onclick="appendOperator('+')" title="Додавання">+</button>
+                    
+                    <!-- Ряд 10: Знак, 0, Крапка, Дорівнює -->
+                    <button class="action" onclick="toggleSign()" title="Змінити знак (+/-)">+/-</button>
+                    <button onclick="appendNumber('0')">0</button>
+                    <button onclick="appendNumber('.')">.</button>
+                    <button class="equals" onclick="calculate()" title="Обчислити результат">=</button>
+                </div>

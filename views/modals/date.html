@@ -1,0 +1,40 @@
+    <div class="modal-overlay" id="date-modal">
+        <div class="modal-content date-modal-content">
+            <h3>📅 Калькулятор Дат та Часу</h3>
+            
+            <div class="date-tabs">
+                <button class="conv-tab active" data-dtab="diff" onclick="switchDateTab('diff')">Різниця між датами</button>
+                <button class="conv-tab" data-dtab="add" onclick="switchDateTab('add')">Додати/відняти дні</button>
+            </div>
+
+            <div class="date-section" id="date-section-diff">
+                <div class="date-input-row">
+                    <label>Початкова дата:</label>
+                    <input type="date" id="date-start" onchange="calculateDateDiff()">
+                </div>
+                <div class="date-input-row">
+                    <label>Кінцева дата:</label>
+                    <input type="date" id="date-end" onchange="calculateDateDiff()">
+                </div>
+                <div class="date-result-box" id="date-diff-result">
+                    <span>Різниця:</span> <strong>0 днів</strong>
+                </div>
+            </div>
+
+            <div class="date-section" id="date-section-add" style="display:none;">
+                <div class="date-input-row">
+                    <label>Базова дата:</label>
+                    <input type="date" id="date-base" onchange="calculateDateAdd()">
+                </div>
+                <div class="date-input-row">
+                    <label>Кількість днів (+ додавання, - віднімання):</label>
+                    <input type="number" id="date-days-count" value="30" oninput="calculateDateAdd()">
+                </div>
+                <div class="date-result-box" id="date-add-result">
+                    <span>Отримана дата:</span> <strong>—</strong>
+                </div>
+            </div>
+
+            <button class="close-btn" onclick="closeModal('date-modal')">Закрити</button>
+        </div>
+    </div>

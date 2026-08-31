@@ -1,0 +1,43 @@
+    <div class="modal-overlay" id="converter-modal">
+        <div class="modal-content converter-modal-content">
+            <h3>🔄 Універсальний Конвертер Одиниць</h3>
+            
+            <div class="converter-tabs">
+                <button class="conv-tab active" data-cat="length" onclick="switchConverterCategory('length')">Довжина</button>
+                <button class="conv-tab" data-cat="weight" onclick="switchConverterCategory('weight')">Маса / Вага</button>
+                <button class="conv-tab" data-cat="temp" onclick="switchConverterCategory('temp')">Температура</button>
+                <button class="conv-tab" data-cat="data" onclick="switchConverterCategory('data')">Дані (IT)</button>
+                <button class="conv-tab" data-cat="speed" onclick="switchConverterCategory('speed')">Швидкість</button>
+                <button class="conv-tab" data-cat="time" onclick="switchConverterCategory('time')">Час</button>
+            </div>
+
+            <div class="converter-body">
+                <div class="converter-input-block">
+                    <label>Звідки:</label>
+                    <div class="conv-input-row">
+                        <input type="number" id="conv-from-val" value="1" oninput="runConversion('from')">
+                        <select id="conv-from-unit" onchange="runConversion('from')"></select>
+                    </div>
+                </div>
+
+                <div class="converter-swap-btn" onclick="swapConverterUnits()" title="Поміняти місцями">
+                    <span>⇅</span>
+                </div>
+
+                <div class="converter-input-block">
+                    <label>Куди:</label>
+                    <div class="conv-input-row">
+                        <input type="number" id="conv-to-val" oninput="runConversion('to')">
+                        <select id="conv-to-unit" onchange="runConversion('from')"></select>
+                    </div>
+                </div>
+            </div>
+
+            <div class="converter-quick-actions">
+                <button class="btn-secondary" onclick="insertConvertedToCalc()">📥 Вставити в калькулятор</button>
+                <button class="btn-secondary" onclick="copyConvertedVal()">📋 Скопіювати</button>
+            </div>
+
+            <button class="close-btn" onclick="closeModal('converter-modal')">Закрити</button>
+        </div>
+    </div>

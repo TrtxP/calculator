@@ -1,0 +1,28 @@
+    <div class="modal-overlay" id="constants-search-modal">
+        <div class="modal-content" style="max-width: 680px;">
+            <h3>⚛️ Розширена База Наукових Констант (40+ Величин)</h3>
+            <p style="font-size:0.85rem; color:var(--text-muted); margin-bottom:8px;">
+                Живий пошук по фундаментальних фізичних константах CODATA, астрономічних та математичних величинах:
+            </p>
+
+            <div class="constants-search-box">
+                <input type="text" class="constants-filter-input" id="const-search-inp" placeholder="🔍 Введіть назву, символ чи категорію (напр. світло, гравітація, Планка, e, ħ)..." oninput="filterExtendedConstants(this.value)">
+
+                <div class="constants-tabs-row">
+                    <button class="conv-tab active" data-ccat="all" onclick="switchConstantsCategory('all')">Усі (40+)</button>
+                    <button class="conv-tab" data-ccat="fundamental" onclick="switchConstantsCategory('fundamental')">Фундаментальні</button>
+                    <button class="conv-tab" data-ccat="em" onclick="switchConstantsCategory('em')">Електромагнетизм</button>
+                    <button class="conv-tab" data-ccat="atomic" onclick="switchConstantsCategory('atomic')">Атом & Кванти</button>
+                    <button class="conv-tab" data-ccat="astro" onclick="switchConstantsCategory('astro')">Астрофізика</button>
+                    <button class="conv-tab" data-ccat="math" onclick="switchConstantsCategory('math')">Математичні</button>
+                </div>
+
+                <div class="constants-extended-list" id="constants-extended-list">
+                    <!-- Динамічні картки констант -->
+                </div>
+            </div>
+
+            <button class="close-btn" onclick="closeModal('constants-search-modal')">Закрити</button>
+        </div>
+    </div>
+

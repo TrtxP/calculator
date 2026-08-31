@@ -1,0 +1,569 @@
+/* --------------------------------------------------------------------------
+   10. Стилі Модулів (Матриці, Біти, Відсотки, Валюти)
+   -------------------------------------------------------------------------- */
+.matrix-size-selector {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 12px;
+}
+
+.matrix-inputs-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-bottom: 12px;
+}
+
+.matrix-box {
+    background: var(--bg-display);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    padding: 12px;
+}
+
+.matrix-label {
+    display: block;
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: var(--accent-operator);
+    margin-bottom: 8px;
+}
+
+.matrix-grid {
+    display: grid;
+    gap: 6px;
+}
+
+.matrix-2x2 {
+    grid-template-columns: repeat(2, 1fr);
+}
+
+.matrix-3x3 {
+    grid-template-columns: repeat(3, 1fr);
+}
+
+.matrix-grid input {
+    background: var(--bg-btn);
+    border: 1px solid var(--border-color);
+    color: var(--text-primary);
+    padding: 8px;
+    border-radius: 8px;
+    font-size: 1.05rem;
+    font-weight: 700;
+    text-align: center;
+}
+
+.matrix-results-box {
+    background: var(--bg-display);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    padding: 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.matrix-res-item {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.92rem;
+}
+
+.matrix-res-item strong {
+    color: var(--accent-operator);
+    font-size: 1.1rem;
+}
+
+.matrix-res-full {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    font-size: 0.85rem;
+    color: var(--text-muted);
+}
+
+.matrix-grid-mini {
+    display: grid;
+    gap: 4px;
+    background: var(--bg-card);
+    padding: 8px;
+    border-radius: 8px;
+    border: 1px solid var(--border-color);
+}
+
+.matrix-grid-mini span {
+    text-align: center;
+    font-weight: 700;
+    color: var(--text-primary);
+}
+
+/* Бітовий Інспектор */
+.bitmask-number-inputs {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+    margin-bottom: 12px;
+}
+
+.bit-num-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--bg-display);
+    border: 1px solid var(--border-color);
+    border-radius: 10px;
+    padding: 6px 10px;
+}
+
+.bit-num-row label {
+    font-size: 0.8rem;
+    font-weight: 800;
+    color: var(--accent-operator);
+    width: 38px;
+}
+
+.bit-num-row input {
+    flex-grow: 1;
+    background: transparent;
+    border: none;
+    color: var(--text-primary);
+    font-size: 1.05rem;
+    font-weight: 700;
+    outline: none;
+}
+
+.bit-grid-container {
+    background: var(--bg-display);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    padding: 12px;
+    margin-bottom: 12px;
+}
+
+.bit-section-title {
+    display: block;
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    margin-bottom: 8px;
+}
+
+.bits-matrix-grid {
+    display: grid;
+    grid-template-columns: repeat(8, 1fr);
+    gap: 6px;
+}
+
+.bit-btn {
+    background: var(--bg-btn);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    padding: 8px 4px;
+    color: var(--text-muted);
+    font-size: 0.95rem;
+    font-weight: 800;
+    cursor: pointer;
+    text-align: center;
+    transition: all 0.15s ease;
+}
+
+.bit-btn.active {
+    background: var(--accent-operator);
+    color: #fff;
+    border-color: var(--accent-operator);
+    box-shadow: 0 0 10px var(--shadow-color);
+}
+
+.bitmask-actions-row {
+    display: flex;
+    gap: 6px;
+    flex-wrap: wrap;
+    margin-bottom: 8px;
+}
+
+/* Відсотки Pro */
+.percent-calc-cards {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.percent-card {
+    background: var(--bg-display);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    padding: 12px;
+}
+
+.p-card-header {
+    font-size: 0.86rem;
+    font-weight: 700;
+    color: var(--accent-operator);
+    margin-bottom: 8px;
+}
+
+.p-inputs-row {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    flex-wrap: wrap;
+    font-size: 0.9rem;
+}
+
+.p-inputs-row input {
+    width: 85px;
+    background: var(--bg-btn);
+    border: 1px solid var(--border-color);
+    color: var(--text-primary);
+    padding: 8px;
+    border-radius: 8px;
+    font-weight: 700;
+    text-align: center;
+}
+
+.p-inputs-row select {
+    background: var(--bg-btn);
+    border: 1px solid var(--border-color);
+    color: var(--text-primary);
+    padding: 8px;
+    border-radius: 8px;
+    font-weight: 700;
+}
+
+.p-result {
+    color: var(--accent-operator);
+    font-size: 1.15rem;
+    margin-left: auto;
+}
+
+/* Валюти та Крипта */
+.currency-converter-body {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.currency-rates-info {
+    font-size: 0.78rem;
+    color: var(--text-muted);
+    text-align: center;
+}
+
+/* Налаштування */
+.settings-sections {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    margin-bottom: 14px;
+}
+
+.settings-group {
+    background: var(--bg-display);
+    border: 1px solid var(--border-color);
+    border-radius: 14px;
+    padding: 12px 14px;
+}
+
+.settings-group h4 {
+    font-size: 0.92rem;
+    color: var(--accent-operator);
+    margin-bottom: 10px;
+}
+
+.settings-row {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    margin-bottom: 10px;
+}
+
+.settings-row:last-child {
+    margin-bottom: 0;
+}
+
+.settings-row label {
+    font-size: 0.84rem;
+    color: var(--text-muted);
+    font-weight: 600;
+}
+
+.settings-row select, .settings-row input[type="range"] {
+    background: var(--bg-btn);
+    border: 1px solid var(--border-color);
+    color: var(--text-primary);
+    padding: 8px 12px;
+    border-radius: 8px;
+    font-size: 0.88rem;
+    font-weight: 600;
+    outline: none;
+}
+
+/* Кастомізатор Кольорів */
+.color-picker-box {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    background: var(--bg-display);
+    border: 1px solid var(--border-color);
+    border-radius: 14px;
+    padding: 14px;
+}
+
+.color-control-item label {
+    display: block;
+    font-size: 0.84rem;
+    color: var(--text-muted);
+    margin-bottom: 6px;
+    font-weight: 600;
+}
+
+.picker-input-group {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.picker-input-group input[type="color"] {
+    width: 44px;
+    height: 38px;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    background: transparent;
+    cursor: pointer;
+}
+
+.picker-input-group input[type="text"] {
+    flex-grow: 1;
+    background: var(--bg-btn);
+    border: 1px solid var(--border-color);
+    color: var(--text-primary);
+    padding: 8px 12px;
+    border-radius: 8px;
+    font-weight: 700;
+}
+
+.accent-swatches-grid {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 8px;
+}
+
+.accent-swatch {
+    height: 34px;
+    border-radius: 8px;
+    border: 2px solid rgba(255, 255, 255, 0.2);
+    cursor: pointer;
+    transition: transform 0.2s ease, border-color 0.2s ease;
+}
+
+.accent-swatch:hover {
+    transform: scale(1.12);
+    border-color: #fff;
+}
+
+.bordeaux-swatch { background: #8b1538; }
+.velvet-swatch { background: #6b0f24; }
+.magma-swatch { background: #b91c1c; }
+.redstone2-swatch { background: #ff2a5f; }
+.cyan-swatch { background: #2dd4bf; }
+.amber-swatch { background: #f59e0b; }
+.emerald-swatch { background: #10b981; }
+.lime-swatch { background: #84cc16; }
+.purple-swatch { background: #c084fc; }
+.amethyst-swatch { background: #9333ea; }
+.pink-swatch { background: #f472b6; }
+.blue-swatch { background: #38bdf8; }
+
+/* Квадратні Рівняння */
+.quadratic-inputs-row {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+    margin-bottom: 14px;
+}
+
+.quad-input-group label {
+    display: block;
+    font-size: 0.82rem;
+    color: var(--text-muted);
+    margin-bottom: 4px;
+}
+
+.quad-input-group input {
+    width: 100%;
+    background: var(--bg-display);
+    border: 1px solid var(--border-color);
+    color: var(--text-primary);
+    padding: 10px;
+    border-radius: 10px;
+    font-size: 1.05rem;
+    font-weight: 700;
+}
+
+.quad-solution-box {
+    background: var(--bg-display);
+    border: 1px solid var(--border-color);
+    border-radius: 14px;
+    padding: 14px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.quad-sol-header {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.95rem;
+    padding-bottom: 8px;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.quad-roots-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+}
+
+.quad-root-item {
+    background: var(--badge-bg);
+    border: 1px solid var(--badge-border);
+    border-radius: 10px;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.quad-root-item strong {
+    font-size: 1.15rem;
+    color: var(--accent-operator);
+}
+
+.quad-vertex-info {
+    font-size: 0.82rem;
+    color: var(--text-muted);
+}
+
+/* Статистика */
+#stats-data-input {
+    width: 100%;
+    background: var(--bg-display);
+    border: 1px solid var(--border-color);
+    color: var(--text-primary);
+    padding: 10px;
+    border-radius: 10px;
+    font-size: 0.95rem;
+    margin-bottom: 12px;
+    resize: none;
+}
+
+.stats-results-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+}
+
+.stats-card {
+    background: var(--bg-display);
+    border: 1px solid var(--border-color);
+    border-radius: 10px;
+    padding: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.stats-card strong {
+    color: var(--accent-operator);
+    font-size: 1.05rem;
+}
+
+/* Дати */
+.date-tabs {
+    display: flex;
+    gap: 6px;
+    margin-bottom: 14px;
+}
+
+.date-section {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-bottom: 14px;
+}
+
+.date-input-row {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.date-input-row label {
+    font-size: 0.82rem;
+    color: var(--text-muted);
+}
+
+.date-input-row input {
+    background: var(--bg-display);
+    border: 1px solid var(--border-color);
+    color: var(--text-primary);
+    padding: 10px;
+    border-radius: 10px;
+    font-size: 0.95rem;
+}
+
+.date-result-box {
+    background: var(--badge-bg);
+    border: 1px solid var(--badge-border);
+    border-radius: 12px;
+    padding: 14px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.date-result-box strong {
+    font-size: 1.2rem;
+    color: var(--accent-operator);
+}
+
+/* Матриця Пам'яті */
+.memory-slots-list {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.memory-slot-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: var(--bg-display);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    padding: 10px 14px;
+    gap: 10px;
+}
+
+.slot-badge {
+    background: var(--badge-bg);
+    border: 1px solid var(--badge-border);
+    padding: 4px 8px;
+    border-radius: 8px;
+    font-weight: 800;
+    color: var(--accent-operator);
+}
+
+.slot-val {
+    font-size: 1.1rem;
+    color: var(--text-primary);
+    flex-grow: 1;
+    text-align: right;
+    word-break: break-all;
+}
+
+.slot-actions {
+    display: flex;
+    gap: 4px;
+}
+
+/* --------------------------------------------------------------------------

@@ -1,0 +1,16 @@
+    <div class="modal-overlay" id="command-palette-modal">
+        <div class="modal-content command-palette-content">
+            <div class="command-search-header">
+                <span class="command-search-icon">⚡</span>
+                <input type="text" id="command-search-input" class="command-search-inp" placeholder="Пошук інструментів, функцій, тем чи команд... (наприклад: вектор, тема, граф)" oninput="filterCommandPalette(this.value)" autocomplete="off">
+                <span class="command-kbd-badge">ESC</span>
+            </div>
+            <div class="command-results-list" id="command-results-list">
+                <!-- Генерується динамічно через app.js -->
+            </div>
+            <div class="command-footer">
+                <span>Використовуйте <kbd class="command-kbd-badge">↑</kbd> <kbd class="command-kbd-badge">↓</kbd> для вибору, <kbd class="command-kbd-badge">Enter</kbd> для переходу</span>
+                <span>MaxNT Pro v1.8.6</span>
+            </div>
+        </div>
+    </div>

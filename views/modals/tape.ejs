@@ -1,0 +1,28 @@
+    <div class="modal-overlay" id="tape-modal">
+        <div class="modal-content tape-modal-content">
+            <h3>📜 Розрахункова Стрічка (Paper Tape Roll)</h3>
+            <p style="font-size:0.86rem; color:var(--text-muted); margin-bottom:10px;">
+                Безперервна розрахункова стрічка з можливістю додавання власних приміток до кожного рядка:
+            </p>
+
+            <div class="tape-roll-box" id="tape-roll-container">
+                <div class="tape-header-decor">*** РОЗРАХУНКОВИЙ ЧЕК PRO ***</div>
+                <div class="tape-lines-list" id="tape-lines-list">
+                    <!-- Динамічні рядки стрічки -->
+                </div>
+                <div class="tape-subtotal-row">
+                    <span>ЗАГАЛЬНИЙ ПІДСУМОК:</span>
+                    <strong id="tape-grand-total">0</strong>
+                </div>
+            </div>
+
+            <div class="tape-actions-row" style="margin-top:12px; display:flex; gap:8px; flex-wrap:wrap;">
+                <button class="btn-secondary" onclick="addCustomTapeEntry()">➕ Додати рядок</button>
+                <button class="btn-secondary" onclick="printTapeRoll()">🖨️ Роздрукувати</button>
+                <button class="btn-secondary" onclick="copyTapeAsText()">📋 Скопіювати чек</button>
+                <button class="btn-secondary btn-danger" onclick="clearTapeRoll()">🗑️ Очистити стрічку</button>
+            </div>
+
+            <button class="close-btn" onclick="closeModal('tape-modal')">Закрити</button>
+        </div>
+    </div>

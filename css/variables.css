@@ -1,0 +1,749 @@
+/* ==========================================================================
+   Calculator Pro v1.8.5 (Build 190) Redstone 3.5 Bordeaux Titanium - Master Stylesheet
+   Author: MaxNT Official, 2026
+   ========================================================================== */
+
+:root {
+    --font-scale: 1;
+}
+
+/* --------------------------------------------------------------------------
+   2. 24 Авторські Колірні Теми (Themes System v1.8.1 Bordeaux Master)
+   -------------------------------------------------------------------------- */
+
+/* 1. Bordeaux Imperial Wine (Флагманська бордова тема) */
+body[data-theme="bordeaux_luxury"], body {
+    --bg-body: #0d0205;
+    --bg-card: rgba(30, 5, 12, 0.88);
+    --bg-display: rgba(16, 2, 6, 0.94);
+    --bg-sidebar: rgba(24, 4, 9, 0.82);
+    --bg-btn: rgba(48, 8, 18, 0.88);
+    --bg-btn-hover: rgba(76, 14, 30, 0.95);
+    --text-primary: #fff0f3;
+    --text-muted: #fda4af;
+    --accent-operator: #8b1538;
+    --accent-equals: #f59e0b;
+    --accent-sci: #5c0617;
+    --accent-sci-text: #ffe4e6;
+    --accent-action: #38040d;
+    --accent-clear: #be123c;
+    --accent-memory: #72091f;
+    --border-color: rgba(139, 21, 56, 0.35);
+    --shadow-color: rgba(139, 21, 56, 0.45);
+    --badge-bg: rgba(139, 21, 56, 0.22);
+    --badge-border: rgba(139, 21, 56, 0.5);
+}
+
+/* 2. Velvet Burgundy Noir */
+body[data-theme="velvet_burgundy"] {
+    --bg-body: #080103;
+    --bg-card: rgba(22, 3, 8, 0.88);
+    --bg-display: rgba(12, 1, 4, 0.95);
+    --bg-sidebar: rgba(18, 2, 7, 0.82);
+    --bg-btn: rgba(38, 5, 14, 0.88);
+    --bg-btn-hover: rgba(62, 10, 24, 0.95);
+    --text-primary: #fdf2f4;
+    --text-muted: #fb7185;
+    --accent-operator: #6b0f24;
+    --accent-equals: #fb7185;
+    --accent-sci: #4a0716;
+    --accent-sci-text: #ffe4e6;
+    --accent-action: #29020a;
+    --accent-clear: #9f1239;
+    --accent-memory: #58081a;
+    --border-color: rgba(107, 15, 36, 0.35);
+    --shadow-color: rgba(107, 15, 36, 0.4);
+    --badge-bg: rgba(107, 15, 36, 0.2);
+    --badge-border: rgba(107, 15, 36, 0.45);
+}
+
+/* 3. Autumn Crimson Spark */
+body[data-theme="autumn_crimson"] {
+    --bg-body: #100204;
+    --bg-card: rgba(32, 6, 10, 0.88);
+    --bg-display: rgba(18, 3, 5, 0.94);
+    --bg-sidebar: rgba(26, 4, 8, 0.82);
+    --bg-btn: rgba(56, 10, 16, 0.88);
+    --bg-btn-hover: rgba(86, 16, 26, 0.95);
+    --text-primary: #fff1f2;
+    --text-muted: #fca5a5;
+    --accent-operator: #dc2626;
+    --accent-equals: #d97706;
+    --accent-sci: #7f1d1d;
+    --accent-sci-text: #fee2e2;
+    --accent-action: #450a0a;
+    --accent-clear: #b91c1c;
+    --accent-memory: #991b1b;
+    --border-color: rgba(220, 38, 38, 0.32);
+    --shadow-color: rgba(220, 38, 38, 0.38);
+    --badge-bg: rgba(220, 38, 38, 0.18);
+    --badge-border: rgba(220, 38, 38, 0.45);
+}
+
+/* 4. Volcanic Magma */
+body[data-theme="volcanic_magma"] {
+    --bg-body: #0c0203;
+    --bg-card: rgba(28, 4, 6, 0.88);
+    --bg-display: rgba(14, 2, 3, 0.94);
+    --bg-sidebar: rgba(22, 3, 5, 0.82);
+    --bg-btn: rgba(52, 8, 12, 0.88);
+    --bg-btn-hover: rgba(82, 12, 18, 0.95);
+    --text-primary: #fff7ed;
+    --text-muted: #fdba74;
+    --accent-operator: #b91c1c;
+    --accent-equals: #ea580c;
+    --accent-sci: #7c2d12;
+    --accent-sci-text: #ffedd5;
+    --accent-action: #431407;
+    --accent-clear: #991b1b;
+    --accent-memory: #9a3412;
+    --border-color: rgba(185, 28, 28, 0.32);
+    --shadow-color: rgba(185, 28, 28, 0.4);
+    --badge-bg: rgba(185, 28, 28, 0.2);
+    --badge-border: rgba(185, 28, 28, 0.45);
+}
+
+/* 5. Redstone 2 Quantum Pulse */
+body[data-theme="redstone2"] {
+    --bg-body: #0a0305;
+    --bg-card: rgba(22, 6, 12, 0.82);
+    --bg-display: rgba(12, 3, 7, 0.92);
+    --bg-sidebar: rgba(18, 5, 10, 0.78);
+    --bg-btn: rgba(36, 10, 20, 0.88);
+    --bg-btn-hover: rgba(56, 16, 32, 0.95);
+    --text-primary: #fff0f3;
+    --text-muted: #fda4af;
+    --accent-operator: #ff2a5f;
+    --accent-equals: #f59e0b;
+    --accent-sci: #881337;
+    --accent-sci-text: #ffe4e6;
+    --accent-action: #4c0519;
+    --accent-clear: #be123c;
+    --accent-memory: #9f1239;
+    --border-color: rgba(255, 42, 95, 0.28);
+    --shadow-color: rgba(255, 42, 95, 0.35);
+    --badge-bg: rgba(255, 42, 95, 0.18);
+    --badge-border: rgba(255, 42, 95, 0.45);
+}
+
+/* 6. Deep Space Nebula */
+body[data-theme="deep_space"] {
+    --bg-body: #050814;
+    --bg-card: rgba(10, 16, 38, 0.85);
+    --bg-display: rgba(6, 10, 26, 0.94);
+    --bg-sidebar: rgba(8, 14, 34, 0.82);
+    --bg-btn: rgba(20, 30, 68, 0.85);
+    --bg-btn-hover: rgba(30, 46, 100, 0.95);
+    --text-primary: #f0f9ff;
+    --text-muted: #7dd3fc;
+    --accent-operator: #38bdf8;
+    --accent-equals: #818cf8;
+    --accent-sci: #1e293b;
+    --accent-sci-text: #e0f2fe;
+    --accent-action: #0f172a;
+    --accent-clear: #ef4444;
+    --accent-memory: #0284c7;
+    --border-color: rgba(56, 189, 248, 0.28);
+    --shadow-color: rgba(56, 189, 248, 0.32);
+    --badge-bg: rgba(56, 189, 248, 0.16);
+    --badge-border: rgba(56, 189, 248, 0.45);
+}
+
+/* 7. Cyber Lime Acid */
+body[data-theme="cyber_lime"] {
+    --bg-body: #060b04;
+    --bg-card: rgba(12, 22, 9, 0.85);
+    --bg-display: rgba(8, 15, 6, 0.94);
+    --bg-sidebar: rgba(10, 18, 8, 0.82);
+    --bg-btn: rgba(22, 40, 16, 0.88);
+    --bg-btn-hover: rgba(35, 62, 25, 0.95);
+    --text-primary: #f7fee7;
+    --text-muted: #bef264;
+    --accent-operator: #84cc16;
+    --accent-equals: #eab308;
+    --accent-sci: #1a2e05;
+    --accent-sci-text: #ecfccb;
+    --accent-action: #14532d;
+    --accent-clear: #ef4444;
+    --accent-memory: #4d7c0f;
+    --border-color: rgba(132, 204, 22, 0.32);
+    --shadow-color: rgba(132, 204, 22, 0.35);
+    --badge-bg: rgba(132, 204, 22, 0.18);
+    --badge-border: rgba(132, 204, 22, 0.45);
+}
+
+/* 8. Royal Amethyst */
+body[data-theme="royal_amethyst"] {
+    --bg-body: #0e051a;
+    --bg-card: rgba(24, 10, 44, 0.85);
+    --bg-display: rgba(14, 6, 26, 0.94);
+    --bg-sidebar: rgba(20, 8, 36, 0.82);
+    --bg-btn: rgba(42, 18, 76, 0.88);
+    --bg-btn-hover: rgba(62, 28, 110, 0.95);
+    --text-primary: #faf5ff;
+    --text-muted: #d8b4fe;
+    --accent-operator: #c084fc;
+    --accent-equals: #d97706;
+    --accent-sci: #3b0764;
+    --accent-sci-text: #f3e8ff;
+    --accent-action: #581c87;
+    --accent-clear: #e11d48;
+    --accent-memory: #7e22ce;
+    --border-color: rgba(192, 132, 252, 0.3);
+    --shadow-color: rgba(192, 132, 252, 0.35);
+    --badge-bg: rgba(192, 132, 252, 0.18);
+    --badge-border: rgba(192, 132, 252, 0.45);
+}
+
+/* 9. Redstone 1 Flux */
+body[data-theme="redstone"] {
+    --bg-body: #140507;
+    --bg-card: rgba(28, 8, 12, 0.82);
+    --bg-display: rgba(18, 4, 7, 0.92);
+    --bg-sidebar: rgba(24, 6, 10, 0.78);
+    --bg-btn: rgba(46, 12, 18, 0.85);
+    --bg-btn-hover: rgba(70, 18, 28, 0.95);
+    --text-primary: #fff1f2;
+    --text-muted: #fca5a5;
+    --accent-operator: #ef4444;
+    --accent-equals: #f59e0b;
+    --accent-sci: #991b1b;
+    --accent-sci-text: #fee2e2;
+    --accent-action: #450a0a;
+    --accent-clear: #dc2626;
+    --accent-memory: #7f1d1d;
+    --border-color: rgba(239, 68, 68, 0.28);
+    --shadow-color: rgba(239, 68, 68, 0.32);
+    --badge-bg: rgba(239, 68, 68, 0.16);
+    --badge-border: rgba(239, 68, 68, 0.4);
+}
+
+/* 10. Amber Cyber */
+body[data-theme="cyber_amber"] {
+    --bg-body: #120b02;
+    --bg-card: rgba(30, 18, 4, 0.82);
+    --bg-display: rgba(20, 12, 2, 0.92);
+    --bg-sidebar: rgba(24, 14, 3, 0.78);
+    --bg-btn: rgba(50, 30, 6, 0.85);
+    --bg-btn-hover: rgba(76, 46, 10, 0.95);
+    --text-primary: #fffbeb;
+    --text-muted: #fcd34d;
+    --accent-operator: #f59e0b;
+    --accent-equals: #10b981;
+    --accent-sci: #78350f;
+    --accent-sci-text: #fef3c7;
+    --accent-action: #451a03;
+    --accent-clear: #ef4444;
+    --accent-memory: #92400e;
+    --border-color: rgba(245, 158, 11, 0.3);
+    --shadow-color: rgba(245, 158, 11, 0.32);
+    --badge-bg: rgba(245, 158, 11, 0.16);
+    --badge-border: rgba(245, 158, 11, 0.4);
+}
+
+/* 11. Nordic Glacier */
+body[data-theme="nordic_frost"] {
+    --bg-body: #031317;
+    --bg-card: rgba(6, 32, 38, 0.82);
+    --bg-display: rgba(4, 22, 26, 0.92);
+    --bg-sidebar: rgba(5, 26, 32, 0.78);
+    --bg-btn: rgba(10, 52, 62, 0.85);
+    --bg-btn-hover: rgba(16, 78, 92, 0.95);
+    --text-primary: #f0fdfa;
+    --text-muted: #5eead4;
+    --accent-operator: #14b8a6;
+    --accent-equals: #06b6d4;
+    --accent-sci: #115e59;
+    --accent-sci-text: #ccfbf1;
+    --accent-action: #042f2e;
+    --accent-clear: #f43f5e;
+    --accent-memory: #0f766e;
+    --border-color: rgba(20, 184, 166, 0.3);
+    --shadow-color: rgba(20, 184, 166, 0.35);
+    --badge-bg: rgba(20, 184, 166, 0.16);
+    --badge-border: rgba(20, 184, 166, 0.4);
+}
+
+/* 12. 80s Synthwave */
+body[data-theme="vintage_retro"] {
+    --bg-body: #160424;
+    --bg-card: rgba(38, 8, 62, 0.82);
+    --bg-display: rgba(26, 5, 42, 0.92);
+    --bg-sidebar: rgba(32, 6, 52, 0.78);
+    --bg-btn: rgba(64, 14, 102, 0.85);
+    --bg-btn-hover: rgba(94, 22, 148, 0.95);
+    --text-primary: #fae8ff;
+    --text-muted: #f0abfc;
+    --accent-operator: #d946ef;
+    --accent-equals: #06b6d4;
+    --accent-sci: #86198f;
+    --accent-sci-text: #fdf4ff;
+    --accent-action: #4a044e;
+    --accent-clear: #f43f5e;
+    --accent-memory: #a21caf;
+    --border-color: rgba(217, 70, 239, 0.32);
+    --shadow-color: rgba(217, 70, 239, 0.35);
+    --badge-bg: rgba(217, 70, 239, 0.16);
+    --badge-border: rgba(217, 70, 239, 0.4);
+}
+
+/* 13. Matrix Terminal */
+body[data-theme="matrix_terminal"] {
+    --bg-body: #020d04;
+    --bg-card: rgba(4, 26, 8, 0.85);
+    --bg-display: rgba(2, 16, 5, 0.94);
+    --bg-sidebar: rgba(3, 20, 6, 0.8);
+    --bg-btn: rgba(6, 42, 14, 0.88);
+    --bg-btn-hover: rgba(10, 68, 22, 0.95);
+    --text-primary: #22c55e;
+    --text-muted: #86efac;
+    --accent-operator: #4ade80;
+    --accent-equals: #16a34a;
+    --accent-sci: #14532d;
+    --accent-sci-text: #dcfce7;
+    --accent-action: #052e16;
+    --accent-clear: #ef4444;
+    --accent-memory: #15803d;
+    --border-color: rgba(34, 197, 94, 0.35);
+    --shadow-color: rgba(34, 197, 94, 0.38);
+    --badge-bg: rgba(34, 197, 94, 0.18);
+    --badge-border: rgba(34, 197, 94, 0.45);
+}
+
+/* 14. Obsidian Royal Gold */
+body[data-theme="obsidian_gold"] {
+    --bg-body: #0d0c08;
+    --bg-card: rgba(24, 22, 14, 0.85);
+    --bg-display: rgba(15, 14, 8, 0.94);
+    --bg-sidebar: rgba(20, 18, 12, 0.8);
+    --bg-btn: rgba(42, 38, 22, 0.88);
+    --bg-btn-hover: rgba(66, 60, 34, 0.95);
+    --text-primary: #fef08a;
+    --text-muted: #eab308;
+    --accent-operator: #eab308;
+    --accent-equals: #ca8a04;
+    --accent-sci: #713f12;
+    --accent-sci-text: #fef9c3;
+    --accent-action: #422006;
+    --accent-clear: #ef4444;
+    --accent-memory: #854d0e;
+    --border-color: rgba(234, 179, 8, 0.32);
+    --shadow-color: rgba(234, 179, 8, 0.35);
+    --badge-bg: rgba(234, 179, 8, 0.18);
+    --badge-border: rgba(234, 179, 8, 0.45);
+}
+
+/* 15. Dark Charcoal */
+body[data-theme="dark"] {
+    --bg-body: #0f172a;
+    --bg-card: rgba(30, 41, 59, 0.75);
+    --bg-display: rgba(15, 23, 42, 0.85);
+    --bg-sidebar: rgba(30, 41, 59, 0.65);
+    --bg-btn: rgba(51, 65, 85, 0.8);
+    --bg-btn-hover: rgba(71, 85, 105, 0.9);
+    --text-primary: #f8fafc;
+    --text-muted: #94a3b8;
+    --accent-operator: #38bdf8;
+    --accent-equals: #22c55e;
+    --accent-sci: #475569;
+    --accent-sci-text: #e2e8f0;
+    --accent-action: #1e293b;
+    --accent-clear: #ef4444;
+    --accent-memory: #0284c7;
+    --border-color: rgba(255, 255, 255, 0.12);
+    --shadow-color: rgba(0, 0, 0, 0.4);
+    --badge-bg: rgba(56, 189, 248, 0.15);
+    --badge-border: rgba(56, 189, 248, 0.35);
+}
+
+/* 16. Clean Porcelain */
+body[data-theme="light"] {
+    --bg-body: #f1f5f9;
+    --bg-card: rgba(255, 255, 255, 0.85);
+    --bg-display: rgba(241, 245, 249, 0.95);
+    --bg-sidebar: rgba(255, 255, 255, 0.75);
+    --bg-btn: rgba(226, 232, 240, 0.8);
+    --bg-btn-hover: rgba(203, 213, 225, 0.95);
+    --text-primary: #0f172a;
+    --text-muted: #64748b;
+    --accent-operator: #0284c7;
+    --accent-equals: #16a34a;
+    --accent-sci: #cbd5e1;
+    --accent-sci-text: #1e293b;
+    --accent-action: #e2e8f0;
+    --accent-clear: #dc2626;
+    --accent-memory: #0369a1;
+    --border-color: rgba(0, 0, 0, 0.1);
+    --shadow-color: rgba(0, 0, 0, 0.08);
+    --badge-bg: rgba(2, 132, 199, 0.12);
+    --badge-border: rgba(2, 132, 199, 0.3);
+}
+
+/* 17. Cyberpunk Glow */
+body[data-theme="neon"] {
+    --bg-body: #05050a;
+    --bg-card: rgba(15, 15, 25, 0.85);
+    --bg-display: rgba(8, 8, 14, 0.95);
+    --bg-sidebar: rgba(12, 12, 20, 0.75);
+    --bg-btn: rgba(25, 25, 40, 0.85);
+    --bg-btn-hover: rgba(45, 45, 70, 0.95);
+    --text-primary: #00ffcc;
+    --text-muted: #ff007f;
+    --accent-operator: #ff007f;
+    --accent-equals: #00ffcc;
+    --accent-sci: #2a1b40;
+    --accent-sci-text: #00ffcc;
+    --accent-action: #141428;
+    --accent-clear: #ff0055;
+    --accent-memory: #7928ca;
+    --border-color: rgba(0, 255, 204, 0.35);
+    --shadow-color: rgba(0, 255, 204, 0.25);
+    --badge-bg: rgba(0, 255, 204, 0.15);
+    --badge-border: rgba(0, 255, 204, 0.4);
+}
+
+/* 18. Midnight Purple */
+body[data-theme="purple"] {
+    --bg-body: #180b2a;
+    --bg-card: rgba(40, 16, 68, 0.75);
+    --bg-display: rgba(20, 8, 36, 0.9);
+    --bg-sidebar: rgba(32, 12, 56, 0.65);
+    --bg-btn: rgba(60, 24, 100, 0.8);
+    --bg-btn-hover: rgba(85, 35, 140, 0.9);
+    --text-primary: #f3e8ff;
+    --text-muted: #c084fc;
+    --accent-operator: #a855f7;
+    --accent-equals: #ec4899;
+    --accent-sci: #581c87;
+    --accent-sci-text: #fae8ff;
+    --accent-action: #3b0764;
+    --accent-clear: #f43f5e;
+    --accent-memory: #9333ea;
+    --border-color: rgba(168, 85, 247, 0.25);
+    --shadow-color: rgba(168, 85, 247, 0.3);
+    --badge-bg: rgba(168, 85, 247, 0.15);
+    --badge-border: rgba(168, 85, 247, 0.35);
+}
+
+/* 19. Emerald Forest */
+body[data-theme="emerald"] {
+    --bg-body: #031e17;
+    --bg-card: rgba(6, 44, 34, 0.78);
+    --bg-display: rgba(3, 28, 22, 0.9);
+    --bg-sidebar: rgba(5, 36, 28, 0.7);
+    --bg-btn: rgba(10, 68, 52, 0.85);
+    --bg-btn-hover: rgba(16, 98, 76, 0.95);
+    --text-primary: #ecfdf5;
+    --text-muted: #6ee7b7;
+    --accent-operator: #10b981;
+    --accent-equals: #34d399;
+    --accent-sci: #064e3b;
+    --accent-sci-text: #d1fae5;
+    --accent-action: #022c22;
+    --accent-clear: #ef4444;
+    --accent-memory: #047857;
+    --border-color: rgba(16, 185, 129, 0.25);
+    --shadow-color: rgba(16, 185, 129, 0.3);
+    --badge-bg: rgba(16, 185, 129, 0.15);
+    --badge-border: rgba(16, 185, 129, 0.35);
+}
+
+/* 20. Sunset Aura */
+body[data-theme="sunset"] {
+    --bg-body: #200d14;
+    --bg-card: rgba(50, 18, 30, 0.78);
+    --bg-display: rgba(28, 9, 16, 0.9);
+    --bg-sidebar: rgba(40, 14, 24, 0.7);
+    --bg-btn: rgba(80, 28, 48, 0.85);
+    --bg-btn-hover: rgba(115, 40, 70, 0.95);
+    --text-primary: #fff1f2;
+    --text-muted: #fda4af;
+    --accent-operator: #f97316;
+    --accent-equals: #e11d48;
+    --accent-sci: #881337;
+    --accent-sci-text: #ffe4e6;
+    --accent-action: #4c0519;
+    --accent-clear: #ef4444;
+    --accent-memory: #be123c;
+    --border-color: rgba(249, 115, 22, 0.25);
+    --shadow-color: rgba(249, 115, 22, 0.3);
+    --badge-bg: rgba(249, 115, 22, 0.15);
+    --badge-border: rgba(249, 115, 22, 0.35);
+}
+
+/* 21. Nordic Ocean */
+body[data-theme="ocean"] {
+    --bg-body: #0b192c;
+    --bg-card: rgba(18, 38, 64, 0.8);
+    --bg-display: rgba(10, 22, 38, 0.9);
+    --bg-sidebar: rgba(14, 30, 52, 0.7);
+    --bg-btn: rgba(30, 60, 100, 0.85);
+    --bg-btn-hover: rgba(45, 85, 140, 0.95);
+    --text-primary: #f0f8ff;
+    --text-muted: #7dd3fc;
+    --accent-operator: #0ea5e9;
+    --accent-equals: #06b6d4;
+    --accent-sci: #1e3a8a;
+    --accent-sci-text: #e0f2fe;
+    --accent-action: #0f172a;
+    --accent-clear: #f43f5e;
+    --accent-memory: #0284c7;
+    --border-color: rgba(14, 165, 233, 0.25);
+    --shadow-color: rgba(14, 165, 233, 0.3);
+    --badge-bg: rgba(14, 165, 233, 0.15);
+    --badge-border: rgba(14, 165, 233, 0.35);
+}
+
+/* 22. Mocha Latte */
+body[data-theme="coffee"] {
+    --bg-body: #1c1410;
+    --bg-card: rgba(44, 30, 24, 0.82);
+    --bg-display: rgba(24, 16, 12, 0.92);
+    --bg-sidebar: rgba(34, 22, 18, 0.75);
+    --bg-btn: rgba(68, 48, 38, 0.85);
+    --bg-btn-hover: rgba(98, 70, 56, 0.95);
+    --text-primary: #fef3c7;
+    --text-muted: #d97706;
+    --accent-operator: #d97706;
+    --accent-equals: #b45309;
+    --accent-sci: #78350f;
+    --accent-sci-text: #fffbeb;
+    --accent-action: #451a03;
+    --accent-clear: #dc2626;
+    --accent-memory: #92400e;
+    --border-color: rgba(217, 119, 6, 0.25);
+    --shadow-color: rgba(217, 119, 6, 0.25);
+    --badge-bg: rgba(217, 119, 6, 0.15);
+    --badge-border: rgba(217, 119, 6, 0.35);
+}
+
+/* 23. Sakura Bloom */
+body[data-theme="sakura"] {
+    --bg-body: #24111c;
+    --bg-card: rgba(56, 26, 44, 0.8);
+    --bg-display: rgba(32, 14, 25, 0.9);
+    --bg-sidebar: rgba(44, 20, 35, 0.7);
+    --bg-btn: rgba(90, 42, 70, 0.85);
+    --bg-btn-hover: rgba(130, 60, 100, 0.95);
+    --text-primary: #fdf2f8;
+    --text-muted: #f472b6;
+    --accent-operator: #ec4899;
+    --accent-equals: #f43f5e;
+    --accent-sci: #831843;
+    --accent-sci-text: #fce7f3;
+    --accent-action: #500724;
+    --accent-clear: #e11d48;
+    --accent-memory: #be185d;
+    --border-color: rgba(236, 72, 153, 0.25);
+    --shadow-color: rgba(236, 72, 153, 0.3);
+    --badge-bg: rgba(236, 72, 153, 0.15);
+    --badge-border: rgba(236, 72, 153, 0.35);
+}
+
+/* 24. Frost Glassmorphism */
+body[data-theme="glass"] {
+    --bg-body: #090e17;
+    --bg-card: rgba(255, 255, 255, 0.08);
+    --bg-display: rgba(0, 0, 0, 0.35);
+    --bg-sidebar: rgba(255, 255, 255, 0.05);
+    --bg-btn: rgba(255, 255, 255, 0.1);
+    --bg-btn-hover: rgba(255, 255, 255, 0.2);
+    --text-primary: #ffffff;
+    --text-muted: #94a3b8;
+    --accent-operator: #38bdf8;
+    --accent-equals: #a855f7;
+    --accent-sci: rgba(255, 255, 255, 0.15);
+    --accent-sci-text: #f8fafc;
+    --accent-action: rgba(0, 0, 0, 0.25);
+    --accent-clear: #ef4444;
+    --accent-memory: #0284c7;
+    --border-color: rgba(255, 255, 255, 0.22);
+    --shadow-color: rgba(0, 0, 0, 0.5);
+    --badge-bg: rgba(255, 255, 255, 0.15);
+    --badge-border: rgba(255, 255, 255, 0.3);
+}
+
+/* 25. Amethyst Crimson Royal */
+body[data-theme="amethyst_crimson"] {
+    --bg-body: #0d010e;
+    --bg-card: rgba(28, 4, 30, 0.88);
+    --bg-display: rgba(16, 2, 18, 0.94);
+    --bg-sidebar: rgba(22, 3, 24, 0.82);
+    --bg-btn: rgba(58, 8, 64, 0.88);
+    --bg-btn-hover: rgba(90, 14, 100, 0.95);
+    --text-primary: #fdf4ff;
+    --text-muted: #e879f9;
+    --accent-operator: #c026d3;
+    --accent-equals: #e11d48;
+    --accent-sci: #581c87;
+    --accent-sci-text: #fae8ff;
+    --accent-action: #3b0764;
+    --accent-clear: #be123c;
+    --accent-memory: #a21caf;
+    --border-color: rgba(192, 38, 211, 0.32);
+    --shadow-color: rgba(192, 38, 211, 0.4);
+    --badge-bg: rgba(192, 38, 211, 0.18);
+    --badge-border: rgba(192, 38, 211, 0.45);
+}
+
+/* 26. Cyber Ruby Neon */
+body[data-theme="cyber_ruby"] {
+    --bg-body: #050002;
+    --bg-card: rgba(20, 1, 9, 0.92);
+    --bg-display: rgba(10, 0, 4, 0.96);
+    --bg-sidebar: rgba(15, 1, 7, 0.85);
+    --bg-btn: rgba(45, 2, 20, 0.9);
+    --bg-btn-hover: rgba(80, 4, 35, 0.98);
+    --text-primary: #fff0f5;
+    --text-muted: #ff2a6d;
+    --accent-operator: #ff0055;
+    --accent-equals: #ff00a0;
+    --accent-sci: #4a0421;
+    --accent-sci-text: #ffccdd;
+    --accent-action: #2b0214;
+    --accent-clear: #ff0033;
+    --accent-memory: #d90429;
+    --border-color: rgba(255, 0, 85, 0.38);
+    --shadow-color: rgba(255, 0, 85, 0.45);
+    --badge-bg: rgba(255, 0, 85, 0.2);
+    --badge-border: rgba(255, 0, 85, 0.5);
+}
+
+/* 27. Golden Bordeaux Imperial */
+body[data-theme="golden_bordeaux"] {
+    --bg-body: #0c0205;
+    --bg-card: rgba(28, 5, 12, 0.9);
+    --bg-display: rgba(15, 2, 6, 0.95);
+    --bg-sidebar: rgba(22, 4, 10, 0.84);
+    --bg-btn: rgba(56, 10, 24, 0.88);
+    --bg-btn-hover: rgba(88, 16, 38, 0.96);
+    --text-primary: #fffbeb;
+    --text-muted: #fcd34d;
+    --accent-operator: #d97706;
+    --accent-equals: #fbbf24;
+    --accent-sci: #881337;
+    --accent-sci-text: #fef3c7;
+    --accent-action: #4c0519;
+    --accent-clear: #b91c1c;
+    --accent-memory: #b45309;
+    --border-color: rgba(217, 119, 6, 0.35);
+    --shadow-color: rgba(217, 119, 6, 0.4);
+    --badge-bg: rgba(217, 119, 6, 0.18);
+    --badge-border: rgba(217, 119, 6, 0.48);
+}
+
+/* 28. Midnight Sapphire Velvet */
+body[data-theme="midnight_sapphire"] {
+    --bg-body: #020617;
+    --bg-card: rgba(15, 23, 42, 0.88);
+    --bg-display: rgba(8, 12, 28, 0.95);
+    --bg-sidebar: rgba(12, 18, 36, 0.8);
+    --bg-btn: rgba(30, 41, 59, 0.88);
+    --bg-btn-hover: rgba(51, 65, 85, 0.96);
+    --text-primary: #f8fafc;
+    --text-muted: #94a3b8;
+    --accent-operator: #38bdf8;
+    --accent-equals: #f43f5e;
+    --accent-sci: #1e3a8a;
+    --accent-sci-text: #e0f2fe;
+    --accent-action: #0f172a;
+    --accent-clear: #ef4444;
+    --accent-memory: #0284c7;
+    --border-color: rgba(56, 189, 248, 0.3);
+    --shadow-color: rgba(56, 189, 248, 0.35);
+    --badge-bg: rgba(56, 189, 248, 0.15);
+    --badge-border: rgba(56, 189, 248, 0.4);
+}
+
+/* 29. Titanium Ruby Master */
+body[data-theme="titanium_ruby"] {
+    --bg-body: #0a0b0e;
+    --bg-card: rgba(18, 20, 26, 0.9);
+    --bg-display: rgba(10, 12, 16, 0.95);
+    --bg-sidebar: rgba(14, 16, 22, 0.84);
+    --bg-btn: rgba(30, 34, 44, 0.88);
+    --bg-btn-hover: rgba(45, 52, 68, 0.96);
+    --text-primary: #f8fafc;
+    --text-muted: #94a3b8;
+    --accent-operator: #e11d48;
+    --accent-equals: #f43f5e;
+    --accent-sci: #1e293b;
+    --accent-sci-text: #fda4af;
+    --accent-action: #0f172a;
+    --accent-clear: #be123c;
+    --accent-memory: #475569;
+    --border-color: rgba(225, 29, 72, 0.32);
+    --shadow-color: rgba(225, 29, 72, 0.35);
+    --badge-bg: rgba(225, 29, 72, 0.16);
+    --badge-border: rgba(225, 29, 72, 0.42);
+}
+
+/* 30. Crimson Supernova */
+body[data-theme="crimson_supernova"] {
+    --bg-body: #080003;
+    --bg-card: rgba(28, 2, 8, 0.92);
+    --bg-display: rgba(16, 1, 5, 0.96);
+    --bg-sidebar: rgba(22, 1, 7, 0.86);
+    --bg-btn: rgba(54, 4, 16, 0.9);
+    --bg-btn-hover: rgba(90, 8, 28, 0.98);
+    --text-primary: #fff1f2;
+    --text-muted: #fda4af;
+    --accent-operator: #ff1e56;
+    --accent-equals: #ffac41;
+    --accent-sci: #4c0519;
+    --accent-sci-text: #ffe4e6;
+    --accent-action: #2e020d;
+    --accent-clear: #e11d48;
+    --accent-memory: #9f1239;
+    --border-color: rgba(255, 30, 86, 0.38);
+    --shadow-color: rgba(255, 30, 86, 0.45);
+    --badge-bg: rgba(255, 30, 86, 0.18);
+    --badge-border: rgba(255, 30, 86, 0.48);
+}
+
+/* 31. Cyberpunk Neon Bordeaux */
+body[data-theme="cyberpunk_neon"] {
+    --bg-body: #040810;
+    --bg-card: rgba(12, 20, 36, 0.9);
+    --bg-display: rgba(6, 12, 24, 0.96);
+    --bg-sidebar: rgba(10, 16, 30, 0.85);
+    --bg-btn: rgba(24, 38, 68, 0.9);
+    --bg-btn-hover: rgba(38, 60, 105, 0.98);
+    --text-primary: #f0fdfa;
+    --text-muted: #2dd4bf;
+    --accent-operator: #d946ef;
+    --accent-equals: #06b6d4;
+    --accent-sci: #1e1b4b;
+    --accent-sci-text: #fdf4ff;
+    --accent-action: #0f172a;
+    --accent-clear: #f43f5e;
+    --accent-memory: #0d9488;
+    --border-color: rgba(6, 182, 212, 0.35);
+    --shadow-color: rgba(217, 70, 239, 0.4);
+    --badge-bg: rgba(6, 182, 212, 0.16);
+    --badge-border: rgba(6, 182, 212, 0.45);
+}
+
+/* 32. Emerald Platinum */
+body[data-theme="emerald_platinum"] {
+    --bg-body: #020c08;
+    --bg-card: rgba(8, 26, 18, 0.88);
+    --bg-display: rgba(4, 16, 10, 0.95);
+    --bg-sidebar: rgba(6, 20, 14, 0.82);
+    --bg-btn: rgba(18, 50, 35, 0.88);
+    --bg-btn-hover: rgba(28, 78, 54, 0.96);
+    --text-primary: #f0fdf4;
+    --text-muted: #86efac;
+    --accent-operator: #10b981;
+    --accent-equals: #e2e8f0;
+    --accent-sci: #064e3b;
+    --accent-sci-text: #dcfce7;
+    --accent-action: #022c22;
+    --accent-clear: #ef4444;
+    --accent-memory: #059669;
+    --border-color: rgba(16, 185, 129, 0.32);
+    --shadow-color: rgba(16, 185, 129, 0.35);
+    --badge-bg: rgba(16, 185, 129, 0.16);
+    --badge-border: rgba(16, 185, 129, 0.45);
+}
+

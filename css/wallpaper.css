@@ -1,0 +1,481 @@
+/* --------------------------------------------------------------------------
+   13. Математичний Порадник та Помилки
+   -------------------------------------------------------------------------- */
+.error-advisor-content {
+    border-color: #ef4444;
+}
+
+.error-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 14px;
+}
+
+.error-icon {
+    font-size: 1.8rem;
+}
+
+.error-body {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-bottom: 14px;
+}
+
+.error-rule-box, .error-explanation-box, .error-remedy-box {
+    background: var(--bg-display);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    padding: 12px;
+}
+
+.error-remedy-box {
+    border-color: var(--accent-equals);
+    background: rgba(245, 158, 11, 0.08);
+}
+
+.rule-label {
+    display: block;
+    font-size: 0.78rem;
+    font-weight: 800;
+    color: var(--accent-operator);
+    margin-bottom: 4px;
+    text-transform: uppercase;
+}
+
+.error-remedy-box .rule-label {
+    color: var(--accent-equals);
+}
+
+.error-actions-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    margin-bottom: 12px;
+}
+
+.error-actions-grid button {
+    background: var(--bg-btn);
+    border: 1px solid var(--accent-equals);
+    padding: 9px;
+    border-radius: 10px;
+    color: var(--text-primary);
+    font-weight: 700;
+    cursor: pointer;
+    text-align: left;
+    transition: all 0.2s ease;
+}
+
+.error-actions-grid button:hover {
+    background: var(--accent-equals);
+    color: #000;
+}
+
+.advisor-accordion {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-bottom: 14px;
+}
+
+.advisor-item {
+    background: var(--bg-display);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    overflow: hidden;
+}
+
+.advisor-item-head {
+    padding: 12px 14px;
+    font-weight: 700;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    user-select: none;
+}
+
+.advisor-item-head:hover {
+    background: var(--bg-btn-hover);
+}
+
+.advisor-item-body {
+    display: none;
+    padding: 12px 14px;
+    border-top: 1px solid var(--border-color);
+    font-size: 0.88rem;
+    line-height: 1.5;
+    color: var(--text-muted);
+}
+
+.advisor-item.active .advisor-item-body {
+    display: block;
+}
+
+.advisor-item.active .advisor-item-head em {
+    transform: rotate(180deg);
+}
+
+/* --------------------------------------------------------------------------
+   14. 2D Графік Функцій
+   -------------------------------------------------------------------------- */
+.graph-presets-row {
+    display: flex;
+    gap: 6px;
+    flex-wrap: wrap;
+    margin-bottom: 12px;
+}
+
+.canvas-wrapper {
+    background: #000;
+    border: 1px solid var(--border-color);
+    border-radius: 14px;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    margin-bottom: 10px;
+}
+
+#function-canvas {
+    width: 100%;
+    height: auto;
+    display: block;
+}
+
+.graph-controls-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.88rem;
+}
+
+/* --------------------------------------------------------------------------
+   15. Фінанси, RNG, Конвертер
+   -------------------------------------------------------------------------- */
+.finance-body, .rng-body {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.finance-input-row, .rng-range-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+}
+
+.finance-input-row label, .rng-range-row label {
+    font-size: 0.88rem;
+    color: var(--text-muted);
+}
+
+.finance-input-row input, .rng-range-row input {
+    width: 120px;
+    background: var(--bg-display);
+    border: 1px solid var(--border-color);
+    color: var(--text-primary);
+    padding: 8px;
+    border-radius: 8px;
+    text-align: right;
+    font-weight: 700;
+}
+
+.finance-results-box {
+    background: var(--bg-display);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    padding: 12px;
+    margin-top: 8px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.fin-res-line {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.88rem;
+}
+
+.fin-res-line.total-line {
+    border-top: 1px solid var(--border-color);
+    padding-top: 8px;
+    font-size: 1.05rem;
+    color: var(--accent-operator);
+}
+
+.rng-result-display {
+    background: var(--badge-bg);
+    border: 1px solid var(--badge-border);
+    border-radius: 14px;
+    padding: 18px;
+    text-align: center;
+    font-size: 2.2rem;
+    font-weight: 800;
+    color: var(--accent-operator);
+    margin: 8px 0;
+}
+
+.dice-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 6px;
+}
+
+/* Конвертер величин */
+.converter-tabs {
+    display: flex;
+    gap: 6px;
+    flex-wrap: wrap;
+    margin-bottom: 14px;
+}
+
+.conv-tab {
+    background: var(--bg-display);
+    border: 1px solid var(--border-color);
+    padding: 6px 12px;
+    border-radius: 8px;
+    color: var(--text-primary);
+    font-size: 0.82rem;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.conv-tab.active {
+    background: var(--accent-operator);
+    color: #fff;
+}
+
+.converter-body {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-bottom: 14px;
+}
+
+.conv-input-row {
+    display: flex;
+    gap: 8px;
+}
+
+.conv-input-row input {
+    flex-grow: 1;
+    background: var(--bg-display);
+    border: 1px solid var(--border-color);
+    color: var(--text-primary);
+    padding: 10px;
+    border-radius: 10px;
+    font-size: 1.05rem;
+    font-weight: 700;
+}
+
+.conv-input-row select {
+    width: 150px;
+    background: var(--bg-display);
+    border: 1px solid var(--border-color);
+    color: var(--text-primary);
+    padding: 10px;
+    border-radius: 10px;
+    font-weight: 600;
+}
+
+.converter-swap-btn {
+    align-self: center;
+    background: var(--badge-bg);
+    border: 1px solid var(--badge-border);
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    font-size: 1.1rem;
+    color: var(--accent-operator);
+}
+
+.converter-quick-actions {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+/* Програміст */
+.programmer-bases-list {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-bottom: 12px;
+}
+
+.prog-base-item {
+    display: flex;
+    align-items: center;
+    background: var(--bg-display);
+    border: 1px solid var(--border-color);
+    border-radius: 10px;
+    padding: 6px 12px;
+}
+
+.prog-base-label {
+    width: 75px;
+    font-size: 0.82rem;
+    font-weight: 800;
+    color: var(--accent-operator);
+}
+
+.prog-base-item input {
+    flex-grow: 1;
+    background: transparent;
+    border: none;
+    color: var(--text-primary);
+    font-size: 1.05rem;
+    font-family: monospace;
+    font-weight: 700;
+    outline: none;
+}
+
+.prog-bitwise-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 6px;
+}
+
+/* Константи */
+.constants-list {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+    margin-bottom: 12px;
+}
+
+.const-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: var(--bg-display);
+    border: 1px solid var(--border-color);
+    border-radius: 10px;
+    padding: 10px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.const-item:hover {
+    border-color: var(--accent-operator);
+    transform: translateY(-2px);
+}
+
+.const-sym {
+    font-size: 1.4rem;
+    font-weight: 800;
+    color: var(--accent-operator);
+    width: 32px;
+    text-align: center;
+}
+
+.const-desc strong {
+    display: block;
+    font-size: 0.84rem;
+}
+
+.const-desc span {
+    font-size: 0.72rem;
+    color: var(--text-muted);
+}
+
+/* Історія та Експорт */
+.history-search-row input {
+    width: 100%;
+    background: var(--bg-display);
+    border: 1px solid var(--border-color);
+    color: var(--text-primary);
+    padding: 9px 12px;
+    border-radius: 10px;
+    margin-bottom: 10px;
+}
+
+#history-list {
+    list-style: none;
+    max-height: 260px;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    margin-bottom: 12px;
+}
+
+#history-list li {
+    background: var(--bg-display);
+    border: 1px solid var(--border-color);
+    border-radius: 10px;
+    padding: 9px 12px;
+    cursor: pointer;
+    transition: all 0.15s ease;
+}
+
+#history-list li:hover {
+    border-color: var(--accent-operator);
+    transform: translateX(3px);
+}
+
+.calc-eq {
+    color: var(--text-muted);
+    font-size: 0.85rem;
+}
+
+.calc-res {
+    font-size: 1.15rem;
+    font-weight: 800;
+    color: var(--text-primary);
+    text-align: right;
+}
+
+.history-actions {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 8px;
+}
+
+.export-options {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-bottom: 12px;
+}
+
+.export-type-btn {
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+    padding: 10px 14px;
+}
+
+.export-type-btn small {
+    color: var(--text-muted);
+}
+
+.hotkeys-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 12px;
+    font-size: 0.85rem;
+}
+
+.hotkeys-table tr {
+    border-bottom: 1px solid var(--border-color);
+}
+
+.hotkeys-table td {
+    padding: 7px 4px;
+}
+
+.hotkeys-table td:first-child {
+    font-weight: 700;
+    color: var(--accent-operator);
+    width: 40%;
+}
+
+/* --------------------------------------------------------------------------

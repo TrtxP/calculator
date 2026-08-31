@@ -1,0 +1,71 @@
+/* --------------------------------------------------------------------------
+   16. Сповіщення (Toasts)
+   -------------------------------------------------------------------------- */
+.toast-container {
+    position: fixed;
+    bottom: 24px;
+    right: 24px;
+    z-index: 9999;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    pointer-events: none;
+}
+
+.toast {
+    background: var(--bg-card);
+    border: 1px solid var(--accent-operator);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    color: var(--text-primary);
+    padding: 10px 16px;
+    border-radius: 12px;
+    box-shadow: 0 10px 30px var(--shadow-color);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.88rem;
+    font-weight: 700;
+    animation: toastSlideIn 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* --------------------------------------------------------------------------
+   18. НОВЕ v1.8.3: Анімації Кліків та Світіння Дисплея (Dynamic Animations)
+   -------------------------------------------------------------------------- */
+.buttons button {
+    position: relative;
+    overflow: hidden;
+}
+
+.btn-ripple-wave {
+    position: absolute;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(255, 255, 255, 0.45) 0%, rgba(255, 255, 255, 0) 75%);
+    transform: scale(0);
+    animation: buttonRippleAnim 0.5s cubic-bezier(0.2, 0.8, 0.2, 1);
+    pointer-events: none;
+}
+
+@keyframes buttonRippleAnim {
+    to {
+        transform: scale(3.5);
+        opacity: 0;
+    }
+}
+
+.display-result-glow {
+    animation: resultGlowPulse 0.6s cubic-bezier(0.2, 0.9, 0.3, 1);
+}
+
+@keyframes resultGlowPulse {
+    0% {
+        text-shadow: 0 0 30px var(--accent-equals), 0 0 50px var(--accent-operator);
+        transform: scale(1.03);
+    }
+    100% {
+        text-shadow: none;
+        transform: scale(1);
+    }
+}
+
+/* --------------------------------------------------------------------------

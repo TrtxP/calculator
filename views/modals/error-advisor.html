@@ -1,0 +1,28 @@
+    <div class="modal-overlay" id="error-advisor-modal">
+        <div class="modal-content error-advisor-content">
+            <div class="error-header">
+                <span class="error-icon" id="error-diag-icon">⚠️</span>
+                <h3 id="error-diag-title" style="margin-bottom:0;">Заборонена математична дія!</h3>
+            </div>
+            <div class="error-body">
+                <div class="diag-item">
+                    <span class="diag-label">Правило:</span>
+                    <p id="error-diag-rule" class="diag-text"></p>
+                </div>
+                <div class="diag-item">
+                    <span class="diag-label">Чому так сталось:</span>
+                    <p id="error-diag-explanation" class="diag-text"></p>
+                </div>
+                <div class="diag-item">
+                    <span class="diag-label">Як виправити (Порада):</span>
+                    <p id="error-diag-remedy" class="diag-text" style="color:var(--accent-operator); font-weight:700;"></p>
+                </div>
+            </div>
+
+            <div class="error-actions" id="error-actions-container">
+                <!-- Швидкі дії виправлення -->
+            </div>
+
+            <button class="close-btn" onclick="closeModal('error-advisor-modal')">Зрозуміло</button>
+        </div>
+    </div>

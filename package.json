@@ -1,0 +1,19 @@
+{
+  "name": "calculator-pro",
+  "version": "1.8.6",
+  "description": "Calculator Pro v1.8.6 Redstone 4.0 Titanium Ultra",
+  "main": "server.js",
+  "scripts": {
+    "build": "node build.js",
+    "start": "node server.js",
+    "dev": "node build.js && node server.js"
+  },
+  "keywords": [
+    "calculator",
+    "math",
+    "scientific-calculator",
+    "engineering"
+  ],
+  "author": "MaxNT Official",
+  "license": "ISC"
+}

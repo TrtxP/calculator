@@ -1,0 +1,18 @@
+    <div class="modal-overlay" id="math-ref-modal">
+        <div class="modal-content" style="max-width: 680px;">
+            <h3>📖 Інтерактивний Математичний Довідник Формул</h3>
+            
+            <div class="constants-tabs-row" style="margin-top:6px;">
+                <button class="conv-tab active" data-rtab="trig" onclick="switchMathRefTab('trig')">Тригонометрія</button>
+                <button class="conv-tab" data-rtab="algebra" onclick="switchMathRefTab('algebra')">Алгебра & Степені</button>
+                <button class="conv-tab" data-rtab="calculus" onclick="switchMathRefTab('calculus')">Похідні & Границі</button>
+                <button class="conv-tab" data-rtab="geometry" onclick="switchMathRefTab('geometry')">Планіметрія 2D/3D</button>
+            </div>
+
+            <div class="math-ref-list" id="math-ref-container">
+                <!-- Динамічні формули -->
+            </div>
+
+            <button class="close-btn" onclick="closeModal('math-ref-modal')">Закрити</button>
+        </div>
+    </div>

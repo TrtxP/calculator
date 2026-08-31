@@ -1,0 +1,27 @@
+    <div class="modal-overlay" id="graph-modal">
+        <div class="modal-content graph-modal-content">
+            <h3>📈 Інтерактивний 2D Графік Функцій</h3>
+            
+            <div class="graph-presets-row">
+                <button class="conv-tab active" onclick="plotFunction('sin')">sin(x)</button>
+                <button class="conv-tab" onclick="plotFunction('cos')">cos(x)</button>
+                <button class="conv-tab" onclick="plotFunction('tan')">tan(x)</button>
+                <button class="conv-tab" onclick="plotFunction('sqr')">x²</button>
+                <button class="conv-tab" onclick="plotFunction('cube')">x³</button>
+                <button class="conv-tab" onclick="plotFunction('sqrt')">√x</button>
+                <button class="conv-tab" onclick="plotFunction('ln')">ln(x)</button>
+                <button class="conv-tab" onclick="plotFunction('inv')">1/x</button>
+            </div>
+
+            <div class="canvas-wrapper">
+                <canvas id="function-canvas" width="480" height="260"></canvas>
+            </div>
+
+            <div class="graph-controls-row">
+                <span id="graph-current-func">Функція: <strong>y = sin(x)</strong></span>
+                <button class="btn-secondary" onclick="resetGraphZoom()">Скинути масштаб</button>
+            </div>
+
+            <button class="close-btn" onclick="closeModal('graph-modal')">Закрити</button>
+        </div>
+    </div>

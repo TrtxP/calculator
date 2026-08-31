@@ -1,0 +1,41 @@
+    <div class="modal-overlay" id="rng-modal">
+        <div class="modal-content rng-modal-content">
+            <h3>🎲 Генератор Випадкових Чисел та Кубики</h3>
+            <div class="rng-body">
+                <div class="rng-range-row">
+                    <label>Від (Min):</label>
+                    <input type="number" id="rng-min" value="1">
+                    <label>До (Max):</label>
+                    <input type="number" id="rng-max" value="100">
+                </div>
+
+                <div class="rng-result-display" id="rng-result">
+                    77
+                </div>
+
+                <div class="rng-actions-row">
+                    <button class="btn-secondary" style="width:100%;" onclick="generateRandomNumber()">⚡ Згенерувати випадкове число</button>
+                </div>
+
+                <div class="dice-section" style="margin-top:14px;">
+                    <label style="display:block; font-size:0.86rem; color:var(--text-muted); margin-bottom:6px;">Кинути гральні кубики:</label>
+                    <div class="dice-grid">
+                        <button class="btn-secondary" onclick="rollDice(4)">d4</button>
+                        <button class="btn-secondary" onclick="rollDice(6)">d6</button>
+                        <button class="btn-secondary" onclick="rollDice(8)">d8</button>
+                        <button class="btn-secondary" onclick="rollDice(10)">d10</button>
+                        <button class="btn-secondary" onclick="rollDice(12)">d12</button>
+                        <button class="btn-secondary" onclick="rollDice(20)">d20</button>
+                        <button class="btn-secondary" onclick="rollDice(100)">d100</button>
+                        <button class="btn-secondary" onclick="flipCoin()">🪙 Монета</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="converter-quick-actions" style="margin-top:14px;">
+                <button class="btn-secondary" onclick="insertRngToCalc()">📥 Вставити в калькулятор</button>
+            </div>
+
+            <button class="close-btn" onclick="closeModal('rng-modal')">Закрити</button>
+        </div>
+    </div>

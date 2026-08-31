@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+<%- include('partials/head.ejs') %>
+    <!-- Головна таблиця стилів (Master Stylesheet) -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body data-theme="bordeaux_luxury" class="font-inter">
+
+<%- include('partials/backgrounds.ejs') %>
+
+    <div class="main-wrapper">
+<%- include('partials/mobile-header.ejs') %>
+
+        <div class="app-container">
+            <!-- Декоративні кути Titanium Laser Chamfer -->
+            <div class="app-corner app-corner-tl"></div>
+            <div class="app-corner app-corner-tr"></div>
+            <div class="app-corner app-corner-bl"></div>
+            <div class="app-corner app-corner-br"></div>
+
+            <!-- Бічне меню керування (Sidebar) -->
+<%- include('partials/sidebar.ejs') %>
+
+            <!-- Основний блок калькулятора -->
+            <main class="calculator">
+                <!-- Інтерактивний дисплей -->
+<%- include('partials/display.ejs') %>
+
+                <!-- Клавіатура калькулятора -->
+<%- include('partials/keyboard.ejs') %>
+            </main>
+        </div>
+
+        <!-- Преміальний фірмовий футер -->
+<%- include('partials/footer.ejs') %>
+    </div>
+
+    <!-- Контейнер для спливаючих сповіщень (Toasts) -->
+<%- include('partials/toast.ejs') %>
+
+    <!-- ==========================================================================
+         Модальні вікна (Modals)
+         ========================================================================== -->
+    
+    <!-- Modal: vector-calc -->
+    <%- include('modals/vector-calc.ejs') %>
+
+    <!-- Modal: complex-calc -->
+    <%- include('modals/complex-calc.ejs') %>
+
+    <!-- Modal: math-ref -->
+    <%- include('modals/math-ref.ejs') %>
+
+    <!-- Modal: trig-circle -->
+    <%- include('modals/trig-circle.ejs') %>
+
+    <!-- Modal: constants-search -->
+    <%- include('modals/constants-search.ejs') %>
+
+    <!-- Modal: formula-solver -->
+    <%- include('modals/formula-solver.ejs') %>
+
+    <!-- Modal: triangle-solver -->
+    <%- include('modals/triangle-solver.ejs') %>
+
+    <!-- Modal: loan-calc -->
+    <%- include('modals/loan-calc.ejs') %>
+
+    <!-- Modal: bookmarks -->
+    <%- include('modals/bookmarks.ejs') %>
+
+    <!-- Modal: tape -->
+    <%- include('modals/tape.ejs') %>
+
+    <!-- Modal: prime-gcd -->
+    <%- include('modals/prime-gcd.ejs') %>
+
+    <!-- Modal: deal-calc -->
+    <%- include('modals/deal-calc.ejs') %>
+
+    <!-- Modal: func-eval -->
+    <%- include('modals/func-eval.ejs') %>
+
+    <!-- Modal: matrix -->
+    <%- include('modals/matrix.ejs') %>
+
+    <!-- Modal: bitmask -->
+    <%- include('modals/bitmask.ejs') %>
+
+    <!-- Modal: percent -->
+    <%- include('modals/percent.ejs') %>
+
+    <!-- Modal: currency -->
+    <%- include('modals/currency.ejs') %>
+
+    <!-- Modal: settings -->
+    <%- include('modals/settings.ejs') %>
+
+    <!-- Modal: color-studio -->
+    <%- include('modals/color-studio.ejs') %>
+
+    <!-- Modal: quadratic -->
+    <%- include('modals/quadratic.ejs') %>
+
+    <!-- Modal: stats -->
+    <%- include('modals/stats.ejs') %>
+
+    <!-- Modal: date -->
+    <%- include('modals/date.ejs') %>
+
+    <!-- Modal: memory -->
+    <%- include('modals/memory.ejs') %>
+
+    <!-- Modal: font -->
+    <%- include('modals/font.ejs') %>
+
+    <!-- Modal: error-advisor -->
+    <%- include('modals/error-advisor.ejs') %>
+
+    <!-- Modal: advisor -->
+    <%- include('modals/advisor.ejs') %>
+
+    <!-- Modal: graph -->
+    <%- include('modals/graph.ejs') %>
+
+    <!-- Modal: wallpaper -->
+    <%- include('modals/wallpaper.ejs') %>
+
+    <!-- Modal: finance -->
+    <%- include('modals/finance.ejs') %>
+
+    <!-- Modal: rng -->
+    <%- include('modals/rng.ejs') %>
+
+    <!-- Modal: theme -->
+    <%- include('modals/theme.ejs') %>
+
+    <!-- Modal: converter -->
+    <%- include('modals/converter.ejs') %>
+
+    <!-- Modal: programmer -->
+    <%- include('modals/programmer.ejs') %>
+
+    <!-- Modal: history -->
+    <%- include('modals/history.ejs') %>
+
+    <!-- Modal: export -->
+    <%- include('modals/export.ejs') %>
+
+    <!-- Modal: hotkeys -->
+    <%- include('modals/hotkeys.ejs') %>
+
+    <!-- Modal: command-palette -->
+    <%- include('modals/command-palette.ejs') %>
+
+    <!-- Modal: shortcuts -->
+    <%- include('modals/shortcuts.ejs') %>
+
+    <!-- Modal: home -->
+    <%- include('modals/home.ejs') %>
+
+    <!-- Modal: about -->
+    <%- include('modals/about.ejs') %>
+
+    <!-- Modal: help -->
+    <%- include('modals/help.ejs') %>
+
+    <!-- Мобільна нижня панель швидких дій (Mobile Bottom Bar) -->
+<%- include('partials/mobile-bottom-bar.ejs') %>
+
+    <!-- Головний скрипт застосунку (Master Application Script) -->
+    <script src="app.js"></script>
+</body>
+</html>

@@ -1,0 +1,114 @@
+/* --------------------------------------------------------------------------
+   7. Redstone 3.4 Bordeaux Master Footer - Компактний
+   -------------------------------------------------------------------------- */
+.footer {
+    width: 100%;
+    background: var(--bg-card);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    padding: 6px 12px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 6px;
+    font-size: 0.72rem;
+}
+
+.footer-left, .footer-right {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    flex-wrap: wrap;
+}
+
+.footer-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    background: var(--badge-bg);
+    border: 1px solid var(--badge-border);
+    padding: 2px 7px;
+    border-radius: 10px;
+    color: var(--accent-operator);
+    font-weight: 800;
+    font-size: 0.70rem;
+    letter-spacing: 0.2px;
+}
+
+.pulse-dot {
+    width: 6px;
+    height: 6px;
+    background-color: var(--accent-operator);
+    border-radius: 50%;
+    box-shadow: 0 0 6px var(--accent-operator);
+    animation: pulseGlow 1.8s infinite ease-in-out;
+}
+
+@keyframes pulseGlow {
+    0%, 100% { transform: scale(1); opacity: 1; }
+    50% { transform: scale(1.35); opacity: 0.5; }
+}
+
+.footer-stat, .footer-timer {
+    color: var(--text-muted);
+    font-size: 0.70rem;
+    padding: 2px 6px;
+    background: var(--badge-bg);
+    border: 1px solid var(--badge-border);
+    border-radius: 6px;
+}
+
+.footer-center {
+    display: flex;
+    align-items: center;
+}
+
+.copyright-line {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    color: var(--text-muted);
+    font-weight: 600;
+    flex-wrap: wrap;
+    font-size: 0.70rem;
+}
+
+.author-tag {
+    color: var(--text-primary);
+    font-weight: 800;
+}
+
+.edition-tag {
+    color: var(--accent-operator);
+    font-weight: 700;
+}
+
+.dot-separator {
+    opacity: 0.4;
+}
+
+.footer-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 3px;
+    background: var(--bg-btn);
+    border: 1px solid var(--border-color);
+    padding: 3px 6px;
+    border-radius: 6px;
+    color: var(--text-primary);
+    font-size: 0.70rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.15s ease;
+}
+
+.footer-btn:hover {
+    background: var(--bg-btn-hover);
+    border-color: var(--accent-operator);
+    transform: translateY(-1px);
+}
+
+/* --------------------------------------------------------------------------

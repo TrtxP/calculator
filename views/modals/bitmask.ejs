@@ -1,0 +1,37 @@
+    <div class="modal-overlay" id="bitmask-modal">
+        <div class="modal-content bitmask-modal-content">
+            <h3>👾 Інтерактивний Бітовий Інспектор</h3>
+            
+            <div class="bits-inputs-row">
+                <div class="bit-input-col">
+                    <label>Десяткове число (DEC):</label>
+                    <input type="number" id="bit-dec-input" value="42" oninput="syncFromDecInput(this.value)">
+                </div>
+                <div class="bit-input-col">
+                    <label>Шістнадцяткове (HEX):</label>
+                    <input type="text" id="bit-hex-input" value="0x2A" oninput="syncFromHexInput(this.value)">
+                </div>
+            </div>
+
+            <div class="bits-matrix-wrapper">
+                <span class="matrix-label">Бітова маска (32 біти — клікніть для перемикання 0/1):</span>
+                <div class="bits-matrix-grid" id="bits-interactive-grid">
+                    <!-- 32 кнопки бітів -->
+                </div>
+            </div>
+
+            <div class="bits-ops-row">
+                <button class="btn-secondary" onclick="bitwiseMaskOp('invert')">~ Інвертувати (NOT)</button>
+                <button class="btn-secondary" onclick="bitwiseMaskOp('shl')">&lt;&lt; Зсув вліво</button>
+                <button class="btn-secondary" onclick="bitwiseMaskOp('shr')">&gt;&gt; Зсув вправо</button>
+                <button class="btn-secondary" onclick="bitwiseMaskOp('clear')">🧹 Очистити всі (0)</button>
+                <button class="btn-secondary" onclick="bitwiseMaskOp('fill')">⚡ Заповнити всі (1)</button>
+            </div>
+
+            <div class="converter-quick-actions" style="margin-top:14px;">
+                <button class="btn-secondary" onclick="insertBitmaskToCalc()">📥 Вставити DEC значення в калькулятор</button>
+            </div>
+
+            <button class="close-btn" onclick="closeModal('bitmask-modal')">Закрити</button>
+        </div>
+    </div>

@@ -1,0 +1,48 @@
+    <div class="modal-overlay" id="matrix-modal">
+        <div class="modal-content matrix-modal-content">
+            <h3>🧮 Матричний Калькулятор (2x2 та 3x3)</h3>
+            
+            <div class="matrix-size-selector">
+                <button class="conv-tab active" data-msize="2" onclick="setMatrixSize(2)">Матриця 2×2</button>
+                <button class="conv-tab" data-msize="3" onclick="setMatrixSize(3)">Матриця 3×3</button>
+            </div>
+
+            <div class="matrix-calc-body">
+                <div class="matrix-input-section">
+                    <span class="matrix-label">Елементи матриці A:</span>
+                    <div class="matrix-grid matrix-2x2" id="matrix-a-grid">
+                        <input type="number" id="m_a_00" value="4" oninput="solveMatrixMath()">
+                        <input type="number" id="m_a_01" value="2" oninput="solveMatrixMath()">
+                        <input type="number" id="m_a_10" value="1" oninput="solveMatrixMath()">
+                        <input type="number" id="m_a_11" value="3" oninput="solveMatrixMath()">
+                    </div>
+                </div>
+
+                <div class="matrix-results-section">
+                    <div class="matrix-metric-card">
+                        <span>Визначник (det A):</span>
+                        <strong id="mat-det-val">10</strong>
+                    </div>
+                    <div class="matrix-metric-card">
+                        <span>Слід матриці (Trace):</span>
+                        <strong id="mat-trace-val">7.00</strong>
+                    </div>
+                    <div class="matrix-metric-card">
+                        <span>Транспонована Aᵀ:</span>
+                        <div class="matrix-grid-mini" id="mat-transpose-val"></div>
+                    </div>
+                    <div class="matrix-metric-card">
+                        <span>Обернена матриця A⁻¹:</span>
+                        <div class="matrix-grid-mini" id="mat-inverse-val"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="converter-quick-actions" style="margin-top:14px;">
+                <button class="btn-secondary" onclick="insertMatrixDetToCalc()">📥 Вставити det(A) в калькулятор</button>
+                <button class="btn-secondary btn-danger" onclick="resetMatrixInputs()">Скинути матрицю</button>
+            </div>
+
+            <button class="close-btn" onclick="closeModal('matrix-modal')">Закрити</button>
+        </div>
+    </div>

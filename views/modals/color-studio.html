@@ -1,0 +1,71 @@
+    <div class="modal-overlay" id="color-studio-modal">
+        <div class="modal-content color-studio-content">
+            <h3>🌈 Кастомізатор Кольорів Інтерфейсу</h3>
+            
+            <div class="color-picker-box">
+                <div class="color-control-item">
+                    <label>Головний акцентний колір (Оператори & Кнопки):</label>
+                    <div class="picker-input-group">
+                        <input type="color" id="picker-accent-color" value="#8b1538" oninput="applyRealtimeColor('accent', this.value)">
+                        <input type="text" id="hex-accent-color" value="#8b1538" onchange="applyRealtimeColor('accent', this.value)">
+                    </div>
+                </div>
+
+                <div class="color-control-item">
+                    <label>Фоновий відтінок картки (Background Tint):</label>
+                    <div class="picker-input-group">
+                        <input type="color" id="picker-bg-color" value="#2a050c" oninput="applyRealtimeColor('bg', this.value)">
+                        <input type="text" id="hex-bg-color" value="#2a050c" onchange="applyRealtimeColor('bg', this.value)">
+                    </div>
+                </div>
+            </div>
+
+            <!-- 3-Канальний Живий HSL мікшер -->
+            <div class="color-mixer-box">
+                <h4 style="font-size:0.9rem; margin-bottom:6px;">🎛️ 3-Канальний Живий Мікшер (HSL Master):</h4>
+                <div class="color-channel-row">
+                    <label for="slider-accent-hue">Колірний тон (Hue): <span id="hue-accent-val">340°</span></label>
+                    <input type="range" id="slider-accent-hue" class="color-channel-slider" min="0" max="360" value="340" oninput="updateLiveHueMixer(this.value)">
+                </div>
+                <div class="color-channel-row">
+                    <label for="slider-accent-sat">Насиченість (Saturation): <span id="sat-accent-val">80%</span></label>
+                    <input type="range" id="slider-accent-sat" class="color-channel-slider" min="20" max="100" value="80" oninput="updateLiveSatMixer(this.value)">
+                </div>
+                <div class="color-channel-row">
+                    <label for="slider-bg-dark">Глибина темряви фону: <span id="dark-bg-val">8%</span></label>
+                    <input type="range" id="slider-bg-dark" class="color-channel-slider" min="2" max="25" value="8" oninput="updateLiveDarkMixer(this.value)">
+                </div>
+                
+                <h4 style="font-size:0.88rem; margin:8px 0 4px;">🎨 Фірмові Гармонії (1-Click Palette):</h4>
+                <div class="harmony-presets-grid">
+                    <button class="harmony-btn" onclick="applyColorHarmony('wine_gold')">🍷 Wine & Gold</button>
+                    <button class="harmony-btn" onclick="applyColorHarmony('ruby_cyber')">⚡ Ruby Cyber</button>
+                    <button class="harmony-btn" onclick="applyColorHarmony('blood_moon')">🌕 Blood Moon</button>
+                    <button class="harmony-btn" onclick="applyColorHarmony('cosmic_amethyst')">🔮 Amethyst Spark</button>
+                    <button class="harmony-btn" onclick="applyColorHarmony('emerald_wine')">🌲 Emerald Wine</button>
+                </div>
+            </div>
+
+            <h4 style="font-size:0.88rem; margin:12px 0 8px;">✨ Бордові, неонові та пастельні акценти:</h4>
+            <div class="accent-swatches-grid">
+                <button class="accent-swatch bordeaux-swatch" onclick="setCustomAccent('#8b1538', 'Bordeaux Imperial Wine')" title="Bordeaux Imperial Wine"></button>
+                <button class="accent-swatch velvet-swatch" onclick="setCustomAccent('#6b0f24', 'Velvet Burgundy')" title="Velvet Burgundy"></button>
+                <button class="accent-swatch magma-swatch" onclick="setCustomAccent('#b91c1c', 'Volcanic Crimson')" title="Volcanic Crimson"></button>
+                <button class="accent-swatch redstone2-swatch" onclick="setCustomAccent('#ff2a5f', 'Redstone Quantum')" title="Redstone Quantum"></button>
+                <button class="accent-swatch cyan-swatch" onclick="setCustomAccent('#2dd4bf', 'Teal Neon')" title="Teal Neon"></button>
+                <button class="accent-swatch amber-swatch" onclick="setCustomAccent('#f59e0b', 'Amber Gold')" title="Amber Gold"></button>
+                <button class="accent-swatch emerald-swatch" onclick="setCustomAccent('#10b981', 'Emerald Jade')" title="Emerald Jade"></button>
+                <button class="accent-swatch lime-swatch" onclick="setCustomAccent('#84cc16', 'Cyber Lime')" title="Cyber Lime"></button>
+                <button class="accent-swatch purple-swatch" onclick="setCustomAccent('#c084fc', 'Ultra Violet')" title="Ultra Violet"></button>
+                <button class="accent-swatch amethyst-swatch" onclick="setCustomAccent('#9333ea', 'Royal Amethyst')" title="Royal Amethyst"></button>
+                <button class="accent-swatch pink-swatch" onclick="setCustomAccent('#f472b6', 'Sakura Pink')" title="Sakura Pink"></button>
+                <button class="accent-swatch blue-swatch" onclick="setCustomAccent('#38bdf8', 'Arctic Sky')" title="Arctic Sky"></button>
+            </div>
+
+            <div class="modal-actions" style="margin-top:16px;">
+                <button class="btn-secondary" onclick="resetCustomColors()">Скинути кольори теми</button>
+                <button class="close-btn" style="margin-top:0;" onclick="closeModal('color-studio-modal')">Застосувати</button>
+            </div>
+        </div>
+    </div>
+

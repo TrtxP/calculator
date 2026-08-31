@@ -1,0 +1,60 @@
+    <div class="modal-overlay" id="triangle-solver-modal">
+        <div class="modal-content" style="max-width: 650px;">
+            <h3>📐 Геометричний Розв'язувач Трикутників</h3>
+            
+            <div class="date-tabs">
+                <button class="conv-tab active" data-ttab="sss" onclick="switchTriangleMode('sss')">3 Сторони (a, b, c)</button>
+                <button class="conv-tab" data-ttab="sas" onclick="switchTriangleMode('sas')">2 Сторони + Кут (a, b, γ)</button>
+                <button class="conv-tab" data-ttab="asa" onclick="switchTriangleMode('asa')">Сторона + 2 Кути (a, β, γ)</button>
+            </div>
+
+            <div class="triangle-sections-wrapper">
+                <!-- Введення параметрів -->
+                <div class="triangle-inputs-col">
+                    <div id="tri-input-row-1" class="deal-input-row">
+                        <label id="tri-lbl-1">Сторона a:</label>
+                        <input type="number" id="tri-val-1" value="5" min="0.001" oninput="solveTriangleGeometry()">
+                    </div>
+                    <div id="tri-input-row-2" class="deal-input-row">
+                        <label id="tri-lbl-2">Сторона b:</label>
+                        <input type="number" id="tri-val-2" value="6" min="0.001" oninput="solveTriangleGeometry()">
+                    </div>
+                    <div id="tri-input-row-3" class="deal-input-row">
+                        <label id="tri-lbl-3">Сторона c:</label>
+                        <input type="number" id="tri-val-3" value="7" min="0.001" oninput="solveTriangleGeometry()">
+                    </div>
+
+                    <div style="margin-top:10px;">
+                        <span class="triangle-badge-type" id="tri-type-badge">Різносторонній, Гострокутний</span>
+                    </div>
+                </div>
+
+                <!-- Результати та метрики -->
+                <div class="triangle-data-grid">
+                    <div class="triangle-stat-card">
+                        <small>Площа S (Герон):</small>
+                        <strong id="tri-res-area">14.697</strong>
+                    </div>
+                    <div class="triangle-stat-card">
+                        <small>Периметр P:</small>
+                        <strong id="tri-res-perim">18.00</strong>
+                    </div>
+                    <div class="triangle-stat-card">
+                        <small>Кути (α / β / γ):</small>
+                        <strong id="tri-res-angles" style="font-size:0.82rem;">44.4° / 57.1° / 78.5°</strong>
+                    </div>
+                    <div class="triangle-stat-card">
+                        <small>Радіуси (r / R):</small>
+                        <strong id="tri-res-radii" style="font-size:0.82rem;">r = 1.63 | R = 3.57</strong>
+                    </div>
+                </div>
+            </div>
+
+            <div class="converter-quick-actions" style="margin-top:14px;">
+                <button class="btn-secondary" onclick="insertTriangleAreaToCalc()">📥 Вставити Площу S в калькулятор</button>
+                <button class="btn-secondary" onclick="insertTrianglePerimToCalc()">📥 Вставити Периметр P</button>
+            </div>
+
+            <button class="close-btn" onclick="closeModal('triangle-solver-modal')">Закрити</button>
+        </div>
+    </div>
