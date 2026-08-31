@@ -2,9 +2,15 @@
 // Керування модальними вікнами
 // ==========================================================================
 function openModal(modalId) {
-    audio.playClick(700);
     const modal = document.getElementById(modalId);
     if (modal) {
+        // Синхронізуємо контроли налаштувань ДО показу модалки: один layout
+        // з фінальними значеннями замість повторного layout посеред анімації
+        // (помітно на мобільних при відкритті «Опцій»)
+        if (modalId === 'settings-modal') {
+            syncSettingsControls();
+        }
+
         modal.classList.add('active');
         if (modalId === 'vector-calc-modal') {
             solveVectorMath();
@@ -109,33 +115,18 @@ function openModal(modalId) {
         if (modalId === 'font-modal') {
             setFontScale(state.fontScale, true);
         }
-        if (modalId === 'settings-modal') {
-            const vSlider = document.getElementById('setting-volume');
-            const vVal = document.getElementById('setting-vol-val');
-            const sProf = document.getElementById('setting-sound-profile');
-            const sSep = document.getElementById('setting-separator');
-            const sPrec = document.getElementById('setting-precision');
-            const sAng = document.getElementById('setting-angle');
-            const sGlass = document.getElementById('setting-glass');
-            const sPart = document.getElementById('setting-particles');
-            const sFScale = document.getElementById('setting-font-scale');
-            if (vSlider) vSlider.value = Math.round(state.soundVolume * 100);
-            if (vVal) vVal.innerText = `${Math.round(state.soundVolume * 100)}%`;
-            if (sProf) sProf.value = state.soundProfile;
-            if (sSep) sSep.value = state.thousandSeparator;
-            if (sPrec) sPrec.value = state.precisionMode;
-            if (sAng) sAng.value = state.angleMode;
-            if (sGlass) sGlass.value = state.glassIntensity;
-            if (sPart) sPart.value = state.particlesEnabled ? 'on' : 'off';
-            if (sFScale) sFScale.value = state.fontScale.toString();
-        }
     }
+
+    // Клік відкладаємо на наступний кадр: ініціалізація AudioContext та
+    // осцилятора не конкурує з першим layout/animated кадром відкриття
+    // (мікролеги на мобільних пристроях)
+    requestAnimationFrame(() => audio.playClick(700));
 }
 
 function closeModal(modalId) {
-    audio.playClick(450);
     const modal = document.getElementById(modalId);
     if (modal) modal.classList.remove('active');
+    requestAnimationFrame(() => audio.playClick(450));
 }
 
 window.onclick = function (event) {

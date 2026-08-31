@@ -1,13 +1,50 @@
 // ==========================================================================
 // Центр Налаштувань
 // ==========================================================================
+let volumeSaveTimer = null;
+let lastVolumeClickTime = 0;
+
+function syncSettingsControls() {
+    const vSlider = document.getElementById('setting-volume');
+    const vVal = document.getElementById('setting-vol-val');
+    const sProf = document.getElementById('setting-sound-profile');
+    const sSep = document.getElementById('setting-separator');
+    const sPrec = document.getElementById('setting-precision');
+    const sAng = document.getElementById('setting-angle');
+    const sGlass = document.getElementById('setting-glass');
+    const sPart = document.getElementById('setting-particles');
+    const sFScale = document.getElementById('setting-font-scale');
+    if (vSlider) vSlider.value = Math.round(state.soundVolume * 100);
+    if (vVal) vVal.innerText = `${Math.round(state.soundVolume * 100)}%`;
+    if (sProf) sProf.value = state.soundProfile;
+    if (sSep) sSep.value = state.thousandSeparator;
+    if (sPrec) sPrec.value = state.precisionMode;
+    if (sAng) sAng.value = state.angleMode;
+    if (sGlass) sGlass.value = state.glassIntensity;
+    if (sPart) sPart.value = state.particlesEnabled ? 'on' : 'off';
+    if (sFScale) sFScale.value = state.fontScale.toString();
+}
+
 function updateSettingsVolume(val) {
     state.soundVolume = parseFloat(val) / 100;
-    localStorage.setItem('calc_sound_vol', state.soundVolume.toString());
     const label = document.getElementById('setting-vol-val');
     if (label) label.innerText = `${val}%`;
-    audio.playClick(750);
+
+    // oninput спрацьовує ~60 разів/сек під час перетягування на мобільних:
+    // обмежуємо частоту звуку і відкладаємо запис у localStorage,
+    // щоб не блокувати головний потік на кожен крок слайдера
+    const now = performance.now();
+    if (now - lastVolumeClickTime > 180) {
+        lastVolumeClickTime = now;
+        audio.playClick(750);
+    }
+
     updateAudioUI();
+
+    clearTimeout(volumeSaveTimer);
+    volumeSaveTimer = setTimeout(() => {
+        localStorage.setItem('calc_sound_vol', state.soundVolume.toString());
+    }, 300);
 }
 
 function setSettingsSoundProfile(val) {
