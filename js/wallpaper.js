@@ -71,7 +71,10 @@ function applyWallpaperToDom() {
         dom.bgWallpaper.style.backgroundImage = 'none';
         dom.bgWallpaper.classList.add('wp-grid');
     } else if (state.currentWallpaper === 'custom' && state.customWallpaperUrl) {
-        dom.bgWallpaper.style.backgroundImage = `url('${state.customWallpaperUrl}')`;
+        // Екрануємо лапки та бекслеші: URL з ')" інакше розривав би url(...)
+        // і дозволяв ін'єкцію довільних CSS-правил
+        const safeWpUrl = state.customWallpaperUrl.replace(/["'\\]/g, '\\$&');
+        dom.bgWallpaper.style.backgroundImage = `url("${safeWpUrl}")`;
     } else {
         dom.bgWallpaper.style.backgroundImage = 'none';
     }

@@ -37,12 +37,16 @@ function renderTapeRoll() {
 
         row.innerHTML = `
             <div style="flex-grow:1;">
-                <div class="tape-line-eq">${item.equation} = <strong>${item.result}</strong></div>
-                <small style="color:#6b7280; font-size:0.72rem;">[${item.time}]</small>
+                <div class="tape-line-eq">${escapeHtml(item.equation)} = <strong>${escapeHtml(item.result)}</strong></div>
+                <small style="color:#6b7280; font-size:0.72rem;">[${escapeHtml(item.time)}]</small>
             </div>
-            <input type="text" class="tape-line-note-input" placeholder="Додати нотатку..." value="${item.note || ''}" onchange="updateTapeNote(${idx}, this.value)">
-            <button class="btn-secondary" style="padding:2px 6px; font-size:0.75rem;" onclick="insertTapeValToCalc('${item.result}')" title="Вставити в калькулятор">📥</button>
+            <input type="text" class="tape-line-note-input" placeholder="Додати нотатку..." onchange="updateTapeNote(${idx}, this.value)">
+            <button class="btn-secondary" style="padding:2px 6px; font-size:0.75rem;" title="Вставити в калькулятор">📥</button>
         `;
+        // Нотатку та обробник кнопки встановлюємо без HTML-інтерполяції
+        // (захист від ін'єкції в атрибут value та onclick)
+        row.querySelector('.tape-line-note-input').value = item.note || '';
+        row.querySelector('.btn-secondary').onclick = () => insertTapeValToCalc(item.result);
         container.appendChild(row);
     });
 

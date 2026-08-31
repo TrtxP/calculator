@@ -26,10 +26,10 @@ function renderHistory(items = state.history) {
         li.title = 'Натисніть, щоб підставити результат у калькулятор';
         li.innerHTML = `
             <div style="display:flex; justify-content:space-between; align-items:center;">
-                <span class="calc-eq">${item.equation} =</span>
-                <span style="font-size:0.75rem; color:var(--text-muted);">${item.time || ''}</span>
+                <span class="calc-eq">${escapeHtml(item.equation)} =</span>
+                <span style="font-size:0.75rem; color:var(--text-muted);">${escapeHtml(item.time || '')}</span>
             </div>
-            <div class="calc-res">${formatDisplayString(item.result)}</div>
+            <div class="calc-res">${escapeHtml(formatDisplayString(item.result))}</div>
         `;
         li.onclick = () => {
             audio.playClick();
@@ -136,7 +136,15 @@ function showToast(message, icon = 'ℹ️') {
     if (!dom.toastContainer) return;
     const toast = document.createElement('div');
     toast.className = 'toast';
-    toast.innerHTML = `<span>${icon}</span> <span>${message}</span>`;
+    // textContent замість innerHTML: повідомлення часто містить дані
+    // користувача (вирази, результати, назви записів)
+    const iconSpan = document.createElement('span');
+    iconSpan.textContent = icon;
+    const msgSpan = document.createElement('span');
+    msgSpan.textContent = message;
+    toast.appendChild(iconSpan);
+    toast.appendChild(document.createTextNode(' '));
+    toast.appendChild(msgSpan);
     dom.toastContainer.appendChild(toast);
     setTimeout(() => { if (toast.parentNode) toast.parentNode.removeChild(toast); }, 2400);
 }

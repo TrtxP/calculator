@@ -10,7 +10,8 @@ const fs = require('fs');
 const path = require('path');
 const { exec } = require('child_process');
 
-const PORT = process.env.PORT || 3000;
+// Лише числовий порт: інакше значення PORT потрапляло б у shell-команду
+const PORT = Number.parseInt(process.env.PORT, 10) || 3000;
 const ROOT_DIR = __dirname;
 
 const MIME_TYPES = {
@@ -30,16 +31,35 @@ const MIME_TYPES = {
 };
 
 const server = http.createServer((req, res) => {
+    if (req.method !== 'GET') {
+        res.writeHead(405, { 'Content-Type': 'text/plain; charset=UTF-8' });
+        res.end('405 Method Not Allowed');
+        return;
+    }
+
     // Безпечне декодування URL
-    let safeUrl = decodeURI(req.url.split('?')[0]);
+    let safeUrl;
+    try {
+        safeUrl = decodeURIComponent(req.url.split('?')[0]);
+    } catch (e) {
+        res.writeHead(400, { 'Content-Type': 'text/plain; charset=UTF-8' });
+        res.end('400 Bad Request');
+        return;
+    }
+    if (safeUrl.includes('\0')) {
+        res.writeHead(400, { 'Content-Type': 'text/plain; charset=UTF-8' });
+        res.end('400 Bad Request');
+        return;
+    }
     if (safeUrl === '/' || safeUrl === '') {
         safeUrl = '/index.html';
     }
 
     const filePath = path.normalize(path.join(ROOT_DIR, safeUrl));
 
-    // Захист від Path Traversal
-    if (!filePath.startsWith(ROOT_DIR)) {
+    // Захист від Path Traversal: точна межа каталогу — шлях поза ROOT_DIR
+    // (включно з сусідніми каталогами на кшталт D:\calculator-other) заборонено
+    if (filePath !== ROOT_DIR && !filePath.startsWith(ROOT_DIR + path.sep)) {
         res.writeHead(403, { 'Content-Type': 'text/plain; charset=UTF-8' });
         res.end('403 Forbidden');
         return;

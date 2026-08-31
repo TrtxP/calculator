@@ -16,15 +16,21 @@ function renderBookmarks() {
         card.className = 'bookmark-card';
         card.innerHTML = `
             <div class="bookmark-card-body">
-                <span class="bookmark-tag-chip">${bm.tag || 'Збережено'}</span>
-                <div style="font-weight:700; color:var(--text-primary); font-size:0.9rem; line-height:1.35;">${bm.title}</div>
-                <div class="bookmark-card-value">${bm.val}</div>
+                <span class="bookmark-tag-chip">${escapeHtml(bm.tag || 'Збережено')}</span>
+                <div style="font-weight:700; color:var(--text-primary); font-size:0.9rem; line-height:1.35;">${escapeHtml(bm.title)}</div>
+                <div class="bookmark-card-value">${escapeHtml(bm.val)}</div>
             </div>
             <div class="bookmark-actions">
-                <button class="btn-secondary" style="padding:4px 8px; font-size:0.75rem;" onclick="insertBookmarkVal('${bm.val}')" title="Вставити в калькулятор">📥 Вставити</button>
-                <button class="btn-secondary btn-danger" style="padding:4px 8px; font-size:0.75rem;" onclick="deleteBookmark(${bm.id})">🗑️</button>
+                <button class="btn-secondary" style="padding:4px 8px; font-size:0.75rem;" title="Вставити в калькулятор">📥 Вставити</button>
+                <button class="btn-secondary btn-danger" style="padding:4px 8px; font-size:0.75rem;">🗑️</button>
             </div>
         `;
+        // Обробники через замикання замість inline onclick з інтерполяцією
+        // значень користувача (захист від ін'єкції в HTML-атрибут)
+        const insertBtn = card.querySelector('.bookmark-actions .btn-secondary:not(.btn-danger)');
+        const deleteBtn = card.querySelector('.bookmark-actions .btn-danger');
+        if (insertBtn) insertBtn.onclick = () => insertBookmarkVal(bm.val);
+        if (deleteBtn) deleteBtn.onclick = () => deleteBookmark(bm.id);
         container.appendChild(card);
     });
 }

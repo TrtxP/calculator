@@ -16,6 +16,17 @@
  * ==========================================================================
  */
 
+// Екранування HTML-спецсимволів (захист від XSS при рендерингу
+// користувацьких даних: історія, стрічка, закладки, тоости тощо)
+function escapeHtml(value) {
+    return String(value)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#39;');
+}
+
 // Стан застосунку (Application State)
 const state = {
     currentInput: '0',
@@ -2016,15 +2027,21 @@ function renderBookmarks() {
         card.className = 'bookmark-card';
         card.innerHTML = `
             <div class="bookmark-card-body">
-                <span class="bookmark-tag-chip">${bm.tag || 'Збережено'}</span>
-                <div style="font-weight:700; color:var(--text-primary); font-size:0.9rem; line-height:1.35;">${bm.title}</div>
-                <div class="bookmark-card-value">${bm.val}</div>
+                <span class="bookmark-tag-chip">${escapeHtml(bm.tag || 'Збережено')}</span>
+                <div style="font-weight:700; color:var(--text-primary); font-size:0.9rem; line-height:1.35;">${escapeHtml(bm.title)}</div>
+                <div class="bookmark-card-value">${escapeHtml(bm.val)}</div>
             </div>
             <div class="bookmark-actions">
-                <button class="btn-secondary" style="padding:4px 8px; font-size:0.75rem;" onclick="insertBookmarkVal('${bm.val}')" title="Вставити в калькулятор">📥 Вставити</button>
-                <button class="btn-secondary btn-danger" style="padding:4px 8px; font-size:0.75rem;" onclick="deleteBookmark(${bm.id})">🗑️</button>
+                <button class="btn-secondary" style="padding:4px 8px; font-size:0.75rem;" title="Вставити в калькулятор">📥 Вставити</button>
+                <button class="btn-secondary btn-danger" style="padding:4px 8px; font-size:0.75rem;">🗑️</button>
             </div>
         `;
+        // Обробники через замикання замість inline onclick з інтерполяцією
+        // значень користувача (захист від ін'єкції в HTML-атрибут)
+        const insertBtn = card.querySelector('.bookmark-actions .btn-secondary:not(.btn-danger)');
+        const deleteBtn = card.querySelector('.bookmark-actions .btn-danger');
+        if (insertBtn) insertBtn.onclick = () => insertBookmarkVal(bm.val);
+        if (deleteBtn) deleteBtn.onclick = () => deleteBookmark(bm.id);
         container.appendChild(card);
     });
 }
@@ -2205,12 +2222,16 @@ function renderTapeRoll() {
 
         row.innerHTML = `
             <div style="flex-grow:1;">
-                <div class="tape-line-eq">${item.equation} = <strong>${item.result}</strong></div>
-                <small style="color:#6b7280; font-size:0.72rem;">[${item.time}]</small>
+                <div class="tape-line-eq">${escapeHtml(item.equation)} = <strong>${escapeHtml(item.result)}</strong></div>
+                <small style="color:#6b7280; font-size:0.72rem;">[${escapeHtml(item.time)}]</small>
             </div>
-            <input type="text" class="tape-line-note-input" placeholder="Додати нотатку..." value="${item.note || ''}" onchange="updateTapeNote(${idx}, this.value)">
-            <button class="btn-secondary" style="padding:2px 6px; font-size:0.75rem;" onclick="insertTapeValToCalc('${item.result}')" title="Вставити в калькулятор">📥</button>
+            <input type="text" class="tape-line-note-input" placeholder="Додати нотатку..." onchange="updateTapeNote(${idx}, this.value)">
+            <button class="btn-secondary" style="padding:2px 6px; font-size:0.75rem;" title="Вставити в калькулятор">📥</button>
         `;
+        // Нотатку та обробник кнопки встановлюємо без HTML-інтерполяції
+        // (захист від ін'єкції в атрибут value та onclick)
+        row.querySelector('.tape-line-note-input').value = item.note || '';
+        row.querySelector('.btn-secondary').onclick = () => insertTapeValToCalc(item.result);
         container.appendChild(row);
     });
 
@@ -2497,6 +2518,15 @@ function parseAndEvalFormula(expr, xVal) {
 
         clean = clean.replace(/\bx\b/g, `(${xVal})`);
         clean = clean.replace(/(\d)\(/g, '$1*(');
+
+        // Білий список: після підстановок функцій дозволені лише числа,
+        // x, оператори, дужки та згенеровані Math.* токени. Будь-які інші
+        // ідентифікатори/символи -> відмова (захист від виконання довільного
+        // коду через new Function)
+        const masked = clean.replace(/Math\.(?:sin|cos|tan|sqrt|abs|log|PI|E)/g, '\u0001');
+        if (!/^[\d x+\-*/%().,\u0001]+$/.test(masked)) {
+            return 'Помилка';
+        }
 
         const res = Function(`'use strict'; return (${clean})`)();
         return isNaN(res) || !isFinite(res) ? 'Помилка' : res;
@@ -3521,7 +3551,10 @@ function applyWallpaperToDom() {
         dom.bgWallpaper.style.backgroundImage = 'none';
         dom.bgWallpaper.classList.add('wp-grid');
     } else if (state.currentWallpaper === 'custom' && state.customWallpaperUrl) {
-        dom.bgWallpaper.style.backgroundImage = `url('${state.customWallpaperUrl}')`;
+        // Екрануємо лапки та бекслеші: URL з ')" інакше розривав би url(...)
+        // і дозволяв ін'єкцію довільних CSS-правил
+        const safeWpUrl = state.customWallpaperUrl.replace(/["'\\]/g, '\\$&');
+        dom.bgWallpaper.style.backgroundImage = `url("${safeWpUrl}")`;
     } else {
         dom.bgWallpaper.style.backgroundImage = 'none';
     }
@@ -4293,10 +4326,10 @@ function renderHistory(items = state.history) {
         li.title = 'Натисніть, щоб підставити результат у калькулятор';
         li.innerHTML = `
             <div style="display:flex; justify-content:space-between; align-items:center;">
-                <span class="calc-eq">${item.equation} =</span>
-                <span style="font-size:0.75rem; color:var(--text-muted);">${item.time || ''}</span>
+                <span class="calc-eq">${escapeHtml(item.equation)} =</span>
+                <span style="font-size:0.75rem; color:var(--text-muted);">${escapeHtml(item.time || '')}</span>
             </div>
-            <div class="calc-res">${formatDisplayString(item.result)}</div>
+            <div class="calc-res">${escapeHtml(formatDisplayString(item.result))}</div>
         `;
         li.onclick = () => {
             audio.playClick();
@@ -4403,7 +4436,15 @@ function showToast(message, icon = 'ℹ️') {
     if (!dom.toastContainer) return;
     const toast = document.createElement('div');
     toast.className = 'toast';
-    toast.innerHTML = `<span>${icon}</span> <span>${message}</span>`;
+    // textContent замість innerHTML: повідомлення часто містить дані
+    // користувача (вирази, результати, назви записів)
+    const iconSpan = document.createElement('span');
+    iconSpan.textContent = icon;
+    const msgSpan = document.createElement('span');
+    msgSpan.textContent = message;
+    toast.appendChild(iconSpan);
+    toast.appendChild(document.createTextNode(' '));
+    toast.appendChild(msgSpan);
     dom.toastContainer.appendChild(toast);
     setTimeout(() => { if (toast.parentNode) toast.parentNode.removeChild(toast); }, 2400);
 }

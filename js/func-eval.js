@@ -18,6 +18,15 @@ function parseAndEvalFormula(expr, xVal) {
         clean = clean.replace(/\bx\b/g, `(${xVal})`);
         clean = clean.replace(/(\d)\(/g, '$1*(');
 
+        // Білий список: після підстановок функцій дозволені лише числа,
+        // x, оператори, дужки та згенеровані Math.* токени. Будь-які інші
+        // ідентифікатори/символи -> відмова (захист від виконання довільного
+        // коду через new Function)
+        const masked = clean.replace(/Math\.(?:sin|cos|tan|sqrt|abs|log|PI|E)/g, '\u0001');
+        if (!/^[\d x+\-*/%().,\u0001]+$/.test(masked)) {
+            return 'Помилка';
+        }
+
         const res = Function(`'use strict'; return (${clean})`)();
         return isNaN(res) || !isFinite(res) ? 'Помилка' : res;
     } catch (e) {
