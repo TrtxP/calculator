@@ -1,0 +1,108 @@
+/* --------------------------------------------------------------------------
+   22. Мобільна Продуктивність (Mobile Performance Layer)
+   Окремий шар оптимізацій для плавного відкриття розділів (модалок)
+   та розвантаження головного потоку на мобільних пристроях.
+   Усі правила активні лише всередині media-запитів: на десктопі
+   без (pointer: coarse) та ширших за 768px екранах ефекту нуль.
+   -------------------------------------------------------------------------- */
+
+/* 22.1 Лаг дотику: touch-action: manipulation прибирає паузу
+       double-tap zoom (~300 мс на старих WebView) при натисканні
+       кнопок відкриття розділів у футері та сайдбарі */
+@media (pointer: coarse) {
+    .buttons button,
+    .footer-btn,
+    .sidebar-nav button,
+    .modal-content button,
+    .modal-actions button,
+    .conv-tab,
+    .command-item,
+    .btn-secondary,
+    .close-btn {
+        touch-action: manipulation;
+        -webkit-tap-highlight-color: transparent;
+    }
+}
+
+/* 22.2 Відкриття розділу лише на композиторі GPU: попередня промоція
+       шару для активної модалки усуває ре-растеризацію в перших кадрах
+       анімацій sheetSlideUp / fadeIn (видимі мікрозатримки на телефонах).
+       Модалки поза .active мають display:none і шар не аллокують,
+       тому will-change коштує лише для одного відкритого вікна */
+@media (max-width: 768px), (pointer: coarse) {
+    .modal-overlay.active {
+        will-change: opacity;
+    }
+
+    .modal-overlay.active .modal-content {
+        will-change: transform;
+        transform: translateZ(0);
+        backface-visibility: hidden;
+    }
+}
+
+/* 22.3 Paint-контейнер: перемалювання вмісту розділу ізольоване
+       його межами й не чіпає сторінку позаду overlay
+       (той самий патерн, що й у мобільного .sidebar) */
+@media (max-width: 768px) {
+    .modal-content {
+        contain: content;
+    }
+}
+
+/* 22.4 Довгі списки: елементи поза в'юпортом не рендерляться доти,
+       поки не наблизяться при скролі (палітра команд ~40 пунктів,
+       історія до 100, стрічка до 50, закладки). Ключове слово auto
+       змушує браузер запам'ятовувати реальний розмір після першого
+       рендеру, тому скролбар не «стрибає» */
+@media (max-width: 768px) {
+    .command-item,
+    #history-list li,
+    .bookmark-card,
+    .tape-line-item,
+    .math-ref-item,
+    .const-ext-card,
+    .shortcut-card {
+        content-visibility: auto;
+        contain-intrinsic-size: auto 56px;
+    }
+}
+
+/* 22.5 Ізоляція скролу: контент розділу не «протягує» скрол на
+       фонову сторінку (scroll chaining), а сама сторінка не скролиться
+       й не перемалюється, поки відкритий розділ */
+@media (max-width: 768px) {
+    .modal-content,
+    .command-results-list,
+    .sidebar-nav {
+        overscroll-behavior: contain;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    body:has(.modal-overlay.active) {
+        overflow: hidden;
+    }
+}
+
+/* 22.6 Дешевший растер тіней: 60px-розмиття великої тіні модалки
+       дорого коштує на слабких GPU; на мобільних досить компактнішої
+       (шар з 22.2 все одно композитить її без повторного paint) */
+@media (max-width: 768px) {
+    .modal-content {
+        box-shadow: 0 14px 36px rgba(0, 0, 0, 0.5);
+    }
+}
+
+/* 22.7 Переходи лише для дешевих властивостей: елементи з
+       transition: all змушують браузер стежити за всіма
+       властивостями при кожному тапі; обмежуємо перелік явно */
+@media (pointer: coarse) {
+    .buttons button,
+    .footer-btn,
+    .sidebar-nav button,
+    .btn-secondary,
+    .conv-tab,
+    .command-item {
+        transition-property: transform, opacity, background-color, border-color, filter;
+    }
+}

@@ -4,7 +4,7 @@
  * 
  * Збирає:
  *  1. index.html - з views/partials/ та views/modals/
- *  2. style.css  - з 16 CSS модулів у папці css/
+ *  2. style.css  - з 17 CSS модулів у папці css/
  *  3. app.js     - з 46 JS модулів у папці js/
  * 
  * Використання: node build.js
@@ -35,7 +35,7 @@ function readView(relativePath) {
     return readFileClean(fullPath);
 }
 
-// 16 CSS модулів у порядку каскаду
+// 17 CSS модулів у порядку каскаду
 const CSS_MODULES = [
     { file: 'variables', desc: 'Змінні дизайну та 32 теми оформлення' },
     { file: 'base', desc: 'Базові стилі та шрифтові гарнітури' },
@@ -52,7 +52,8 @@ const CSS_MODULES = [
     { file: 'wallpaper', desc: 'Шпалери та атмосферні шари' },
     { file: 'animations', desc: 'Анімації, пульсації та ripple-ефекти' },
     { file: 'color-studio', desc: 'Студія кастомних RGB тем' },
-    { file: 'responsive', desc: 'Адаптивність та мобільні стилі' }
+    { file: 'responsive', desc: 'Адаптивність та мобільні стилі' },
+    { file: 'mobile-perf', desc: 'Мобільна продуктивність: композитор, paint-контейнери, touch-лаг' }
 ];
 
 // 46 JS модулів у строгому порядку залежностей
@@ -126,7 +127,7 @@ console.log('🚀 Початок процесу збирання Calculator Pro 
 // ============================================================================
 let combinedCss = `/* ==========================================================================
    Calculator Pro v1.8.6 (Build 204) Redstone 4.0 Titanium Ultra Edition
-   Master Stylesheet (Згенеровано автоматично з 16 модулів у папці css/)
+   Master Stylesheet (Згенеровано автоматично з 17 модулів у папці css/)
    Author: MaxNT Official, 2026
    ========================================================================== */\n\n`;
 
