@@ -49,7 +49,7 @@ document.addEventListener('keydown', (event) => {
     if (event.key === 'Escape') {
         const activeModal = document.querySelector('.modal-overlay.active');
         if (activeModal) {
-            activeModal.classList.remove('active');
+            closeModal(activeModal.id);
             return;
         }
         clearDisplay();
