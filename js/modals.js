@@ -11,7 +11,8 @@ function openModal(modalId) {
             syncSettingsControls();
         }
 
-        modal.classList.add('active');
+        requestAnimationFrame(() => modal.classList.add('active'));
+
         if (modalId === 'vector-calc-modal') {
             solveVectorMath();
         }
@@ -22,7 +23,7 @@ function openModal(modalId) {
             renderMathRefList();
         }
         if (modalId === 'trig-circle-modal') {
-            setTimeout(() => updateTrigCircle(state.trigAngleDeg), 50);
+            setTimeout(() => updateTrigCircle(state.trigAngleDeg), 300);
         }
         if (modalId === 'constants-search-modal') {
             renderExtendedConstants();
