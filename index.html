@@ -226,23 +226,9 @@
                         <div class="display-badges">
                             <span class="display-led-status" title="Калькулятор активний"></span>
                             <span class="command-badge" id="command-badge" onclick="event.stopPropagation(); openCommandPalette();" title="Швидкий пошук інструментів (Ctrl+K)">⚡ Пошук</span>
-                            <span class="shortcuts-badge" id="shortcuts-badge" onclick="event.stopPropagation(); openModal('shortcuts-modal');" title="Гарячі клавіші (F1 або ?)">⌨️ F1</span>
                             <span class="mode-badge" id="mode-badge" onclick="event.stopPropagation(); toggleAngleMode();" title="Натисніть для зміни DEG / RAD / GRAD">DEG</span>
                             <span class="secondary-badge" id="secondary-badge" onclick="event.stopPropagation(); toggleSecondMode();" title="Режим додаткових функцій (2nd / Shift)">2nd</span>
                             <span class="memory-badge" id="memory-badge" onclick="event.stopPropagation(); openModal('memory-modal');" title="Матриця пам'яті M1-M4">M</span>
-                            <span class="vector-badge" id="vector-badge" onclick="event.stopPropagation(); openModal('vector-calc-modal');" title="3D Вектори">📐 Вектори</span>
-                            <span class="complex-badge" id="complex-badge" onclick="event.stopPropagation(); openModal('complex-calc-modal');" title="Комплексні числа">ℂ Числа</span>
-                            <span class="math-ref-badge" id="math-ref-badge" onclick="event.stopPropagation(); openModal('math-ref-modal');" title="Довідник формул">📖 Довідник</span>
-                            <span class="trig-circle-badge" id="trig-circle-badge" onclick="event.stopPropagation(); openModal('trig-circle-modal');" title="Тригонометричне коло">⭕ Коло</span>
-                            <span class="formula-badge" id="formula-badge" onclick="event.stopPropagation(); openModal('formula-solver-modal');" title="Фізичні формули">⚡ Формули</span>
-                            <span class="triangle-badge" id="triangle-badge" onclick="event.stopPropagation(); openModal('triangle-solver-modal');" title="Розв'язувач трикутників">📐 Трикутник</span>
-                            <span class="loan-badge" id="loan-badge" onclick="event.stopPropagation(); openModal('loan-calc-modal');" title="Кредитний калькулятор">🏦 Кредит</span>
-                            <span class="bookmarks-badge" id="bookmarks-badge" onclick="event.stopPropagation(); openModal('bookmarks-modal');" title="Збережені вирази">🔖 Блокнот</span>
-                            <span class="speech-badge" id="speech-badge" onclick="event.stopPropagation(); speakCurrentResult();" title="Озвучити результат голосом">🗣️</span>
-                            <span class="advisor-badge" id="advisor-badge" onclick="event.stopPropagation(); openModal('advisor-modal');" title="Математичний порадник">🧠</span>
-                            <span class="settings-badge" id="settings-badge" onclick="event.stopPropagation(); openModal('settings-modal');" title="Налаштування калькулятора">⚙️</span>
-                            <span class="fullscreen-badge" id="fullscreen-badge" onclick="event.stopPropagation(); toggleFullScreen();" title="Повноекранний режим (F11)">⛶</span>
-                            <span class="font-scale-badge" id="font-scale-badge" onclick="event.stopPropagation(); cycleFontScale();" title="Масштаб шрифту (клік для циклічного збільшення: 90% → 100% → 115% → 130% → 145%)">🔠 100%</span>
                             <span class="audio-badge" id="audio-badge" onclick="event.stopPropagation(); cycleSoundProfile();" title="Перемкнути профіль звуку">🔊</span>
                         </div>
                         <div class="history-line" id="history-line"></div>
@@ -258,73 +244,101 @@
                 </div>
 
                 <!-- Клавіатура калькулятора -->
+                <!-- Перемикач режимів калькулятора (Базовий / Інженерний / Програміст) -->
+                <div class="calc-mode-bar">
+                    <button class="calc-mode-tab active" data-mode="basic" onclick="setKeyboardMode('basic')" title="Базовий режим (5 рядів)">🔢 Базовий</button>
+                    <button class="calc-mode-tab" data-mode="scientific" onclick="setKeyboardMode('scientific')" title="Інженерний режим (тригонометрія, степені, логарифми)">📐 Інженерний</button>
+                    <button class="calc-mode-tab" data-mode="programmer" onclick="setKeyboardMode('programmer')" title="Програміст (HEX/DEC/BIN, бітові операції)">💻 Програміст</button>
+                </div>
+
                 <!-- Клавіатура калькулятора -->
                 <div class="buttons">
-                    <!-- Ряд 1: Робота з пам'яттю -->
-                    <button class="memory" onclick="memoryClear()" title="Очистити активну пам'ять">MC</button>
-                    <button class="memory" onclick="memoryRecall()" title="Викликати з пам'яті">MR</button>
-                    <button class="memory" onclick="memoryAdd()" title="Додати до пам'яті">M+</button>
-                    <button class="memory" onclick="memorySubtract()" title="Відняти від пам'яті">M-</button>
+                    <!-- Ряд 1: Робота з пам'яттю (Basic & Scientific) -->
+                    <button class="memory kbd-row-mem" onclick="memoryClear()" title="Очистити активну пам'ять">MC</button>
+                    <button class="memory kbd-row-mem" onclick="memoryRecall()" title="Викликати з пам'яті">MR</button>
+                    <button class="memory kbd-row-mem" onclick="memoryAdd()" title="Додати до пам'яті">M+</button>
+                    <button class="memory kbd-row-mem" onclick="memorySubtract()" title="Відняти від пам'яті">M-</button>
 
-                    <!-- Ряд 2: 2nd Shift та Тригонометрія (DEG / RAD / GRAD) -->
-                    <button class="sci shift-btn" id="btn-2nd" onclick="toggleSecondMode()" title="Перемкнути додаткові функції (2nd)">2nd</button>
-                    <button class="sci" id="btn-sin" onclick="handleTrigOrSecondary('sin')" title="Синус / Арксинус">sin</button>
-                    <button class="sci" id="btn-cos" onclick="handleTrigOrSecondary('cos')" title="Косинус / Арккосинус">cos</button>
-                    <button class="sci" id="btn-tan" onclick="handleTrigOrSecondary('tan')" title="Тангенс / Арктангенс">tan</button>
+                    <!-- Ряди Інженерного режиму (Scientific only) -->
+                    <!-- Ряд S1: 2nd Shift та Тригонометрія (DEG / RAD / GRAD) -->
+                    <button class="sci shift-btn kbd-row-sci" id="btn-2nd" onclick="toggleSecondMode()" title="Перемкнути додаткові функції (2nd)">2nd</button>
+                    <button class="sci kbd-row-sci" id="btn-sin" onclick="handleTrigOrSecondary('sin')" title="Синус / Арксинус">sin</button>
+                    <button class="sci kbd-row-sci" id="btn-cos" onclick="handleTrigOrSecondary('cos')" title="Косинус / Арккосинус">cos</button>
+                    <button class="sci kbd-row-sci" id="btn-tan" onclick="handleTrigOrSecondary('tan')" title="Тангенс / Арктангенс">tan</button>
 
-                    <!-- Ряд 3: Гіперболічні / Логарифми / Степені -->
-                    <button class="sci" id="btn-sinh" onclick="handleHyperbolicOrSecondary('sinh')" title="Гіперболічний синус / косинус">sinh</button>
-                    <button class="sci" id="btn-ln" onclick="handleLnOrLog2()" title="Натуральний ln / Двійковий log2">ln</button>
-                    <button class="sci" id="btn-log" onclick="handleLogOr10x()" title="Десятковий log10 / 10^x">log</button>
-                    <button class="action" id="btn-sqr" onclick="handleSquareOrCube()" title="Квадрат x² / Куб x³">x²</button>
+                    <!-- Ряд S2: Гіперболічні / Логарифми / Степені -->
+                    <button class="sci kbd-row-sci" id="btn-sinh" onclick="handleHyperbolicOrSecondary('sinh')" title="Гіперболічний синус / косинус">sinh</button>
+                    <button class="sci kbd-row-sci" id="btn-ln" onclick="handleLnOrLog2()" title="Натуральний ln / Двійковий log2">ln</button>
+                    <button class="sci kbd-row-sci" id="btn-log" onclick="handleLogOr10x()" title="Десятковий log10 / 10^x">log</button>
+                    <button class="action kbd-row-sci" id="btn-sqr" onclick="handleSquareOrCube()" title="Квадрат x² / Куб x³">x²</button>
 
-                    <!-- Ряд 4: Корені, Степені та Модуль -->
-                    <button class="action" id="btn-sqrt" onclick="handleSqrtOrCbrt()" title="Квадратний корінь √ / Кубічний ∛">√</button>
-                    <button class="action" id="btn-pow" onclick="handlePowerOrExp()" title="Піднесення до степеня xⁿ / eˣ">xⁿ</button>
-                    <button class="action" onclick="calculateAbs()" title="Модуль числа |x|">|x|</button>
-                    <button class="action" onclick="calculateInverse()" title="Обернене число 1/x">1/x</button>
+                    <!-- Ряд S3: Корені, Степені та Модуль -->
+                    <button class="action kbd-row-sci" id="btn-sqrt" onclick="handleSqrtOrCbrt()" title="Квадратний корінь √ / Кубічний ∛">√</button>
+                    <button class="action kbd-row-sci" id="btn-pow" onclick="handlePowerOrExp()" title="Піднесення до степеня xⁿ / eˣ">xⁿ</button>
+                    <button class="action kbd-row-sci" onclick="calculateAbs()" title="Модуль числа |x|">|x|</button>
+                    <button class="action kbd-row-sci" onclick="calculateInverse()" title="Обернене число 1/x">1/x</button>
 
-                    <!-- Ряд 5: Константи та Дужки -->
-                    <button class="action" onclick="insertPi()" title="Число Пі (3.14159...)">π</button>
-                    <button class="action" onclick="insertEuler()" title="Число Ейлера e (2.71828...)">e</button>
-                    <button class="action" onclick="appendBracket('(')" title="Відкрити дужку">(</button>
-                    <button class="action" onclick="appendBracket(')')" title="Закрити дужку">)</button>
-                    
-                    <!-- Ряд 6: Керування, Очищення, Modulo та Ділення -->
-                    <button class="clear" onclick="clearDisplay()" title="Очистити все">C</button>
-                    <button class="action" onclick="backspace()" title="Стерти символ" style="display:flex; align-items:center; justify-content:center;">
+                    <!-- Ряд S4: Константи та Дужки -->
+                    <button class="action kbd-row-sci" onclick="insertPi()" title="Число Пі (3.14159...)">π</button>
+                    <button class="action kbd-row-sci" onclick="insertEuler()" title="Число Ейлера e (2.71828...)">e</button>
+                    <button class="action kbd-row-sci" onclick="appendBracket('(')" title="Відкрити дужку">(</button>
+                    <button class="action kbd-row-sci" onclick="appendBracket(')')" title="Закрити дужку">)</button>
+
+                    <!-- Ряди Програмістського режиму (Programmer only) -->
+                    <!-- Ряд P1: Швидка конвертація систем числення -->
+                    <button class="sci kbd-row-prog" onclick="handleProgBaseQuick('HEX')" title="Швидкий перегляд у HEX">HEX</button>
+                    <button class="sci kbd-row-prog" onclick="handleProgBaseQuick('DEC')" title="Швидкий перегляд у DEC">DEC</button>
+                    <button class="sci kbd-row-prog" onclick="handleProgBaseQuick('OCT')" title="Швидкий перегляд у OCT">OCT</button>
+                    <button class="sci kbd-row-prog" onclick="handleProgBaseQuick('BIN')" title="Швидкий перегляд у BIN">BIN</button>
+
+                    <!-- Ряд P2: Побітові операції -->
+                    <button class="action kbd-row-prog" onclick="handleProgBitwiseOp('AND')" title="Побітове І (AND)">AND</button>
+                    <button class="action kbd-row-prog" onclick="handleProgBitwiseOp('OR')" title="Побітове АБО (OR)">OR</button>
+                    <button class="action kbd-row-prog" onclick="handleProgBitwiseOp('XOR')" title="Виключне АБО (XOR)">XOR</button>
+                    <button class="action kbd-row-prog" onclick="handleProgBitwiseOp('NOT')" title="Побітове НЕ (~NOT)">NOT</button>
+
+                    <!-- Ряд P3: Зсуви та дужки -->
+                    <button class="action kbd-row-prog" onclick="handleProgBitwiseOp('SHL')" title="Побітовий зсув вліво (&lt;&lt;)">&lt;&lt;</button>
+                    <button class="action kbd-row-prog" onclick="handleProgBitwiseOp('SHR')" title="Побітовий зсув вправо (&gt;&gt;)">&gt;&gt;</button>
+                    <button class="action kbd-row-prog" onclick="appendBracket('(')" title="Відкрити дужку">(</button>
+                    <button class="action kbd-row-prog" onclick="appendBracket(')')" title="Закрити дужку">)</button>
+
+                    <!-- Базові арифметичні ряди (Core: активні у всіх режимах) -->
+                    <!-- Ряд C1: Керування, Очищення, Modulo та Ділення -->
+                    <button class="clear kbd-row-core" onclick="clearDisplay()" title="Очистити все">C</button>
+                    <button class="action kbd-row-core" onclick="backspace()" title="Стерти символ" style="display:flex; align-items:center; justify-content:center;">
                         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
                             <path d="M21 4H8l-7 8 7 8h13a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2z"></path>
                             <line x1="18" y1="9" x2="12" y2="15"></line>
                             <line x1="12" y1="9" x2="18" y2="15"></line>
                         </svg>
                     </button>
-                    <button class="action" onclick="appendOperator('mod')" title="Остача від ділення (mod)">mod</button>
-                    <button class="operator" onclick="appendOperator('/')" title="Ділення">÷</button>
+                    <button class="action kbd-row-core" onclick="appendOperator('mod')" title="Остача від ділення (mod)">mod</button>
+                    <button class="operator kbd-row-core" onclick="appendOperator('/')" title="Ділення">÷</button>
                     
-                    <!-- Ряд 7: 7, 8, 9, Множення -->
-                    <button onclick="appendNumber('7')">7</button>
-                    <button onclick="appendNumber('8')">8</button>
-                    <button onclick="appendNumber('9')">9</button>
-                    <button class="operator" onclick="appendOperator('*')" title="Множення">×</button>
+                    <!-- Ряд C2: 7, 8, 9, Множення -->
+                    <button class="kbd-row-core" onclick="appendNumber('7')">7</button>
+                    <button class="kbd-row-core" onclick="appendNumber('8')">8</button>
+                    <button class="kbd-row-core" onclick="appendNumber('9')">9</button>
+                    <button class="operator kbd-row-core" onclick="appendOperator('*')" title="Множення">×</button>
                     
-                    <!-- Ряд 8: 4, 5, 6, Віднімання -->
-                    <button onclick="appendNumber('4')">4</button>
-                    <button onclick="appendNumber('5')">5</button>
-                    <button onclick="appendNumber('6')">6</button>
-                    <button class="operator" onclick="appendOperator('-')" title="Віднімання">−</button>
+                    <!-- Ряд C3: 4, 5, 6, Віднімання -->
+                    <button class="kbd-row-core" onclick="appendNumber('4')">4</button>
+                    <button class="kbd-row-core" onclick="appendNumber('5')">5</button>
+                    <button class="kbd-row-core" onclick="appendNumber('6')">6</button>
+                    <button class="operator kbd-row-core" onclick="appendOperator('-')" title="Віднімання">−</button>
                     
-                    <!-- Ряд 9: 1, 2, 3, Додавання -->
-                    <button onclick="appendNumber('1')">1</button>
-                    <button onclick="appendNumber('2')">2</button>
-                    <button onclick="appendNumber('3')">3</button>
-                    <button class="operator" onclick="appendOperator('+')" title="Додавання">+</button>
+                    <!-- Ряд C4: 1, 2, 3, Додавання -->
+                    <button class="kbd-row-core" onclick="appendNumber('1')">1</button>
+                    <button class="kbd-row-core" onclick="appendNumber('2')">2</button>
+                    <button class="kbd-row-core" onclick="appendNumber('3')">3</button>
+                    <button class="operator kbd-row-core" onclick="appendOperator('+')" title="Додавання">+</button>
                     
-                    <!-- Ряд 10: Знак, 0, Крапка, Дорівнює -->
-                    <button class="action" onclick="toggleSign()" title="Змінити знак (+/-)">+/-</button>
-                    <button onclick="appendNumber('0')">0</button>
-                    <button onclick="appendNumber('.')">.</button>
-                    <button class="equals" onclick="calculate()" title="Обчислити результат">=</button>
+                    <!-- Ряд C5: Знак, 0, Крапка, Дорівнює -->
+                    <button class="action kbd-row-core" onclick="toggleSign()" title="Змінити знак (+/-)">+/-</button>
+                    <button class="kbd-row-core" onclick="appendNumber('0')">0</button>
+                    <button class="kbd-row-core" onclick="appendNumber('.')">.</button>
+                    <button class="equals kbd-row-core" onclick="calculate()" title="Обчислити результат">=</button>
                 </div>
             </main>
         </div>
@@ -356,62 +370,17 @@
             </div>
 
             <div class="footer-right">
-                <button class="footer-btn" onclick="openModal('vector-calc-modal')" title="3D Вектори">
-                    <span>📐</span> Вектори
+                <button class="footer-btn" onclick="openCommandPalette()" title="Швидкий пошук (Ctrl+K)">
+                    <span>⚡</span> Пошук
                 </button>
-                <button class="footer-btn" onclick="openModal('complex-calc-modal')" title="Комплексні числа">
-                    <span>⚛️</span> Комплексні
+                <button class="footer-btn" onclick="openModal('history-modal')" title="Журнал історії">
+                    <span>🕒</span> Історія
                 </button>
-                <button class="footer-btn" onclick="openModal('math-ref-modal')" title="Довідник формул">
-                    <span>📖</span> Довідник
-                </button>
-                <button class="footer-btn" onclick="openModal('trig-circle-modal')" title="Тригонометричне коло">
-                    <span>⭕</span> Коло
-                </button>
-                <button class="footer-btn" onclick="openModal('constants-search-modal')" title="База констант 40+">
-                    <span>⚛️</span> Константи
-                </button>
-                <button class="footer-btn" onclick="openModal('formula-solver-modal')" title="Формули фізики">
-                    <span>⚡</span> Формули
-                </button>
-                <button class="footer-btn" onclick="openModal('triangle-solver-modal')" title="Розв'язувач трикутників">
-                    <span>📐</span> Трикутник
-                </button>
-                <button class="footer-btn" onclick="openModal('loan-calc-modal')" title="Кредит та іпотека">
-                    <span>🏦</span> Кредит
-                </button>
-                <button class="footer-btn" onclick="openModal('bookmarks-modal')" title="Блокнот виразів">
-                    <span>🔖</span> Блокнот
-                </button>
-                <button class="footer-btn" onclick="openModal('tape-modal')" title="Розрахункова стрічка">
-                    <span>📜</span> Стрічка
-                </button>
-                <button class="footer-btn" onclick="openModal('prime-gcd-modal')" title="НСД / НСК">
-                    <span>🔢</span> НСД/НСК
-                </button>
-                <button class="footer-btn" onclick="openModal('deal-calc-modal')" title="Порівняння цін">
-                    <span>⚖️</span> Порівняти
-                </button>
-                <button class="footer-btn" onclick="openModal('matrix-modal')" title="Матричний калькулятор">
-                    <span>🧮</span> Матриці
-                </button>
-                <button class="footer-btn" onclick="openModal('bitmask-modal')" title="Бітовий інспектор">
-                    <span>👾</span> Біти
-                </button>
-                <button class="footer-btn" onclick="openModal('currency-modal')" title="Валюти та крипта">
-                    <span>💱</span> ₴ / $
+                <button class="footer-btn" onclick="openModal('theme-modal')" title="Теми оформлення">
+                    <span>🎨</span> Теми
                 </button>
                 <button class="footer-btn" onclick="openModal('settings-modal')" title="Центр налаштувань">
                     <span>⚙️</span> Опції
-                </button>
-                <button class="footer-btn" onclick="openModal('color-studio-modal')" title="Палітра та колір інтерфейсу">
-                    <span>🌈</span> Кольори
-                </button>
-                <button class="footer-btn" onclick="speakCurrentResult()" title="Озвучити результат">
-                    <span>🗣️</span> Голос
-                </button>
-                <button class="footer-btn" onclick="openModal('export-modal')" title="Експорт історії">
-                    <span>📥</span> Експорт
                 </button>
             </div>
         </footer>
@@ -1834,7 +1803,8 @@
     </div>
     </template>
 
-    <!-- Modal: memory -->
+    <!-- Modal (lazy): memory -->
+    <template data-modal="memory-modal">
         <div class="modal-overlay" id="memory-modal">
         <div class="modal-content memory-modal-content">
             <h3>🗄️ Матриця Пам'яті (Слоти M1–M4)</h3>
@@ -1887,8 +1857,10 @@
             </div>
         </div>
     </div>
+    </template>
 
-    <!-- Modal: font -->
+    <!-- Modal (lazy): font -->
+    <template data-modal="font-modal">
         <div class="modal-overlay" id="font-modal">
         <div class="modal-content font-modal-content">
             <!-- Масштабування розміру шрифтів (Font Size Scaling) -->
@@ -1959,8 +1931,10 @@
             <button class="close-btn" onclick="closeModal('font-modal')">Закрити</button>
         </div>
     </div>
+    </template>
 
-    <!-- Modal: error-advisor -->
+    <!-- Modal (lazy): error-advisor -->
+    <template data-modal="error-advisor-modal">
         <div class="modal-overlay" id="error-advisor-modal">
         <div class="modal-content error-advisor-content">
             <div class="error-header">
@@ -1989,8 +1963,10 @@
             <button class="close-btn" onclick="closeModal('error-advisor-modal')">Зрозуміло</button>
         </div>
     </div>
+    </template>
 
-    <!-- Modal: advisor -->
+    <!-- Modal (lazy): advisor -->
+    <template data-modal="advisor-modal">
         <div class="modal-overlay" id="advisor-modal">
         <div class="modal-content advisor-modal-content">
             <h3>🧠 Математичний Порадник & Правила</h3>
@@ -2040,6 +2016,7 @@
             <button class="close-btn" onclick="closeModal('advisor-modal')">Закрити</button>
         </div>
     </div>
+    </template>
 
     <!-- Modal (lazy): graph -->
     <template data-modal="graph-modal">
@@ -2072,7 +2049,8 @@
     </div>
     </template>
 
-    <!-- Modal: wallpaper -->
+    <!-- Modal (lazy): wallpaper -->
+    <template data-modal="wallpaper-modal">
         <div class="modal-overlay" id="wallpaper-modal">
         <div class="modal-content wallpaper-modal-content">
             <h3>🖼️ Студія Шпалер & Фону (12 HD фонів)</h3>
@@ -2187,6 +2165,7 @@
             </div>
         </div>
     </div>
+    </template>
 
     <!-- Modal (lazy): finance -->
     <template data-modal="finance-modal">
@@ -2286,7 +2265,8 @@
     </div>
     </template>
 
-    <!-- Modal: theme -->
+    <!-- Modal (lazy): theme -->
+    <template data-modal="theme-modal">
         <div class="modal-overlay" id="theme-modal">
         <div class="modal-content theme-modal-content">
             <h3>🎨 Каталог Колірних Тем (32 теми)</h3>
@@ -2435,6 +2415,7 @@
             <button class="close-btn" onclick="closeModal('theme-modal')">Закрити</button>
         </div>
     </div>
+    </template>
 
     <!-- Modal (lazy): converter -->
     <template data-modal="converter-modal">
@@ -2525,7 +2506,8 @@
     </div>
     </template>
 
-    <!-- Modal: history -->
+    <!-- Modal (lazy): history -->
+    <template data-modal="history-modal">
         <div class="modal-overlay" id="history-modal">
         <div class="modal-content">
             <h3>🕒 Історія обчислень</h3>
@@ -2542,8 +2524,10 @@
             <button class="close-btn" onclick="closeModal('history-modal')">Закрити</button>
         </div>
     </div>
+    </template>
 
-    <!-- Modal: export -->
+    <!-- Modal (lazy): export -->
+    <template data-modal="export-modal">
         <div class="modal-overlay" id="export-modal">
         <div class="modal-content">
             <h3>📥 Експорт історії розрахунків</h3>
@@ -2564,8 +2548,10 @@
             <button class="close-btn" onclick="closeModal('export-modal')">Скасувати</button>
         </div>
     </div>
+    </template>
 
-    <!-- Modal: hotkeys -->
+    <!-- Modal (lazy): hotkeys -->
+    <template data-modal="hotkeys-modal">
         <div class="modal-overlay" id="hotkeys-modal">
         <div class="modal-content">
             <span class="sheet-drag-handle"></span>
@@ -2593,8 +2579,10 @@
             <button class="close-btn" onclick="closeModal('hotkeys-modal')">Зрозуміло</button>
         </div>
     </div>
+    </template>
 
-    <!-- Modal: command-palette -->
+    <!-- Modal (lazy): command-palette -->
+    <template data-modal="command-palette-modal">
         <div class="modal-overlay" id="command-palette-modal">
         <div class="modal-content command-palette-content">
             <div class="command-search-header">
@@ -2611,8 +2599,10 @@
             </div>
         </div>
     </div>
+    </template>
 
-    <!-- Modal: shortcuts -->
+    <!-- Modal (lazy): shortcuts -->
+    <template data-modal="shortcuts-modal">
         <div class="modal-overlay" id="shortcuts-modal">
         <div class="modal-content">
             <span class="sheet-drag-handle"></span>
@@ -2670,8 +2660,10 @@
             <button class="close-btn" onclick="closeModal('shortcuts-modal')">Зрозуміло</button>
         </div>
     </div>
+    </template>
 
-    <!-- Modal: home -->
+    <!-- Modal (lazy): home -->
+    <template data-modal="home-modal">
     <div class="modal-overlay" id="home-modal">
     <div class="modal-content" style="text-align: center;">
         <span class="sheet-drag-handle"></span>
@@ -2682,8 +2674,10 @@
         <button class="close-btn" onclick="closeModal('home-modal')">Почати роботу</button>
     </div>
 </div>
+    </template>
 
-    <!-- Modal: about -->
+    <!-- Modal (lazy): about -->
+    <template data-modal="about-modal">
         <div class="modal-overlay" id="about-modal">
         <div class="modal-content">
             <span class="sheet-drag-handle"></span>
@@ -2703,8 +2697,10 @@
             <button class="close-btn" onclick="closeModal('about-modal')">Закрити</button>
         </div>
     </div>
+    </template>
 
-    <!-- Modal: help -->
+    <!-- Modal (lazy): help -->
+    <template data-modal="help-modal">
         <div class="modal-overlay" id="help-modal">
         <div class="modal-content">
             <span class="sheet-drag-handle"></span>
@@ -2719,6 +2715,7 @@
             <button class="close-btn" onclick="closeModal('help-modal')">Зрозуміло</button>
         </div>
     </div>
+    </template>
 
     <!-- Головний скрипт застосунку (Master Application Script) -->
     <script src="app.js"></script>

@@ -3,6 +3,7 @@
 // ==========================================================================
 document.addEventListener('DOMContentLoaded', () => {
     applyMobilePerfOptimizations();
+    setKeyboardMode(state.keyboardMode, true);
 
     // Тема
     if (state.currentTheme) {

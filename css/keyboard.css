@@ -110,3 +110,80 @@
 }
 
 /* --------------------------------------------------------------------------
+   6.1 Перемикач режимів калькулятора (Tabs Bar)
+   -------------------------------------------------------------------------- */
+.calc-mode-bar {
+    display: flex;
+    gap: 4px;
+    margin-bottom: 6px;
+    background: var(--bg-card);
+    padding: 3px;
+    border-radius: 9px;
+    border: 1px solid var(--border-color);
+}
+
+.calc-mode-tab {
+    flex: 1;
+    padding: 6px 4px;
+    font-size: 0.74rem;
+    font-weight: 700;
+    border: none;
+    border-radius: 6px;
+    background: transparent;
+    color: var(--text-muted);
+    cursor: pointer;
+    transition: all 0.15s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+    user-select: none;
+}
+
+.calc-mode-tab:hover {
+    color: var(--text-primary);
+    background: var(--bg-btn-hover);
+}
+
+.calc-mode-tab.active {
+    background: var(--accent-operator);
+    color: #fff;
+    box-shadow: 0 2px 6px var(--shadow-color);
+}
+
+/* --------------------------------------------------------------------------
+   6.2 Керування видимістю рядків за режимами
+   -------------------------------------------------------------------------- */
+/* Базовий режим (за замовчуванням): приховуємо інженерні та програмістські ряди */
+.calculator[data-kbd-mode="basic"] .kbd-row-sci,
+.calculator[data-kbd-mode="basic"] .kbd-row-prog,
+.calculator:not([data-kbd-mode]) .kbd-row-sci,
+.calculator:not([data-kbd-mode]) .kbd-row-prog {
+    display: none !important;
+}
+
+/* Інженерний режим: приховуємо програмістські */
+.calculator[data-kbd-mode="scientific"] .kbd-row-prog {
+    display: none !important;
+}
+
+/* Програмістський режим: приховуємо інженерні та пам'ять */
+.calculator[data-kbd-mode="programmer"] .kbd-row-sci,
+.calculator[data-kbd-mode="programmer"] .kbd-row-mem {
+    display: none !important;
+}
+
+/* Зручна ергономічна висота кнопок у базовому режимі (6 рядів) */
+.calculator[data-kbd-mode="basic"] .buttons button,
+.calculator:not([data-kbd-mode]) .buttons button {
+    min-height: 44px;
+    font-size: calc(1.08rem * var(--font-scale, 1));
+}
+
+@media (max-width: 768px) {
+    .calculator[data-kbd-mode="basic"] .buttons button,
+    .calculator:not([data-kbd-mode]) .buttons button {
+        min-height: 48px;
+        font-size: 1.15rem;
+    }
+}

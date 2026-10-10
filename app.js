@@ -5,19 +5,12 @@
  * Author: MaxNT Official, 2026
  * ==========================================================================
  */
-
-// --------------------------------------------------------------------------
-// Модуль 01: state.js — Глобальний стан та робота з LocalStorage
-// --------------------------------------------------------------------------
 /**
  * ==========================================================================
  * Calculator Pro v1.8.6 (Build 204) Redstone 4.0 Bordeaux Titanium Ultra
  * Author: MaxNT Official, 2026
  * ==========================================================================
- */
-
-// Екранування HTML-спецсимволів (захист від XSS при рендерингу
-// користувацьких даних: історія, стрічка, закладки, тоости тощо)
+ */
 function escapeHtml(value) {
     return String(value)
         .replace(/&/g, '&amp;')
@@ -25,9 +18,7 @@ function escapeHtml(value) {
         .replace(/>/g, '&gt;')
         .replace(/"/g, '&quot;')
         .replace(/'/g, '&#39;');
-}
-
-// Стан застосунку (Application State)
+}
 const state = {
     currentInput: '0',
     previousInput: '',
@@ -58,6 +49,7 @@ const state = {
     thousandSeparator: localStorage.getItem('calc_separator') || 'space', // 'space', 'comma', 'none'
     glassIntensity: localStorage.getItem('calc_glass') || 'heavy',
     perfMode: localStorage.getItem('calc_perf_mode') || 'auto', // 'auto' | 'lite' | 'full'
+    keyboardMode: localStorage.getItem('calc_kbd_mode') || 'basic', // 'basic' | 'scientific' | 'programmer'
     activeGraphFunc: 'sin',
     activeDateTab: 'diff',
     activeTriangleMode: 'sss', // 'sss', 'sas', 'asa'
@@ -86,11 +78,8 @@ const state = {
         ETH: 132800.0,
         SOL: 7885.0
     }
-};
-
-// База 40+ фундаментальних наукових та математичних констант
-const EXTENDED_CONSTANTS = [
-    // 1. Фундаментальні
+};
+const EXTENDED_CONSTANTS = [
     { sym: 'c', name: 'Швидкість світла у вакуумі', val: '299792458', unit: 'м/с', cat: 'fundamental' },
     { sym: 'G', name: 'Гравітаційна стала Ньютона', val: '6.67430e-11', unit: 'м³/(кг·с²)', cat: 'fundamental' },
     { sym: 'h', name: 'Стала Планка', val: '6.62607015e-34', unit: 'Дж·с', cat: 'fundamental' },
@@ -98,17 +87,13 @@ const EXTENDED_CONSTANTS = [
     { sym: 'k_B', name: 'Стала Больцмана', val: '1.380649e-23', unit: 'Дж/К', cat: 'fundamental' },
     { sym: 'N_A', name: 'Число Авогадро', val: '6.02214076e23', unit: 'моль⁻¹', cat: 'fundamental' },
     { sym: 'R', name: 'Універсальна газова стала', val: '8.314462618', unit: 'Дж/(моль·К)', cat: 'fundamental' },
-    { sym: 'σ', name: 'Стала Стефана-Больцмана', val: '5.670374419e-8', unit: 'Вт/(м²·К⁴)', cat: 'fundamental' },
-
-    // 2. Електромагнетизм
+    { sym: 'σ', name: 'Стала Стефана-Больцмана', val: '5.670374419e-8', unit: 'Вт/(м²·К⁴)', cat: 'fundamental' },
     { sym: 'e', name: 'Елементарний електричний заряд', val: '1.602176634e-19', unit: 'Кл', cat: 'em' },
     { sym: 'ε₀', name: 'Електрична стала (діелектрична)', val: '8.8541878128e-12', unit: 'Ф/м', cat: 'em' },
     { sym: 'μ₀', name: 'Магнітна стала (проникність)', val: '1.25663706212e-6', unit: 'Гн/м', cat: 'em' },
     { sym: 'α', name: 'Стала тонкої структури', val: '0.0072973525693', unit: '—', cat: 'em' },
     { sym: 'F', name: 'Стала Фарадея', val: '96485.33212', unit: 'Кл/моль', cat: 'em' },
-    { sym: 'Z₀', name: 'Хвильовий опір вакууму', val: '376.730313668', unit: 'Ом', cat: 'em' },
-
-    // 3. Атом & Кванти
+    { sym: 'Z₀', name: 'Хвильовий опір вакууму', val: '376.730313668', unit: 'Ом', cat: 'em' },
     { sym: 'm_e', name: 'Маса спокою електрона', val: '9.1093837015e-31', unit: 'кг', cat: 'atomic' },
     { sym: 'm_p', name: 'Маса спокою протона', val: '1.67262192369e-27', unit: 'кг', cat: 'atomic' },
     { sym: 'm_n', name: 'Маса спокою нейтрона', val: '1.67492749804e-27', unit: 'кг', cat: 'atomic' },
@@ -116,9 +101,7 @@ const EXTENDED_CONSTANTS = [
     { sym: 'R_∞', name: 'Стала Рідберга', val: '10973731.568160', unit: 'м⁻¹', cat: 'atomic' },
     { sym: 'a₀', name: 'Боровський радіус', val: '5.29177210903e-11', unit: 'м', cat: 'atomic' },
     { sym: 'μ_B', name: 'Магнетон Бора', val: '9.2740100783e-24', unit: 'Дж/Тл', cat: 'atomic' },
-    { sym: 'μ_N', name: 'Ядерний магнетон', val: '5.0507837461e-27', unit: 'Дж/Тл', cat: 'atomic' },
-
-    // 4. Астрофізика & Гео
+    { sym: 'μ_N', name: 'Ядерний магнетон', val: '5.0507837461e-27', unit: 'Дж/Тл', cat: 'atomic' },
     { sym: 'g', name: 'Стандартне прискорення вільного падіння', val: '9.80665', unit: 'м/с²', cat: 'astro' },
     { sym: 'M_⊕', name: 'Маса планети Земля', val: '5.9722e24', unit: 'кг', cat: 'astro' },
     { sym: 'R_⊕', name: 'Середній радіус Землі', val: '6371000', unit: 'м', cat: 'astro' },
@@ -127,9 +110,7 @@ const EXTENDED_CONSTANTS = [
     { sym: 'AU', name: 'Астрономічна одиниця', val: '149597870700', unit: 'м', cat: 'astro' },
     { sym: 'ly', name: 'Світловий рік', val: '9.4607304725808e15', unit: 'м', cat: 'astro' },
     { sym: 'pc', name: 'Парсек', val: '3.08567758149137e16', unit: 'м', cat: 'astro' },
-    { sym: 'atm', name: 'Стандартний атмосферний тиск', val: '101325', unit: 'Па', cat: 'astro' },
-
-    // 5. Математичні
+    { sym: 'atm', name: 'Стандартний атмосферний тиск', val: '101325', unit: 'Па', cat: 'astro' },
     { sym: 'π', name: 'Число Пі (Архімеда)', val: '3.141592653589793', unit: '—', cat: 'math' },
     { sym: 'e', name: 'Число Ейлера (основа ln)', val: '2.718281828459045', unit: '—', cat: 'math' },
     { sym: 'φ', name: 'Золотий перетин (Фібоначчі)', val: '1.618033988749895', unit: '—', cat: 'math' },
@@ -138,9 +119,7 @@ const EXTENDED_CONSTANTS = [
     { sym: 'ln(2)', name: 'Натуральний логарифм двійки', val: '0.693147180559945', unit: '—', cat: 'math' },
     { sym: 'ln(10)', name: 'Модуль десяткового переходу', val: '2.302585092994046', unit: '—', cat: 'math' },
     { sym: 'γ', name: 'Стала Ейлера-Маскероні', val: '0.577215664901532', unit: '—', cat: 'math' }
-];
-
-// Інтерактивна база формул математичного довідника
+];
 const MATH_REFERENCE_DATA = {
     trig: [
         { title: 'Основна тригонометрична тотожність', formula: 'sin²(x) + cos²(x) = 1' },
@@ -190,9 +169,7 @@ const MATH_REFERENCE_DATA = {
         { title: 'Об\'єм циліндра', formula: 'V = π · r² · h' },
         { title: 'Об\'єм конуса', formula: 'V = (1/3) · π · r² · h' }
     ]
-};
-
-// Елементи інтерфейсу (DOM Elements)
+};
 const dom = {
     display: document.getElementById('display'),
     historyLine: document.getElementById('history-line'),
@@ -213,8 +190,7 @@ const dom = {
     bgWallpaper: document.getElementById('bg-wallpaper'),
     bgParticlesCanvas: document.getElementById('bg-particles-canvas'),
     bgOverlay: document.getElementById('bg-overlay'),
-    btn2nd: document.getElementById('btn-2nd'),
-    // Динамічні кнопки 2nd
+    btn2nd: document.getElementById('btn-2nd'),
     btnSin: document.getElementById('btn-sin'),
     btnCos: document.getElementById('btn-cos'),
     btnTan: document.getElementById('btn-tan'),
@@ -225,18 +201,10 @@ const dom = {
     btnSqrt: document.getElementById('btn-sqrt'),
     btnPow: document.getElementById('btn-pow')
 };
-
-// --------------------------------------------------------------------------
-// Модуль 02: audio.js — Звуковий рушій Web Audio API
-// --------------------------------------------------------------------------
-// ==========================================================================
-// Аудіо рушій на базі Web Audio API з регулюванням гучності + Haptics
-// ==========================================================================
 class SoundEngine {
     constructor() {
         this.ctx = null;
     }
-
     init() {
         if (!this.ctx) {
             const AudioContext = window.AudioContext || window.webkitAudioContext;
@@ -248,25 +216,21 @@ class SoundEngine {
             this.ctx.resume();
         }
     }
-
     triggerHaptic(ms = 12) {
         if (navigator.vibrate) {
             try { navigator.vibrate(ms); } catch (e) { }
         }
     }
-
     playClick(freq = 600, duration = 0.04) {
         if (state.soundProfile === 'off' || state.soundVolume <= 0) return;
         this.triggerHaptic(8);
         try {
             this.init();
             if (!this.ctx) return;
-
             const now = this.ctx.currentTime;
             const osc = this.ctx.createOscillator();
             const gain = this.ctx.createGain();
             const masterVol = state.soundVolume;
-
             switch (state.soundProfile) {
                 case 'tactile':
                     osc.type = 'triangle';
@@ -298,18 +262,15 @@ class SoundEngine {
                     gain.gain.exponentialRampToValueAtTime(0.001, now + duration);
                     break;
             }
-
             osc.connect(gain);
             gain.connect(this.ctx.destination);
             osc.start(now);
             osc.stop(now + Math.max(duration, 0.06));
         } catch (e) { }
     }
-
     playAction() {
         this.playClick(850, 0.06);
     }
-
     playEquals() {
         if (state.soundProfile === 'off' || state.soundVolume <= 0) return;
         this.triggerHaptic(18);
@@ -320,21 +281,17 @@ class SoundEngine {
             const osc = this.ctx.createOscillator();
             const gain = this.ctx.createGain();
             const masterVol = state.soundVolume;
-
             osc.type = state.soundProfile === 'retro' ? 'square' : 'triangle';
             osc.frequency.setValueAtTime(440, now);
             osc.frequency.exponentialRampToValueAtTime(880, now + 0.12);
-
             gain.gain.setValueAtTime(0.16 * masterVol, now);
             gain.gain.exponentialRampToValueAtTime(0.001, now + 0.12);
-
             osc.connect(gain);
             gain.connect(this.ctx.destination);
             osc.start(now);
             osc.stop(now + 0.12);
         } catch (e) { }
     }
-
     playError() {
         if (state.soundProfile === 'off' || state.soundVolume <= 0) return;
         this.triggerHaptic([30, 40, 30]);
@@ -345,14 +302,11 @@ class SoundEngine {
             const osc = this.ctx.createOscillator();
             const gain = this.ctx.createGain();
             const masterVol = state.soundVolume;
-
             osc.type = 'sawtooth';
             osc.frequency.setValueAtTime(220, now);
             osc.frequency.setValueAtTime(140, now + 0.08);
-
             gain.gain.setValueAtTime(0.2 * masterVol, now);
             gain.gain.exponentialRampToValueAtTime(0.001, now + 0.22);
-
             osc.connect(gain);
             gain.connect(this.ctx.destination);
             osc.start(now);
@@ -360,15 +314,7 @@ class SoundEngine {
         } catch (e) { }
     }
 }
-
 const audio = new SoundEngine();
-
-// --------------------------------------------------------------------------
-// Модуль 03: particles.js — Анімовані частинки Canvas фону
-// --------------------------------------------------------------------------
-// ==========================================================================
-// Сесійний Таймер
-// ==========================================================================
 setInterval(() => {
     state.sessionSeconds++;
     if (dom.timerVal) {
@@ -376,11 +322,7 @@ setInterval(() => {
         const secs = (state.sessionSeconds % 60).toString().padStart(2, '0');
         dom.timerVal.innerText = `${mins}:${secs}`;
     }
-}, 1000);
-
-// ==========================================================================
-// Повноекранний Режим (Fullscreen Toggle)
-// ==========================================================================
+}, 1000);
 function toggleFullScreen() {
     audio.playAction();
     if (!document.fullscreenElement) {
@@ -395,29 +337,22 @@ function toggleFullScreen() {
             showToast('Вихід з повноекранного режиму', '🪟');
         }
     }
-}
-
-// ==========================================================================
-// Динамічний Canvas з Інтерактивними Частинками (Particle Dynamics)
-// ==========================================================================
+}
 let particles = [];
 let animFrameId = null;
 let mousePos = { x: -1000, y: -1000, active: false };
 let particlesPaused = false;
 let resizeTimer = null;
-
 if (!window.matchMedia('(pointer: coarse)').matches) {
     window.addEventListener('mousemove', (e) => {
         mousePos.x = e.clientX;
         mousePos.y = e.clientY;
         mousePos.active = true;
     });
-
     window.addEventListener('mouseleave', () => {
         mousePos.active = false;
     });
 }
-
 document.addEventListener('visibilitychange', () => {
     particlesPaused = document.hidden;
     if (!document.hidden && state.particlesEnabled) {
@@ -427,26 +362,22 @@ document.addEventListener('visibilitychange', () => {
         animFrameId = null;
     }
 });
-
 function initParticlesCanvas() {
     const canvas = dom.bgParticlesCanvas;
     if (!canvas || !state.particlesEnabled || particlesPaused) return;
     const ctx = canvas.getContext('2d');
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
-
     particles = [];
     const rawCount = Math.floor((canvas.width * canvas.height) / 50000);
     const count = Math.min(rawCount, typeof getParticleCountLimit === 'function' ? getParticleCountLimit() : 60);
     const drawConnections = typeof shouldDrawParticleConnections === 'function'
         ? shouldDrawParticleConnections()
         : true;
-
     let speedMult = 1.0;
     if (state.particleSpeedMode === 'aurora') speedMult = 0.5;
     if (state.particleSpeedMode === 'starlight') speedMult = 0.8;
     if (state.particleSpeedMode === 'warp') speedMult = 2.4;
-
     for (let i = 0; i < count; i++) {
         particles.push({
             x: Math.random() * canvas.width,
@@ -457,7 +388,6 @@ function initParticlesCanvas() {
             color: Math.random() > 0.4 ? 'rgba(192, 38, 211, ' : (Math.random() > 0.5 ? 'rgba(245, 158, 11, ' : 'rgba(255, 0, 85, ')
         });
     }
-
     function render() {
         if (!state.particlesEnabled || particlesPaused) {
             ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -465,10 +395,8 @@ function initParticlesCanvas() {
             return;
         }
         ctx.clearRect(0, 0, canvas.width, canvas.height);
-
         for (let i = 0; i < particles.length; i++) {
             const p = particles[i];
-
             if (mousePos.active) {
                 const dx = mousePos.x - p.x;
                 const dy = mousePos.y - p.y;
@@ -478,20 +406,16 @@ function initParticlesCanvas() {
                     p.y += (dy / dist) * 0.6;
                 }
             }
-
             p.x += p.vx;
             p.y += p.vy;
-
             if (p.x < 0) p.x = canvas.width;
             if (p.x > canvas.width) p.x = 0;
             if (p.y < 0) p.y = canvas.height;
             if (p.y > canvas.height) p.y = 0;
-
             ctx.beginPath();
             ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
             ctx.fillStyle = p.color + '0.75)';
             ctx.fill();
-
             if (drawConnections) {
                 for (let j = i + 1; j < particles.length; j++) {
                     const p2 = particles[j];
@@ -512,11 +436,9 @@ function initParticlesCanvas() {
         }
         animFrameId = requestAnimationFrame(render);
     }
-
     if (animFrameId) cancelAnimationFrame(animFrameId);
     render();
 }
-
 function setParticleSpeedMode(mode) {
     state.particleSpeedMode = mode;
     localStorage.setItem('calc_part_mode', mode);
@@ -527,13 +449,11 @@ function setParticleSpeedMode(mode) {
     const names = { standard: 'Стандарт (Calm)', aurora: 'Aurora Flow', starlight: 'Starlight', warp: 'Warp Speed' };
     showToast(`Динаміка частинок: ${names[mode]}`, '✨');
 }
-
 window.addEventListener('resize', () => {
     if (!dom.bgParticlesCanvas || !state.particlesEnabled) return;
     clearTimeout(resizeTimer);
     resizeTimer = setTimeout(() => initParticlesCanvas(), 180);
 });
-
 function stopParticlesCanvas() {
     if (animFrameId) {
         cancelAnimationFrame(animFrameId);
@@ -544,10 +464,7 @@ function stopParticlesCanvas() {
         ctx.clearRect(0, 0, dom.bgParticlesCanvas.width, dom.bgParticlesCanvas.height);
     }
 }
-
-function toggleParticlesSetting(val) {
-    // У легкому режимі частинки недоступні: запам'ятовуємо побажання
-    // і вмикаємо їх лише коли користувач перейде на режим «Повний»
+function toggleParticlesSetting(val) {
     if (val === 'on' && document.documentElement.classList.contains('perf-lite')) {
         localStorage.setItem('calc_particles', 'on');
         state.particlesEnabled = false;
@@ -566,81 +483,54 @@ function toggleParticlesSetting(val) {
         showToast('Фонові частинки вимкнено', '⏸️');
     }
 }
-
-// --------------------------------------------------------------------------
-// Модуль 04: animations.js — Анімації інтерфейсу та ефекти кліків
-// --------------------------------------------------------------------------
-// ==========================================================================
-// Хвильова Ripple-Анімація при кліках на кнопки
-// ==========================================================================
 document.addEventListener('click', (e) => {
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
     if (window.matchMedia('(pointer: coarse)').matches) return;
     if (document.documentElement.classList.contains('perf-lite')) return;
-
     const btn = e.target.closest('.buttons button, .footer-btn, .conv-tab, .sidebar-nav button');
     if (!btn) return;
-
     const circle = document.createElement('span');
     const diameter = Math.max(btn.clientWidth, btn.clientHeight);
     const radius = diameter / 2;
     const rect = btn.getBoundingClientRect();
-
     circle.style.width = circle.style.height = `${diameter}px`;
     circle.style.left = `${e.clientX - rect.left - radius}px`;
     circle.style.top = `${e.clientY - rect.top - radius}px`;
     circle.classList.add('btn-ripple-wave');
-
     const ripple = btn.getElementsByClassName('btn-ripple-wave')[0];
     if (ripple) ripple.remove();
-
     btn.appendChild(circle);
     setTimeout(() => circle.remove(), 550);
 });
-
-// --------------------------------------------------------------------------
-// Модуль 05: trig-circle.js — Інтерактивне тригонометричне коло
-// --------------------------------------------------------------------------
-// ==========================================================================
-// 1. НОВЕ v1.8.4: Інтерактивне Тригонометричне Коло (Unit Circle Visualizer)
-// ==========================================================================
 function updateTrigCircle(angleVal) {
     state.trigAngleDeg = parseFloat(angleVal) || 0;
     const slider = document.getElementById('trig-angle-slider');
     if (slider) slider.value = state.trigAngleDeg;
-
     const rad = state.trigAngleDeg * (Math.PI / 180);
     const sinVal = Math.sin(rad);
     const cosVal = Math.cos(rad);
-    const tanVal = Math.abs(cosVal) > 0.0001 ? sinVal / cosVal : (sinVal > 0 ? Infinity : -Infinity);
-
-    // Оновлення текстових міток
+    const tanVal = Math.abs(cosVal) > 0.0001 ? sinVal / cosVal : (sinVal > 0 ? Infinity : -Infinity);
     const angleLabel = document.getElementById('trig-angle-val');
     const sinEl = document.getElementById('trig-res-sin');
     const cosEl = document.getElementById('trig-res-cos');
     const tanEl = document.getElementById('trig-res-tan');
     const quadEl = document.getElementById('trig-res-quad');
-
     const piFraction = (state.trigAngleDeg / 180).toFixed(2);
     if (angleLabel) angleLabel.innerText = `${state.trigAngleDeg}° (${piFraction}π rad)`;
     if (sinEl) sinEl.innerText = sinVal.toFixed(4);
     if (cosEl) cosEl.innerText = cosVal.toFixed(4);
     if (tanEl) tanEl.innerText = isFinite(tanVal) ? tanVal.toFixed(4) : '±∞ (розрив)';
-
     let quadText = 'I Чверть (+, +)';
     if (state.trigAngleDeg > 90 && state.trigAngleDeg <= 180) quadText = 'II Чверть (−, +)';
     else if (state.trigAngleDeg > 180 && state.trigAngleDeg <= 270) quadText = 'III Чверть (−, −)';
     else if (state.trigAngleDeg > 270 && state.trigAngleDeg <= 360) quadText = 'IV Чверть (+, −)';
     if (quadEl) quadEl.innerText = quadText;
-
     drawTrigUnitCircleCanvas(state.trigAngleDeg, sinVal, cosVal);
 }
-
 function setTrigAngle(deg) {
     audio.playAction();
     updateTrigCircle(deg);
 }
-
 function drawTrigUnitCircleCanvas(deg, sinVal, cosVal) {
     const canvas = document.getElementById('trig-unit-circle-canvas');
     if (!canvas) return;
@@ -650,70 +540,51 @@ function drawTrigUnitCircleCanvas(deg, sinVal, cosVal) {
     const cx = w / 2;
     const cy = h / 2;
     const r = 95; // Радіус кола
-
-    ctx.clearRect(0, 0, w, h);
-
-    // 1. Сітка та осі
+    ctx.clearRect(0, 0, w, h);
     ctx.strokeStyle = 'rgba(255, 255, 255, 0.12)';
     ctx.lineWidth = 1;
     ctx.beginPath();
     ctx.moveTo(0, cy); ctx.lineTo(w, cy);
     ctx.moveTo(cx, 0); ctx.lineTo(cx, h);
-    ctx.stroke();
-
-    // 2. Одиничне коло
+    ctx.stroke();
     ctx.strokeStyle = 'rgba(255, 255, 255, 0.4)';
     ctx.lineWidth = 2;
     ctx.beginPath();
     ctx.arc(cx, cy, r, 0, Math.PI * 2);
-    ctx.stroke();
-
-    // 3. Точка на колі
+    ctx.stroke();
     const px = cx + cosVal * r;
-    const py = cy - sinVal * r; // Інверсія Y у Canvas
-
-    // 4. Проекція Косинуса (на осі X)
+    const py = cy - sinVal * r; // Інверсія Y у Canvas
     ctx.strokeStyle = '#f59e0b'; // Gold
     ctx.lineWidth = 3;
     ctx.beginPath();
     ctx.moveTo(cx, cy);
     ctx.lineTo(px, cy);
-    ctx.stroke();
-
-    // 5. Проекція Синуса (вертикаль)
+    ctx.stroke();
     ctx.strokeStyle = '#c026d3'; // Magenta
     ctx.lineWidth = 3;
     ctx.beginPath();
     ctx.moveTo(px, cy);
     ctx.lineTo(px, py);
-    ctx.stroke();
-
-    // 6. Радіус-вектор гіпотенузи
+    ctx.stroke();
     ctx.strokeStyle = '#38bdf8'; // Cyan
     ctx.lineWidth = 2;
     ctx.beginPath();
     ctx.moveTo(cx, cy);
     ctx.lineTo(px, py);
-    ctx.stroke();
-
-    // 7. Сектор кута
+    ctx.stroke();
     ctx.fillStyle = 'rgba(245, 158, 11, 0.2)';
     ctx.beginPath();
     ctx.moveTo(cx, cy);
     ctx.arc(cx, cy, 26, 0, -deg * (Math.PI / 180), true);
     ctx.closePath();
-    ctx.fill();
-
-    // 8. Маркер точки на колі
+    ctx.fill();
     ctx.fillStyle = '#ff0055';
     ctx.beginPath();
     ctx.arc(px, py, 5.5, 0, Math.PI * 2);
     ctx.fill();
     ctx.strokeStyle = '#fff';
     ctx.lineWidth = 1.5;
-    ctx.stroke();
-
-    // Підписи осей
+    ctx.stroke();
     ctx.fillStyle = 'rgba(255, 255, 255, 0.6)';
     ctx.font = '10px Inter, sans-serif';
     ctx.fillText('1', cx + r + 2, cy - 4);
@@ -721,7 +592,6 @@ function drawTrigUnitCircleCanvas(deg, sinVal, cosVal) {
     ctx.fillText('1 (sin)', cx + 4, cy - r - 4);
     ctx.fillText('(cos)', w - 28, cy - 4);
 }
-
 function insertTrigSinToCalc() {
     audio.playAction();
     const rad = state.trigAngleDeg * (Math.PI / 180);
@@ -732,7 +602,6 @@ function insertTrigSinToCalc() {
     closeModal('trig-circle-modal');
     showToast(`sin(${state.trigAngleDeg}°) = ${val} вставлено`, '⭕');
 }
-
 function insertTrigCosToCalc() {
     audio.playAction();
     const rad = state.trigAngleDeg * (Math.PI / 180);
@@ -743,29 +612,19 @@ function insertTrigCosToCalc() {
     closeModal('trig-circle-modal');
     showToast(`cos(${state.trigAngleDeg}°) = ${val} вставлено`, '⭕');
 }
-
-// --------------------------------------------------------------------------
-// Модуль 06: constants.js — Математичні та фізичні константи
-// --------------------------------------------------------------------------
-// ==========================================================================
-// 2. НОВЕ v1.8.4: Розширена База Наукових Констант (40+)
-// ==========================================================================
 function renderExtendedConstants(filterText = '', category = state.activeConstantsCat) {
     const list = document.getElementById('constants-extended-list');
     if (!list) return;
-
     const q = filterText.trim().toLowerCase();
     const items = EXTENDED_CONSTANTS.filter(c => {
         const matchesCat = category === 'all' || c.cat === category;
         const matchesQ = !q || c.name.toLowerCase().includes(q) || c.sym.toLowerCase().includes(q) || c.val.includes(q);
         return matchesCat && matchesQ;
     });
-
     if (items.length === 0) {
         list.innerHTML = '<div style="grid-column: 1/-1; text-align:center; color:var(--text-muted); padding:20px;">Констант не знайдено за вашим запитом.</div>';
         return;
     }
-
     list.innerHTML = '';
     items.forEach(c => {
         const card = document.createElement('div');
@@ -784,11 +643,9 @@ function renderExtendedConstants(filterText = '', category = state.activeConstan
         list.appendChild(card);
     });
 }
-
 function filterExtendedConstants(val) {
     renderExtendedConstants(val, state.activeConstantsCat);
 }
-
 function switchConstantsCategory(cat) {
     state.activeConstantsCat = cat;
     document.querySelectorAll('.constants-tabs-row .conv-tab').forEach(t => {
@@ -797,7 +654,6 @@ function switchConstantsCategory(cat) {
     const inp = document.getElementById('const-search-inp');
     renderExtendedConstants(inp ? inp.value : '', cat);
 }
-
 function insertExtConstant(val, sym) {
     audio.playAction();
     state.currentInput = val;
@@ -806,13 +662,6 @@ function insertExtConstant(val, sym) {
     closeModal('constants-search-modal');
     showToast(`Константу ${sym} (${val}) вставлено`, '⚛️');
 }
-
-// --------------------------------------------------------------------------
-// Модуль 07: display.js — Керування відображенням дисплею
-// --------------------------------------------------------------------------
-// ==========================================================================
-// Форматування чисел з розділювачами розрядів
-// ==========================================================================
 function formatDisplayString(rawVal) {
     if (!rawVal || isNaN(parseFloat(rawVal)) || rawVal.includes('(') || rawVal.includes('Помилка')) {
         return rawVal;
@@ -820,21 +669,17 @@ function formatDisplayString(rawVal) {
     if (state.thousandSeparator === 'none') {
         return rawVal;
     }
-
     const parts = rawVal.split('.');
     const isNegative = parts[0].startsWith('-');
     let integerPart = isNegative ? parts[0].slice(1) : parts[0];
     const sep = state.thousandSeparator === 'comma' ? ',' : ' ';
-
     integerPart = integerPart.replace(/\B(?=(\d{3})+(?!\d))/g, sep);
-
     let res = (isNegative ? '-' : '') + integerPart;
     if (parts.length > 1) {
         res += '.' + parts[1];
     }
     return res;
 }
-
 function cycleSeparatorFormat() {
     audio.playAction();
     const formats = ['space', 'comma', 'none'];
@@ -844,10 +689,7 @@ function cycleSeparatorFormat() {
     updateDisplay();
     const names = { space: 'Пробіл (1 000 000)', comma: 'Кома (1,000,000)', none: 'Без розділювача' };
     showToast(`Формат тисяч: ${names[state.thousandSeparator]}`, '🔢');
-}
-// ==========================================================================
-// Оновлення дисплея та індикаторів
-// ==========================================================================
+}
 function updateDisplay() {
     if (dom.display) {
         const formatted = formatDisplayString(state.currentInput);
@@ -861,7 +703,6 @@ function updateDisplay() {
         }
         dom.display.innerText = formatted;
     }
-
     if (dom.historyLine) {
         if (state.operator != null) {
             let opSymbol = state.operator;
@@ -873,24 +714,18 @@ function updateDisplay() {
         } else {
             dom.historyLine.innerText = '';
         }
-    }
-
-    // Індикатор кутового режиму (DEG / RAD / GRAD)
+    }
     if (dom.modeBadge) {
         dom.modeBadge.innerText = state.angleMode;
         const angleNames = { DEG: 'Градуси (DEG)', RAD: 'Радіани (RAD)', GRAD: 'Градіани (GRAD)' };
         dom.modeBadge.title = `Кутовий режим: ${angleNames[state.angleMode]} (клікніть для зміни)`;
-    }
-
-    // Індикатор 2nd (Shift)
+    }
     if (dom.secondaryBadge) {
         dom.secondaryBadge.classList.toggle('active', state.isSecondMode);
     }
     if (dom.btn2nd) {
         dom.btn2nd.classList.toggle('active', state.isSecondMode);
-    }
-
-    // Індикатор пам'яті [M]
+    }
     if (dom.memoryBadge) {
         const hasMemory = state.memoryValue !== 0 || state.memorySlots.some(s => s !== 0);
         if (hasMemory) {
@@ -900,30 +735,20 @@ function updateDisplay() {
             dom.memoryBadge.classList.remove('active');
             dom.memoryBadge.innerText = 'M';
         }
-    }
-
-    // Індикатор розділювача розрядів
+    }
     if (dom.separatorTag) {
         const sepNames = { space: 'Розряди: Пробіл', comma: 'Розряди: Кома', none: 'Розряди: Без' };
         dom.separatorTag.innerText = sepNames[state.thousandSeparator] || 'Розряди';
-    }
-
-    // Індикатор точності
+    }
     if (dom.precisionTag) {
         dom.precisionTag.innerText = `Округлення: ${state.precisionMode === 'auto' ? 'Auto' : state.precisionMode + ' зн.'}`;
-    }
-
-    // Індикатор звуку
-    updateAudioUI();
-
-    // Лічильник операцій
+    }
+    updateAudioUI();
     if (dom.opsCounter) {
         dom.opsCounter.innerText = state.operationsCount;
     }
-
     updateSecondaryButtonsUI();
 }
-
 function updateSecondaryButtonsUI() {
     if (state.isSecondMode) {
         if (dom.btnSin) { dom.btnSin.innerText = 'sin⁻¹'; dom.btnSin.title = 'Арксинус (asin)'; }
@@ -947,7 +772,6 @@ function updateSecondaryButtonsUI() {
         if (dom.btnPow) { dom.btnPow.innerText = 'xⁿ'; dom.btnPow.title = 'Степінь (xⁿ)'; }
     }
 }
-
 function updateAudioUI() {
     const isMuted = state.soundProfile === 'off' || state.soundVolume <= 0;
     const profileNames = {
@@ -958,7 +782,6 @@ function updateAudioUI() {
         off: 'Вимк.'
     };
     const pName = profileNames[state.soundProfile] || 'Classic';
-
     if (dom.audioBadge) {
         dom.audioBadge.innerText = isMuted ? '🔇' : '🔊';
         dom.audioBadge.title = `Звук: ${pName} (${Math.round(state.soundVolume * 100)}%)`;
@@ -967,33 +790,22 @@ function updateAudioUI() {
         dom.sidebarSoundStatus.innerText = `🔔 ${pName} (${Math.round(state.soundVolume * 100)}%)`;
     }
 }
-
-// --------------------------------------------------------------------------
-// Модуль 08: math-advisor.js — Математичний радник та підказки
-// --------------------------------------------------------------------------
-// ==========================================================================
-// Розумний Математичний Порадник
-// ==========================================================================
 function triggerMathAdvisor(errorType, contextVal = {}) {
     audio.playError();
-
     const diagIcon = document.getElementById('error-diag-icon');
     const diagTitle = document.getElementById('error-diag-title');
     const diagRule = document.getElementById('error-diag-rule');
     const diagExpl = document.getElementById('error-diag-explanation');
     const diagRemedy = document.getElementById('error-diag-remedy');
     const actionsContainer = document.getElementById('error-actions-container');
-
     if (!actionsContainer) return;
     actionsContainer.innerHTML = '';
-
     let title = 'Заборонена математична дія!';
     let icon = '⚠️';
     let rule = '';
     let explanation = '';
     let remedy = '';
     let quickActions = [];
-
     switch (errorType) {
         case 'zero_division':
             icon = '🚫';
@@ -1026,7 +838,6 @@ function triggerMathAdvisor(errorType, contextVal = {}) {
                 }
             ];
             break;
-
         case 'negative_sqrt':
             icon = '📐';
             title = 'Корінь з від\'ємного числа!';
@@ -1050,7 +861,6 @@ function triggerMathAdvisor(errorType, contextVal = {}) {
                 }
             ];
             break;
-
         case 'invalid_log':
             icon = '📉';
             title = 'Логарифм недопустимого аргументу!';
@@ -1075,7 +885,6 @@ function triggerMathAdvisor(errorType, contextVal = {}) {
                 }
             ];
             break;
-
         case 'invalid_asin_acos':
             icon = '⭕';
             title = 'Аргумент поза діапазоном [-1, 1]!';
@@ -1095,7 +904,6 @@ function triggerMathAdvisor(errorType, contextVal = {}) {
                 }
             ];
             break;
-
         case 'tan_90':
             icon = '📐';
             title = 'Тангенс 90° (асимптота)!';
@@ -1115,7 +923,6 @@ function triggerMathAdvisor(errorType, contextVal = {}) {
                 }
             ];
             break;
-
         case 'invalid_factorial':
             icon = '❗';
             title = 'Факторіал від\'ємного чи дробу!';
@@ -1137,69 +944,46 @@ function triggerMathAdvisor(errorType, contextVal = {}) {
             ];
             break;
     }
-
     if (diagIcon) diagIcon.innerText = icon;
     if (diagTitle) diagTitle.innerText = title;
     if (diagRule) diagRule.innerText = rule;
     if (diagExpl) diagExpl.innerText = explanation;
     if (diagRemedy) diagRemedy.innerText = remedy;
-
     quickActions.forEach(act => {
         const btn = document.createElement('button');
         btn.innerText = act.text;
         btn.onclick = act.handler;
         actionsContainer.appendChild(btn);
     });
-
     openModal('error-advisor-modal');
 }
-
 function toggleAccordion(headerEl) {
     const item = headerEl.parentElement;
     item.classList.toggle('active');
 }
-
-// --------------------------------------------------------------------------
-// Модуль 09: speech.js — Голосове озвучення (SpeechSynthesis)
-// --------------------------------------------------------------------------
-// ==========================================================================
-// Голосове Озвучення (Speech Synthesis)
-// ==========================================================================
 function speakCurrentResult() {
     if (!('speechSynthesis' in window)) {
         showToast('Speech Synthesis не підтримується', '⚠️');
         return;
     }
-
     audio.playAction();
     window.speechSynthesis.cancel();
-
     let textToSpeak = state.currentInput;
     if (textToSpeak === 'Помилка') {
         textToSpeak = 'Помилка обчислення. Будь ласка, перегляньте математичний порадник.';
     } else {
         textToSpeak = `Результат: ${state.currentInput.replace('-', 'мінус ')}`;
     }
-
     const utterance = new SpeechSynthesisUtterance(textToSpeak);
     utterance.lang = 'uk-UA';
     utterance.rate = 1.0;
     utterance.pitch = 1.0;
-
     const voices = window.speechSynthesis.getVoices();
     const ukVoice = voices.find(v => v.lang.includes('uk') || v.lang.includes('UA'));
     if (ukVoice) utterance.voice = ukVoice;
-
     window.speechSynthesis.speak(utterance);
     showToast(`Озвучено: ${state.currentInput}`, '🗣️');
 }
-
-// --------------------------------------------------------------------------
-// Модуль 10: trig-functions.js — Тригонометричні та інженерні функції
-// --------------------------------------------------------------------------
-// ==========================================================================
-// Перемикачі та системні функції
-// ==========================================================================
 function toggleAngleMode() {
     const modes = ['DEG', 'RAD', 'GRAD'];
     const curIdx = modes.indexOf(state.angleMode);
@@ -1210,14 +994,12 @@ function toggleAngleMode() {
     const names = { DEG: 'Градуси (DEG)', RAD: 'Радіани (RAD)', GRAD: 'Градіани / Гради (GRAD)' };
     showToast(`Кутовий режим: ${names[state.angleMode]}`, '📐');
 }
-
 function toggleSecondMode() {
     state.isSecondMode = !state.isSecondMode;
     audio.playAction();
     updateDisplay();
     showToast(state.isSecondMode ? 'Режим 2nd (Shift) увімкнено' : 'Стандартні функції', '⚡');
 }
-
 function cyclePrecision() {
     audio.playAction();
     const modes = ['auto', '0', '2', '4', '6', '8', '10', '12'];
@@ -1227,7 +1009,6 @@ function cyclePrecision() {
     updateDisplay();
     showToast(`Точність: ${state.precisionMode === 'auto' ? 'Автоматична' : state.precisionMode + ' знаків'}`, '🎯');
 }
-
 function cycleSoundProfile() {
     const profiles = ['classic', 'tactile', 'retro', 'scifi', 'off'];
     const currentIdx = profiles.indexOf(state.soundProfile);
@@ -1244,7 +1025,6 @@ function cycleSoundProfile() {
     };
     showToast(`Звуковий профіль: ${profileNamesUA[state.soundProfile]}`, state.soundProfile === 'off' ? '🔇' : '🔊');
 }
-
 function goHome() {
     audio.playAction();
     clearDisplay();
@@ -1253,7 +1033,6 @@ function goHome() {
     updateDisplay();
     openModal('home-modal');
 }
-
 function clearDisplay() {
     audio.playAction();
     state.currentInput = '0';
@@ -1262,12 +1041,9 @@ function clearDisplay() {
     state.shouldResetDisplay = false;
     updateDisplay();
 }
-
 function backspace() {
     audio.playClick(500);
-    if (state.shouldResetDisplay) return;
-
-    // Перевірка на багатосимвольні математичні токени
+    if (state.shouldResetDisplay) return;
     const mathTokens = [
         'asin(', 'acos(', 'atan(', 'asinh(', 'acosh(', 'atanh(',
         'sinh(', 'cosh(', 'tanh(', 'sin(', 'cos(', 'tan(',
@@ -1282,7 +1058,6 @@ function backspace() {
             return;
         }
     }
-
     if (
         state.currentInput.length === 1 ||
         (state.currentInput.length === 2 && state.currentInput.startsWith('-')) ||
@@ -1294,7 +1069,6 @@ function backspace() {
     }
     updateDisplay();
 }
-
 function appendNumber(number) {
     audio.playClick(650);
     if (isNaN(parseFloat(state.currentInput)) && state.currentInput !== '.') {
@@ -1312,7 +1086,6 @@ function appendNumber(number) {
     }
     updateDisplay();
 }
-
 function appendBracket(bracket) {
     audio.playAction();
     if (bracket === '(') {
@@ -1331,7 +1104,6 @@ function appendBracket(bracket) {
     }
     updateDisplay();
 }
-
 function appendOperator(op) {
     audio.playAction();
     if (isNaN(parseFloat(state.currentInput)) && !state.currentInput.includes(')')) return;
@@ -1342,32 +1114,24 @@ function appendOperator(op) {
     state.previousInput = state.currentInput;
     state.shouldResetDisplay = true;
     updateDisplay();
-}
-
-// ==========================================================================
-// Тригонометрія з підтримкою DEG, RAD та GRAD
-// ==========================================================================
+}
 function angleToRadians(val) {
     if (state.angleMode === 'DEG') return val * (Math.PI / 180);
     if (state.angleMode === 'GRAD') return val * (Math.PI / 200);
     return val;
 }
-
 function radiansToAngle(rad) {
     if (state.angleMode === 'DEG') return rad * (180 / Math.PI);
     if (state.angleMode === 'GRAD') return rad * (200 / Math.PI);
     return rad;
 }
-
 function handleTrigOrSecondary(func) {
     audio.playAction();
     const current = parseFloat(state.currentInput);
     if (isNaN(current)) return;
-
     let result;
     const unitMap = { DEG: '°', RAD: ' rad', GRAD: ' grad' };
     const unit = unitMap[state.angleMode];
-
     if (!state.isSecondMode) {
         let radians = angleToRadians(current);
         if (func === 'sin') result = Math.sin(radians);
@@ -1423,16 +1187,13 @@ function handleTrigOrSecondary(func) {
             state.currentInput = formatted;
         }
     }
-
     state.shouldResetDisplay = true;
     updateDisplay();
 }
-
 function handleHyperbolicOrSecondary(func) {
     audio.playAction();
     const current = parseFloat(state.currentInput);
     if (isNaN(current)) return;
-
     let result;
     if (!state.isSecondMode) {
         result = Math.sinh(current);
@@ -1448,7 +1209,6 @@ function handleHyperbolicOrSecondary(func) {
     state.shouldResetDisplay = true;
     updateDisplay();
 }
-
 function handleLnOrLog2() {
     audio.playAction();
     const current = parseFloat(state.currentInput);
@@ -1464,7 +1224,6 @@ function handleLnOrLog2() {
     state.shouldResetDisplay = true;
     updateDisplay();
 }
-
 function handleLogOr10x() {
     audio.playAction();
     const current = parseFloat(state.currentInput);
@@ -1488,7 +1247,6 @@ function handleLogOr10x() {
     state.shouldResetDisplay = true;
     updateDisplay();
 }
-
 function handleSquareOrCube() {
     audio.playAction();
     const current = parseFloat(state.currentInput);
@@ -1500,7 +1258,6 @@ function handleSquareOrCube() {
     state.shouldResetDisplay = true;
     updateDisplay();
 }
-
 function handleSqrtOrCbrt() {
     audio.playAction();
     const current = parseFloat(state.currentInput);
@@ -1524,7 +1281,6 @@ function handleSqrtOrCbrt() {
     state.shouldResetDisplay = true;
     updateDisplay();
 }
-
 function handlePowerOrExp() {
     if (!state.isSecondMode) {
         appendOperator('^');
@@ -1540,7 +1296,6 @@ function handlePowerOrExp() {
         updateDisplay();
     }
 }
-
 function calculateAbs() {
     audio.playAction();
     const current = parseFloat(state.currentInput);
@@ -1552,7 +1307,6 @@ function calculateAbs() {
     state.shouldResetDisplay = true;
     updateDisplay();
 }
-
 function calculateInverse() {
     audio.playAction();
     const current = parseFloat(state.currentInput);
@@ -1568,7 +1322,6 @@ function calculateInverse() {
     state.shouldResetDisplay = true;
     updateDisplay();
 }
-
 function calculateFactorial() {
     audio.playAction();
     let num = parseFloat(state.currentInput);
@@ -1593,28 +1346,24 @@ function calculateFactorial() {
     state.shouldResetDisplay = true;
     updateDisplay();
 }
-
 function toggleSign() {
     audio.playClick(550);
     if (state.currentInput === '0' || isNaN(parseFloat(state.currentInput))) return;
     state.currentInput = (parseFloat(state.currentInput) * -1).toString();
     updateDisplay();
 }
-
 function insertPi() {
     audio.playAction();
     if (state.shouldResetDisplay) { state.currentInput = ''; state.shouldResetDisplay = false; }
     state.currentInput = Math.PI.toFixed(12).replace(/\.?0+$/, '');
     updateDisplay();
 }
-
 function insertEuler() {
     audio.playAction();
     if (state.shouldResetDisplay) { state.currentInput = ''; state.shouldResetDisplay = false; }
     state.currentInput = Math.E.toFixed(12).replace(/\.?0+$/, '');
     updateDisplay();
 }
-
 function insertConstantVal(val, name) {
     audio.playAction();
     state.currentInput = val;
@@ -1622,16 +1371,13 @@ function insertConstantVal(val, name) {
     updateDisplay();
     closeModal('constants-modal');
     showToast(`Константу ${name} вставлено`, '⚛️');
-}
-
-// Пам'ять
+}
 function memoryClear() {
     audio.playAction();
     state.memoryValue = 0;
     updateDisplay();
     showToast("Пам'ять очищено", '🧹');
 }
-
 function memoryRecall() {
     audio.playAction();
     state.currentInput = formatResult(state.memoryValue);
@@ -1639,7 +1385,6 @@ function memoryRecall() {
     updateDisplay();
     showToast(`Викликано з пам'яті: ${state.currentInput}`, '📥');
 }
-
 function memoryAdd() {
     audio.playAction();
     state.memoryValue += parseFloat(state.currentInput) || 0;
@@ -1647,23 +1392,19 @@ function memoryAdd() {
     updateDisplay();
     showToast(`Додано до пам'яті (M = ${formatResult(state.memoryValue)})`, '➕');
 }
-
 function memorySubtract() {
     audio.playAction();
     state.memoryValue -= parseFloat(state.currentInput) || 0;
     state.shouldResetDisplay = true;
     updateDisplay();
     showToast(`Віднято від пам'яті (M = ${formatResult(state.memoryValue)})`, '➖');
-}
-
-// Матриця Пам'яті M1-M4
+}
 function updateMemorySlotsUI() {
     for (let i = 0; i < 4; i++) {
         const el = document.getElementById(`mem-slot-val-${i}`);
         if (el) el.innerText = formatResult(state.memorySlots[i]);
     }
 }
-
 function memorySlotStore(idx) {
     audio.playAction();
     const val = parseFloat(state.currentInput) || 0;
@@ -1673,7 +1414,6 @@ function memorySlotStore(idx) {
     updateDisplay();
     showToast(`Збережено в M${idx + 1}: ${val}`, '💾');
 }
-
 function memorySlotRecall(idx) {
     audio.playAction();
     const val = state.memorySlots[idx] || 0;
@@ -1683,7 +1423,6 @@ function memorySlotRecall(idx) {
     closeModal('memory-modal');
     showToast(`Викликано з M${idx + 1}: ${state.currentInput}`, '📥');
 }
-
 function memorySlotClear(idx) {
     audio.playAction();
     state.memorySlots[idx] = 0;
@@ -1692,7 +1431,6 @@ function memorySlotClear(idx) {
     updateDisplay();
     showToast(`Слот M${idx + 1} очищено`, '🧹');
 }
-
 function clearAllMemorySlots() {
     audio.playAction();
     state.memorySlots = [0, 0, 0, 0];
@@ -1701,13 +1439,6 @@ function clearAllMemorySlots() {
     updateDisplay();
     showToast('Всі слоти M1-M4 очищено', '🧹');
 }
-
-// --------------------------------------------------------------------------
-// Модуль 11: formula-solver.js — Розв'язувач фізичних формул
-// --------------------------------------------------------------------------
-// ==========================================================================
-// Фізико-Математичний Формулатор
-// ==========================================================================
 function solvePhysicsFormula(type) {
     if (type === 'ek') {
         const m = parseFloat(document.getElementById('f-ek-m').value) || 0;
@@ -1753,7 +1484,6 @@ function solvePhysicsFormula(type) {
         if (el) el.innerText = `${formatResult(p)} Па`;
     }
 }
-
 function insertFormulaValToCalc(resId) {
     audio.playAction();
     const el = document.getElementById(resId);
@@ -1768,26 +1498,17 @@ function insertFormulaValToCalc(resId) {
         }
     }
 }
-
-// --------------------------------------------------------------------------
-// Модуль 12: triangle-solver.js — Геометрія та розв'язання трикутників
-// --------------------------------------------------------------------------
-// ==========================================================================
-// Геометричний Розв'язувач Трикутників
-// ==========================================================================
 function switchTriangleMode(mode) {
     state.activeTriangleMode = mode;
     document.querySelectorAll('[data-ttab]').forEach(b => {
         b.classList.toggle('active', b.getAttribute('data-ttab') === mode);
     });
-
     const l1 = document.getElementById('tri-lbl-1');
     const l2 = document.getElementById('tri-lbl-2');
     const l3 = document.getElementById('tri-lbl-3');
     const i1 = document.getElementById('tri-val-1');
     const i2 = document.getElementById('tri-val-2');
     const i3 = document.getElementById('tri-val-3');
-
     if (mode === 'sss') {
         if (l1) l1.innerText = 'Сторона a:';
         if (l2) l2.innerText = 'Сторона b:';
@@ -1812,21 +1533,17 @@ function switchTriangleMode(mode) {
     }
     solveTriangleGeometry();
 }
-
 function solveTriangleGeometry() {
     let v1 = parseFloat(document.getElementById('tri-val-1').value) || 0;
     let v2 = parseFloat(document.getElementById('tri-val-2').value) || 0;
     let v3 = parseFloat(document.getElementById('tri-val-3').value) || 0;
-
     let a = 0, b = 0, c = 0;
     let alpha = 0, beta = 0, gamma = 0;
-
     const areaEl = document.getElementById('tri-res-area');
     const perimEl = document.getElementById('tri-res-perim');
     const anglesEl = document.getElementById('tri-res-angles');
     const radiiEl = document.getElementById('tri-res-radii');
     const badgeEl = document.getElementById('tri-type-badge');
-
     if (state.activeTriangleMode === 'sss') {
         a = v1; b = v2; c = v3;
         if (a + b <= c || a + c <= b || b + c <= a || a <= 0 || b <= 0 || c <= 0) {
@@ -1865,34 +1582,27 @@ function solveTriangleGeometry() {
         b = a * (Math.sin(radB) / Math.sin(radA));
         c = a * (Math.sin(radG) / Math.sin(radA));
     }
-
     const perim = a + b + c;
     const s = perim / 2;
     const area = Math.sqrt(Math.max(0, s * (s - a) * (s - b) * (s - c)));
     const rIn = area > 0 ? area / s : 0;
     const rOut = area > 0 ? (a * b * c) / (4 * area) : 0;
-
     state.triangleResults.area = formatResult(area);
     state.triangleResults.perim = formatResult(perim);
-
     if (areaEl) areaEl.innerText = state.triangleResults.area;
     if (perimEl) perimEl.innerText = state.triangleResults.perim;
     if (anglesEl) anglesEl.innerText = `${alpha.toFixed(1)}° / ${beta.toFixed(1)}° / ${gamma.toFixed(1)}°`;
     if (radiiEl) radiiEl.innerText = `r = ${rIn.toFixed(2)} | R = ${rOut.toFixed(2)}`;
-
     let typeStr = '';
     if (Math.abs(a - b) < 0.01 && Math.abs(b - c) < 0.01) typeStr = 'Рівносторонній';
     else if (Math.abs(a - b) < 0.01 || Math.abs(b - c) < 0.01 || Math.abs(a - c) < 0.01) typeStr = 'Рівнобедрений';
     else typeStr = 'Різносторонній';
-
     const maxAngle = Math.max(alpha, beta, gamma);
     if (Math.abs(maxAngle - 90) < 0.1) typeStr += ', Прямокутний';
     else if (maxAngle > 90) typeStr += ', Тупокутний';
     else typeStr += ', Гострокутний';
-
     if (badgeEl) badgeEl.innerText = typeStr;
 }
-
 function insertTriangleAreaToCalc() {
     audio.playAction();
     state.currentInput = state.triangleResults.area;
@@ -1901,7 +1611,6 @@ function insertTriangleAreaToCalc() {
     closeModal('triangle-solver-modal');
     showToast(`Площу S = ${state.triangleResults.area} вставлено`, '📐');
 }
-
 function insertTrianglePerimToCalc() {
     audio.playAction();
     state.currentInput = state.triangleResults.perim;
@@ -1910,34 +1619,22 @@ function insertTrianglePerimToCalc() {
     closeModal('triangle-solver-modal');
     showToast(`Периметр P = ${state.triangleResults.perim} вставлено`, '📐');
 }
-
-// --------------------------------------------------------------------------
-// Модуль 13: loan-calc.js — Кредитний та іпотечний калькулятор
-// --------------------------------------------------------------------------
-// ==========================================================================
-// Іпотечний та Кредитний Калькулятор
-// ==========================================================================
 function calculateLoanAmortization() {
     const P = parseFloat(document.getElementById('loan-amount').value) || 0;
     const annualRate = parseFloat(document.getElementById('loan-rate').value) || 0;
     const n = parseInt(document.getElementById('loan-term').value, 10) || 1;
     const type = document.getElementById('loan-type').value;
-
     const monthlyEl = document.getElementById('loan-monthly-val');
     const interestEl = document.getElementById('loan-interest-val');
     const totalEl = document.getElementById('loan-total-val');
     const pctEl = document.getElementById('loan-pct-val');
     const tbody = document.getElementById('loan-table-tbody');
-
     if (P <= 0 || n <= 0) return;
-
     const r = annualRate / 100 / 12;
     let monthlyPay = 0;
     let totalPaid = 0;
     let totalInterest = 0;
-
     if (tbody) tbody.innerHTML = '';
-
     if (type === 'annuity') {
         if (r > 0) {
             monthlyPay = P * (r * Math.pow(1 + r, n)) / (Math.pow(1 + r, n) - 1);
@@ -1946,14 +1643,12 @@ function calculateLoanAmortization() {
         }
         totalPaid = monthlyPay * n;
         totalInterest = totalPaid - P;
-
         let balance = P;
         const previewLimit = Math.min(n, 24);
         for (let m = 1; m <= previewLimit; m++) {
             const interest = balance * r;
             const principal = monthlyPay - interest;
             balance = Math.max(0, balance - principal);
-
             if (tbody) {
                 const tr = document.createElement('tr');
                 tr.innerHTML = `
@@ -1970,14 +1665,12 @@ function calculateLoanAmortization() {
         const principalFixed = P / n;
         let balance = P;
         let firstMonthPay = 0;
-
         for (let m = 1; m <= n; m++) {
             const interest = balance * r;
             const pay = principalFixed + interest;
             if (m === 1) firstMonthPay = pay;
             totalPaid += pay;
             balance = Math.max(0, balance - principalFixed);
-
             if (tbody && m <= 24) {
                 const tr = document.createElement('tr');
                 tr.innerHTML = `
@@ -1993,16 +1686,13 @@ function calculateLoanAmortization() {
         totalInterest = totalPaid - P;
         monthlyPay = firstMonthPay;
     }
-
     state.loanResults.monthly = monthlyPay.toFixed(2);
     state.loanResults.total = totalPaid.toFixed(2);
-
     if (monthlyEl) monthlyEl.innerText = `${monthlyPay.toFixed(2)} ₴${type === 'diff' ? ' (1-й міс.)' : ''}`;
     if (interestEl) interestEl.innerText = `${totalInterest.toFixed(2)} ₴`;
     if (totalEl) totalEl.innerText = `${totalPaid.toFixed(2)} ₴`;
     if (pctEl) pctEl.innerText = `+${((totalInterest / P) * 100).toFixed(2)}%`;
 }
-
 function insertLoanMonthlyToCalc() {
     audio.playAction();
     state.currentInput = state.loanResults.monthly;
@@ -2011,7 +1701,6 @@ function insertLoanMonthlyToCalc() {
     closeModal('loan-calc-modal');
     showToast(`Платіж ${state.loanResults.monthly} ₴ вставлено`, '🏦');
 }
-
 function insertLoanTotalToCalc() {
     audio.playAction();
     state.currentInput = state.loanResults.total;
@@ -2020,22 +1709,13 @@ function insertLoanTotalToCalc() {
     closeModal('loan-calc-modal');
     showToast(`Загальну вартість ${state.loanResults.total} ₴ вставлено`, '🏦');
 }
-
-// --------------------------------------------------------------------------
-// Модуль 14: bookmarks.js — Закладки та обрані вирази
-// --------------------------------------------------------------------------
-// ==========================================================================
-// Блокнот Обраних Виразів (Bookmarks)
-// ==========================================================================
 function renderBookmarks() {
     const container = document.getElementById('bookmarks-list-box');
     if (!container) return;
-
     if (state.bookmarks.length === 0) {
         container.innerHTML = '<div style="text-align:center; color:var(--text-muted); padding:20px;">Блокнот порожній. Додайте важливі числа або формули.</div>';
         return;
     }
-
     container.innerHTML = '';
     state.bookmarks.forEach((bm, idx) => {
         const card = document.createElement('div');
@@ -2050,9 +1730,7 @@ function renderBookmarks() {
                 <button class="btn-secondary" style="padding:4px 8px; font-size:0.75rem;" title="Вставити в калькулятор">📥 Вставити</button>
                 <button class="btn-secondary btn-danger" style="padding:4px 8px; font-size:0.75rem;">🗑️</button>
             </div>
-        `;
-        // Обробники через замикання замість inline onclick з інтерполяцією
-        // значень користувача (захист від ін'єкції в HTML-атрибут)
+        `;
         const insertBtn = card.querySelector('.bookmark-actions .btn-secondary:not(.btn-danger)');
         const deleteBtn = card.querySelector('.bookmark-actions .btn-danger');
         if (insertBtn) insertBtn.onclick = () => insertBookmarkVal(bm.val);
@@ -2060,13 +1738,11 @@ function renderBookmarks() {
         container.appendChild(card);
     });
 }
-
 function addCurrentAsBookmark() {
     const titleInp = document.getElementById('bm-title-input');
     const valInp = document.getElementById('bm-val-input');
     const title = titleInp ? titleInp.value.trim() || 'Користувацький запис' : 'Запис';
     const val = (valInp && valInp.value.trim()) ? valInp.value.trim() : state.currentInput;
-
     audio.playAction();
     state.bookmarks.unshift({
         id: Date.now(),
@@ -2080,7 +1756,6 @@ function addCurrentAsBookmark() {
     renderBookmarks();
     showToast(`Запис "${title}" додано до блокнота`, '🔖');
 }
-
 function insertBookmarkVal(val) {
     audio.playAction();
     state.currentInput = val.toString();
@@ -2089,7 +1764,6 @@ function insertBookmarkVal(val) {
     closeModal('bookmarks-modal');
     showToast(`Значення ${val} вставлено`, '📥');
 }
-
 function deleteBookmark(id) {
     audio.playAction();
     state.bookmarks = state.bookmarks.filter(b => b.id !== id);
@@ -2097,7 +1771,6 @@ function deleteBookmark(id) {
     renderBookmarks();
     showToast('Запис видалено', '🗑️');
 }
-
 function clearAllBookmarks() {
     audio.playAction();
     state.bookmarks = [];
@@ -2105,56 +1778,42 @@ function clearAllBookmarks() {
     renderBookmarks();
     showToast('Блокнот очищено', '🧹');
 }
-
-// --------------------------------------------------------------------------
-// Модуль 15: color-studio.js — Кастомізація власної колірної теми
-// --------------------------------------------------------------------------
-// ==========================================================================
-// 3-Канальний Живий HSL Мікшер
-// ==========================================================================
 let mixerHue = 340;
 let mixerSat = 80;
 let mixerDark = 8;
-
 function updateLiveHueMixer(val) {
     mixerHue = parseInt(val);
     const label = document.getElementById('hue-accent-val');
     if (label) label.innerText = `${val}°`;
     applyLiveHslMixer();
 }
-
 function updateLiveSatMixer(val) {
     mixerSat = parseInt(val);
     const label = document.getElementById('sat-accent-val');
     if (label) label.innerText = `${val}%`;
     applyLiveHslMixer();
 }
-
 function updateLiveDarkMixer(val) {
     mixerDark = parseInt(val);
     const label = document.getElementById('dark-bg-val');
     if (label) label.innerText = `${val}%`;
     applyLiveHslMixer();
 }
-
 function applyLiveHslMixer() {
     const accent = `hsl(${mixerHue}, ${mixerSat}%, 45%)`;
     const glow = `hsl(${mixerHue}, ${mixerSat}%, 60%)`;
     const bg = `hsl(${mixerHue}, ${Math.max(10, mixerSat - 40)}%, ${mixerDark}%)`;
-
     document.documentElement.style.setProperty('--accent-operator', accent);
     document.documentElement.style.setProperty('--accent-equals', glow);
     document.documentElement.style.setProperty('--bg-body', bg);
     document.documentElement.style.setProperty('--badge-bg', `hsla(${mixerHue}, ${mixerSat}%, 50%, 0.18)`);
     document.documentElement.style.setProperty('--badge-border', `hsla(${mixerHue}, ${mixerSat}%, 50%, 0.45)`);
 }
-
 function applyColorHarmony(preset) {
     audio.playAction();
     const hSlider = document.getElementById('slider-accent-hue');
     const sSlider = document.getElementById('slider-accent-sat');
     const dSlider = document.getElementById('slider-bg-dark');
-
     if (preset === 'wine_gold') {
         mixerHue = 345; mixerSat = 85; mixerDark = 6;
         document.documentElement.style.setProperty('--accent-operator', '#8b1538');
@@ -2181,7 +1840,6 @@ function applyColorHarmony(preset) {
         document.documentElement.style.setProperty('--accent-equals', '#8b1538');
         document.documentElement.style.setProperty('--bg-body', '#02120e');
     }
-
     if (hSlider) hSlider.value = mixerHue;
     if (sSlider) sSlider.value = mixerSat;
     if (dSlider) dSlider.value = mixerDark;
@@ -2191,16 +1849,8 @@ function applyColorHarmony(preset) {
     if (hL) hL.innerText = `${mixerHue}°`;
     if (sL) sL.innerText = `${mixerSat}%`;
     if (dL) dL.innerText = `${mixerDark}%`;
-
     showToast(`Гармонію ${preset} застосовано`, '🎨');
 }
-
-// --------------------------------------------------------------------------
-// Модуль 16: tape.js — Аудиторська розрахункова стрічка
-// --------------------------------------------------------------------------
-// ==========================================================================
-// Розрахункова Стрічка (Paper Tape Roll)
-// ==========================================================================
 function addTapeEntry(equation, result, note = '') {
     const entry = {
         id: Date.now() + Math.random(),
@@ -2214,27 +1864,22 @@ function addTapeEntry(equation, result, note = '') {
     localStorage.setItem('calc_tape', JSON.stringify(state.tapeEntries));
     renderTapeRoll();
 }
-
 function renderTapeRoll() {
     const container = document.getElementById('tape-lines-list');
     const totalEl = document.getElementById('tape-grand-total');
     if (!container) return;
-
     if (state.tapeEntries.length === 0) {
         container.innerHTML = '<div style="text-align:center; color:#9ca3af; padding:16px;">Стрічка чиста. Виконайте розрахунки.</div>';
         if (totalEl) totalEl.innerText = '0.00';
         return;
     }
-
     container.innerHTML = '';
     let grandSum = 0;
-
     state.tapeEntries.forEach((item, idx) => {
         const row = document.createElement('div');
         row.className = 'tape-line-item';
         const parsed = parseFloat(item.result) || 0;
         grandSum += parsed;
-
         row.innerHTML = `
             <div style="flex-grow:1;">
                 <div class="tape-line-eq">${escapeHtml(item.equation)} = <strong>${escapeHtml(item.result)}</strong></div>
@@ -2242,24 +1887,19 @@ function renderTapeRoll() {
             </div>
             <input type="text" class="tape-line-note-input" placeholder="Додати нотатку..." onchange="updateTapeNote(${idx}, this.value)">
             <button class="btn-secondary" style="padding:2px 6px; font-size:0.75rem;" title="Вставити в калькулятор">📥</button>
-        `;
-        // Нотатку та обробник кнопки встановлюємо без HTML-інтерполяції
-        // (захист від ін'єкції в атрибут value та onclick)
+        `;
         row.querySelector('.tape-line-note-input').value = item.note || '';
         row.querySelector('.btn-secondary').onclick = () => insertTapeValToCalc(item.result);
         container.appendChild(row);
     });
-
     if (totalEl) totalEl.innerText = grandSum.toFixed(2);
 }
-
 function updateTapeNote(idx, val) {
     if (state.tapeEntries[idx]) {
         state.tapeEntries[idx].note = val;
         localStorage.setItem('calc_tape', JSON.stringify(state.tapeEntries));
     }
 }
-
 function insertTapeValToCalc(val) {
     audio.playAction();
     state.currentInput = val.toString();
@@ -2268,19 +1908,16 @@ function insertTapeValToCalc(val) {
     closeModal('tape-modal');
     showToast(`Значення ${val} вставлено`, '📥');
 }
-
 function addCustomTapeEntry() {
     audio.playAction();
     const val = state.currentInput || '0';
     addTapeEntry(`Введення`, val, 'Ручний запис');
     showToast('Рядок додано до стрічки', '📜');
 }
-
 function printTapeRoll() {
     audio.playAction();
     window.print();
 }
-
 function copyTapeAsText() {
     audio.playAction();
     let text = `=== РОЗРАХУНКОВИЙ ЧЕК PRO v1.8.4 ===\nДата: ${new Date().toLocaleString('uk-UA')}\n------------------------------------\n`;
@@ -2293,7 +1930,6 @@ function copyTapeAsText() {
     navigator.clipboard.writeText(text);
     showToast('Розрахунковий чек скопійовано', '📋');
 }
-
 function clearTapeRoll() {
     audio.playAction();
     state.tapeEntries = [];
@@ -2301,23 +1937,14 @@ function clearTapeRoll() {
     renderTapeRoll();
     showToast('Розрахункову стрічку очищено', '🗑️');
 }
-
-// --------------------------------------------------------------------------
-// Модуль 17: prime-gcd.js — Прості числа, НСД та НСК
-// --------------------------------------------------------------------------
-// ==========================================================================
-// НСД, НСК та Прості Множники
-// ==========================================================================
 function solvePrimeFactorization() {
     const numInput = document.getElementById('prime-num-input');
     if (!numInput) return;
     let n = Math.abs(parseInt(numInput.value, 10)) || 0;
-
     const factorResEl = document.getElementById('prime-factor-res');
     const isPrimeBadge = document.getElementById('prime-is-prime-badge');
     const countEl = document.getElementById('divisors-count');
     const chipsList = document.getElementById('divisors-chips-list');
-
     if (n <= 0) {
         if (factorResEl) factorResEl.innerText = 'Введіть число > 0';
         return;
@@ -2329,7 +1956,6 @@ function solvePrimeFactorization() {
         if (chipsList) chipsList.innerHTML = '<span class="div-chip">1</span>';
         return;
     }
-
     let temp = n;
     const factors = {};
     for (let d = 2; d * d <= temp; d++) {
@@ -2341,7 +1967,6 @@ function solvePrimeFactorization() {
     if (temp > 1) {
         factors[temp] = (factors[temp] || 0) + 1;
     }
-
     const factorParts = [];
     const supMap = { '0': '⁰', '1': '¹', '2': '²', '3': '³', '4': '⁴', '5': '⁵', '6': '⁶', '7': '⁷', '8': '⁸', '9': '⁹' };
     for (let prime in factors) {
@@ -2353,15 +1978,12 @@ function solvePrimeFactorization() {
             factorParts.push(`${prime}${pwrStr}`);
         }
     }
-
     if (factorResEl) factorResEl.innerText = factorParts.join(' × ');
-
     const isPrime = Object.keys(factors).length === 1 && factors[Object.keys(factors)[0]] === 1;
     if (isPrimeBadge) {
         isPrimeBadge.innerText = isPrime ? '⭐ Просте число' : 'Складене число';
         isPrimeBadge.style.color = isPrime ? 'var(--accent-equals)' : 'var(--accent-operator)';
     }
-
     const divisors = [];
     for (let i = 1; i * i <= n; i++) {
         if (n % i === 0) {
@@ -2370,7 +1992,6 @@ function solvePrimeFactorization() {
         }
     }
     divisors.sort((a, b) => a - b);
-
     if (countEl) countEl.innerText = divisors.length;
     if (chipsList) {
         chipsList.innerHTML = '';
@@ -2387,7 +2008,6 @@ function solvePrimeFactorization() {
         });
     }
 }
-
 function setPrimeFromCalc() {
     audio.playAction();
     const num = Math.abs(parseInt(state.currentInput, 10)) || 100;
@@ -2397,15 +2017,12 @@ function setPrimeFromCalc() {
         solvePrimeFactorization();
     }
 }
-
 function solveGcdLcm() {
     let a = Math.abs(parseInt(document.getElementById('gcd-num-a').value, 10)) || 0;
     let b = Math.abs(parseInt(document.getElementById('gcd-num-b').value, 10)) || 0;
-
     const gcdEl = document.getElementById('gcd-val-res');
     const lcmEl = document.getElementById('lcm-val-res');
     const stepsEl = document.getElementById('euclid-steps-count');
-
     if (a === 0 || b === 0) {
         const gcd = a || b;
         state.gcdVal = gcd.toString();
@@ -2415,7 +2032,6 @@ function solveGcdLcm() {
         if (stepsEl) stepsEl.innerText = '1 крок';
         return;
     }
-
     let origA = a, origB = b;
     let steps = 0;
     while (b !== 0) {
@@ -2426,15 +2042,12 @@ function solveGcdLcm() {
     }
     const gcd = a;
     const lcm = (origA * origB) / gcd;
-
     state.gcdVal = gcd.toString();
     state.lcmVal = lcm.toString();
-
     if (gcdEl) gcdEl.innerText = gcd;
     if (lcmEl) lcmEl.innerText = lcm;
     if (stepsEl) stepsEl.innerText = `${steps} кроки за алгоритмом Евкліда`;
 }
-
 function insertGcdToCalc() {
     audio.playAction();
     state.currentInput = state.gcdVal;
@@ -2443,7 +2056,6 @@ function insertGcdToCalc() {
     closeModal('prime-gcd-modal');
     showToast(`НСД = ${state.gcdVal} вставлено`, '🔢');
 }
-
 function insertLcmToCalc() {
     audio.playAction();
     state.currentInput = state.lcmVal;
@@ -2452,47 +2064,32 @@ function insertLcmToCalc() {
     closeModal('prime-gcd-modal');
     showToast(`НСК = ${state.lcmVal} вставлено`, '🔢');
 }
-
-// --------------------------------------------------------------------------
-// Модуль 18: deal-calc.js — Калькулятор вигідної покупки
-// --------------------------------------------------------------------------
-// ==========================================================================
-// Порівняння Цін за Одиницю
-// ==========================================================================
 function calculateUnitDeal() {
     const pA = parseFloat(document.getElementById('deal-a-price').value) || 0;
     const qA = parseFloat(document.getElementById('deal-a-qty').value) || 1;
     const uA = document.getElementById('deal-a-unit').value;
-
     const pB = parseFloat(document.getElementById('deal-b-price').value) || 0;
     const qB = parseFloat(document.getElementById('deal-b-qty').value) || 1;
     const uB = document.getElementById('deal-b-unit').value;
-
     const factorMap = { g: 0.001, kg: 1.0, ml: 0.001, l: 1.0, pcs: 1.0 };
     const normA = qA * (factorMap[uA] || 1.0);
     const normB = qB * (factorMap[uB] || 1.0);
-
     const unitPriceA = normA > 0 ? (pA / normA) : 0;
     const unitPriceB = normB > 0 ? (pB / normB) : 0;
-
     const resAEl = document.getElementById('deal-a-unit-price');
     const resBEl = document.getElementById('deal-b-unit-price');
     const cardA = document.getElementById('deal-card-a');
     const cardB = document.getElementById('deal-card-b');
     const winText = document.getElementById('deal-winner-text');
     const saveDetail = document.getElementById('deal-savings-detail');
-
     if (resAEl) resAEl.innerText = `${unitPriceA.toFixed(2)} ₴`;
     if (resBEl) resBEl.innerText = `${unitPriceB.toFixed(2)} ₴`;
-
     if (cardA) cardA.classList.remove('winner');
     if (cardB) cardB.classList.remove('winner');
-
     if (unitPriceA <= 0 || unitPriceB <= 0) {
         if (winText) winText.innerText = 'Введіть коректні ціни та об\'єми';
         return;
     }
-
     if (Math.abs(unitPriceA - unitPriceB) < 0.01) {
         if (winText) winText.innerText = 'Обидва варіанти однаково вигідні!';
         if (saveDetail) saveDetail.innerText = 'Ціна за 1 одиницю повністю ідентична.';
@@ -2510,13 +2107,6 @@ function calculateUnitDeal() {
         if (saveDetail) saveDetail.innerText = `Економія становить ${diff.toFixed(2)} ₴ на кожній базовій одиниці (1 кг/л/од).`;
     }
 }
-
-// --------------------------------------------------------------------------
-// Модуль 19: func-eval.js — Обчислення значень функцій f(x)
-// --------------------------------------------------------------------------
-// ==========================================================================
-// Обчислювач Функцій f(x)
-// ==========================================================================
 function parseAndEvalFormula(expr, xVal) {
     try {
         let clean = expr.toLowerCase()
@@ -2530,38 +2120,27 @@ function parseAndEvalFormula(expr, xVal) {
             .replace(/ln/g, 'Math.log')
             .replace(/pi/g, 'Math.PI')
             .replace(/e/g, 'Math.E');
-
         clean = clean.replace(/\bx\b/g, `(${xVal})`);
-        clean = clean.replace(/(\d)\(/g, '$1*(');
-
-        // Білий список: після підстановок функцій дозволені лише числа,
-        // x, оператори, дужки та згенеровані Math.* токени. Будь-які інші
-        // ідентифікатори/символи -> відмова (захист від виконання довільного
-        // коду через new Function)
+        clean = clean.replace(/(\d)\(/g, '$1*(');
         const masked = clean.replace(/Math\.(?:sin|cos|tan|sqrt|abs|log|PI|E)/g, '\u0001');
         if (!/^[\d x+\-*/%().,\u0001]+$/.test(masked)) {
             return 'Помилка';
         }
-
         const res = Function(`'use strict'; return (${clean})`)();
         return isNaN(res) || !isFinite(res) ? 'Помилка' : res;
     } catch (e) {
         return 'Помилка';
     }
 }
-
 function evaluateCustomFunc() {
     const expr = document.getElementById('func-expr-input').value;
     const xVal = parseFloat(document.getElementById('func-single-x').value) || 0;
     const resEl = document.getElementById('func-single-res');
-
     const res = parseAndEvalFormula(expr, xVal);
     state.funcSingleRes = typeof res === 'number' ? formatResult(res) : 'Помилка';
     if (resEl) resEl.innerText = state.funcSingleRes;
-
     buildFuncTable();
 }
-
 function buildFuncTable() {
     const expr = document.getElementById('func-expr-input').value;
     const start = parseFloat(document.getElementById('func-range-start').value) || -3;
@@ -2569,11 +2148,9 @@ function buildFuncTable() {
     const step = parseFloat(document.getElementById('func-range-step').value) || 1;
     const tbody = document.getElementById('func-table-tbody');
     if (!tbody) return;
-
     tbody.innerHTML = '';
     const safeStep = Math.max(0.01, Math.abs(step));
     const safeEnd = Math.min(start + (safeStep * 50), end);
-
     for (let x = start; x <= safeEnd + 0.0001; x += safeStep) {
         const val = parseAndEvalFormula(expr, x);
         const tr = document.createElement('tr');
@@ -2586,7 +2163,6 @@ function buildFuncTable() {
         tbody.appendChild(tr);
     }
 }
-
 function insertFuncResToCalc() {
     audio.playAction();
     state.currentInput = state.funcSingleRes;
@@ -2595,7 +2171,6 @@ function insertFuncResToCalc() {
     closeModal('func-eval-modal');
     showToast(`Значення f(x) = ${state.funcSingleRes} вставлено`, '📈');
 }
-
 function insertTableValToCalc(val) {
     if (val !== 'Помилка') {
         audio.playAction();
@@ -2606,24 +2181,15 @@ function insertTableValToCalc(val) {
         showToast(`Значення ${val} вставлено`, '📥');
     }
 }
-
-// --------------------------------------------------------------------------
-// Модуль 20: matrix.js — Лінійна алгебра та операції з матрицями
-// --------------------------------------------------------------------------
-// ==========================================================================
-// Матричний Калькулятор (2x2 та 3x3)
-// ==========================================================================
 function setMatrixSize(size) {
     state.matrixSize = size;
     document.querySelectorAll('.matrix-size-selector button').forEach(b => {
         b.classList.toggle('active', parseInt(b.getAttribute('data-msize')) === size);
     });
-
     const grid = document.getElementById('matrix-a-grid');
     if (!grid) return;
     grid.className = `matrix-grid matrix-${size}x${size}`;
     grid.innerHTML = '';
-
     for (let r = 0; r < size; r++) {
         for (let c = 0; c < size; c++) {
             const inp = document.createElement('input');
@@ -2636,7 +2202,6 @@ function setMatrixSize(size) {
     }
     solveMatrixMath();
 }
-
 function getMatrixData(size) {
     const mat = [];
     for (let r = 0; r < size; r++) {
@@ -2648,7 +2213,6 @@ function getMatrixData(size) {
     }
     return mat;
 }
-
 function solveMatrixMath() {
     const size = state.matrixSize;
     const mat = getMatrixData(size);
@@ -2656,12 +2220,10 @@ function solveMatrixMath() {
     const trEl = document.getElementById('mat-trace-val');
     const tBox = document.getElementById('mat-transpose-val');
     const invBox = document.getElementById('mat-inverse-val');
-
     let det = 0;
     let trace = 0;
     for (let i = 0; i < size; i++) trace += mat[i][i];
     if (trEl) trEl.innerText = trace.toFixed(2);
-
     if (size === 2) {
         det = (mat[0][0] * mat[1][1]) - (mat[0][1] * mat[1][0]);
     } else {
@@ -2669,10 +2231,8 @@ function solveMatrixMath() {
             mat[0][1] * (mat[1][0] * mat[2][2] - mat[1][2] * mat[2][0]) +
             mat[0][2] * (mat[1][0] * mat[2][1] - mat[1][1] * mat[2][0]);
     }
-
     state.matrixDetVal = det.toFixed(4);
     if (detEl) detEl.innerText = state.matrixDetVal;
-
     if (tBox) {
         tBox.className = `matrix-grid-mini matrix-${size}x${size}`;
         tBox.innerHTML = '';
@@ -2684,7 +2244,6 @@ function solveMatrixMath() {
             }
         }
     }
-
     if (invBox) {
         invBox.className = `matrix-grid-mini matrix-${size}x${size}`;
         invBox.innerHTML = '';
@@ -2707,7 +2266,6 @@ function solveMatrixMath() {
         }
     }
 }
-
 function insertMatrixDetToCalc() {
     audio.playAction();
     state.currentInput = state.matrixDetVal;
@@ -2716,22 +2274,13 @@ function insertMatrixDetToCalc() {
     closeModal('matrix-modal');
     showToast(`Визначник det(A) = ${state.matrixDetVal} вставлено`, '🧮');
 }
-
 function resetMatrixInputs() {
     setMatrixSize(state.matrixSize);
 }
-
-// --------------------------------------------------------------------------
-// Модуль 21: bitmask.js — Візуалізатор бітових масок
-// --------------------------------------------------------------------------
-// ==========================================================================
-// Інтерактивний Бітовий Інспектор
-// ==========================================================================
 function renderBitmaskGrid() {
     const grid = document.getElementById('bits-interactive-grid');
     if (!grid) return;
     grid.innerHTML = '';
-
     for (let i = 31; i >= 0; i--) {
         const isSet = ((state.bitmaskValue >>> i) & 1) === 1;
         const btn = document.createElement('button');
@@ -2746,7 +2295,6 @@ function renderBitmaskGrid() {
         grid.appendChild(btn);
     }
 }
-
 function updateBitmaskOutputs() {
     const decEl = document.getElementById('bit-dec-input');
     const hexEl = document.getElementById('bit-hex-input');
@@ -2754,20 +2302,17 @@ function updateBitmaskOutputs() {
     if (hexEl) hexEl.value = '0x' + (state.bitmaskValue >>> 0).toString(16).toUpperCase();
     renderBitmaskGrid();
 }
-
 function syncFromDecInput(val) {
     const num = parseInt(val, 10) || 0;
     state.bitmaskValue = num >>> 0;
     updateBitmaskOutputs();
 }
-
 function syncFromHexInput(val) {
     const clean = val.replace(/^0x/i, '');
     const num = parseInt(clean, 16) || 0;
     state.bitmaskValue = num >>> 0;
     updateBitmaskOutputs();
 }
-
 function bitwiseMaskOp(op) {
     audio.playAction();
     if (op === 'invert') state.bitmaskValue = (~state.bitmaskValue) >>> 0;
@@ -2777,7 +2322,6 @@ function bitwiseMaskOp(op) {
     else if (op === 'fill') state.bitmaskValue = 0xFFFFFFFF;
     updateBitmaskOutputs();
 }
-
 function insertBitmaskToCalc() {
     audio.playAction();
     state.currentInput = state.bitmaskValue.toString();
@@ -2786,13 +2330,6 @@ function insertBitmaskToCalc() {
     closeModal('bitmask-modal');
     showToast(`Значення ${state.bitmaskValue} вставлено`, '👾');
 }
-
-// --------------------------------------------------------------------------
-// Модуль 22: percent.js — Розрахунок відсотків та націнок
-// --------------------------------------------------------------------------
-// ==========================================================================
-// Розширений Калькулятор Відсотків Pro
-// ==========================================================================
 function calcPercent1() {
     const p = parseFloat(document.getElementById('p1-percent').value) || 0;
     const base = parseFloat(document.getElementById('p1-base').value) || 0;
@@ -2800,7 +2337,6 @@ function calcPercent1() {
     const el = document.getElementById('p1-res');
     if (el) el.innerText = formatResult(res);
 }
-
 function calcPercent2() {
     const v1 = parseFloat(document.getElementById('p2-val1').value) || 0;
     const v2 = parseFloat(document.getElementById('p2-val2').value) || 0;
@@ -2812,7 +2348,6 @@ function calcPercent2() {
     const delta = ((v2 - v1) / v1) * 100;
     if (el) el.innerText = `${delta >= 0 ? '+' : ''}${delta.toFixed(2)}%`;
 }
-
 function calcPercent3() {
     const base = parseFloat(document.getElementById('p3-base').value) || 0;
     const op = document.getElementById('p3-op').value;
@@ -2821,20 +2356,12 @@ function calcPercent3() {
     let res = op === 'add' ? base + (base * (p / 100)) : base - (base * (p / 100));
     if (el) el.innerText = formatResult(res);
 }
-
-// --------------------------------------------------------------------------
-// Модуль 23: currency.js — Курси валют та конвертація
-// --------------------------------------------------------------------------
-// ==========================================================================
-// Конвертер Валют та Криптовалют
-// ==========================================================================
 function runCurrencyConversion(dir = 'from') {
     const fromUnit = document.getElementById('curr-from-unit').value;
     const toUnit = document.getElementById('curr-to-unit').value;
     const fromInp = document.getElementById('curr-from-val');
     const toInp = document.getElementById('curr-to-val');
     if (!fromInp || !toInp) return;
-
     const rates = state.currencyRates;
     if (dir === 'from') {
         const val = parseFloat(fromInp.value) || 0;
@@ -2848,7 +2375,6 @@ function runCurrencyConversion(dir = 'from') {
         fromInp.value = res < 0.01 ? res.toFixed(6) : res.toFixed(2);
     }
 }
-
 function swapCurrencyUnits() {
     audio.playAction();
     const u1 = document.getElementById('curr-from-unit');
@@ -2859,7 +2385,6 @@ function swapCurrencyUnits() {
     u2.value = t;
     runCurrencyConversion('from');
 }
-
 function insertCurrencyToCalc() {
     audio.playAction();
     const val = document.getElementById('curr-to-val').value;
@@ -2871,7 +2396,6 @@ function insertCurrencyToCalc() {
         showToast(`Суму ${val} вставлено`, '💱');
     }
 }
-
 function copyCurrencyVal() {
     const val = document.getElementById('curr-to-val').value;
     if (val) {
@@ -2880,26 +2404,15 @@ function copyCurrencyVal() {
         showToast(`Скопійовано: ${val}`, '📋');
     }
 }
-
-// --------------------------------------------------------------------------
-// Модуль 24: calculator.js — Базова арифметика та обчислювальний рушій
-// --------------------------------------------------------------------------
-// ==========================================================================
-// Головний розрахунок (Calculate) + Результатне Світіння
-// ==========================================================================
-function calculate(saveToHistory = true) {
-    // Авто-балансування відкритих дужок перед обчисленням
+function calculate(saveToHistory = true) {
     if (state.bracketDepth > 0) {
         state.currentInput += ')'.repeat(state.bracketDepth);
         state.bracketDepth = 0;
     }
-
     let computation;
     const prev = parseFloat(state.previousInput);
     const current = parseFloat(state.currentInput);
-
     if (isNaN(prev) || isNaN(current) || state.operator === undefined) return;
-
     switch (state.operator) {
         case '+':
             computation = prev + current;
@@ -2935,13 +2448,20 @@ function calculate(saveToHistory = true) {
             }
             computation = prev % current;
             break;
+        case 'AND':
+            computation = (prev | 0) & (current | 0);
+            break;
+        case 'OR':
+            computation = (prev | 0) | (current | 0);
+            break;
+        case 'XOR':
+            computation = (prev | 0) ^ (current | 0);
+            break;
         default:
             return;
     }
-
     audio.playEquals();
     let resultStr = formatResult(computation);
-
     if (saveToHistory) {
         let opSymbol = state.operator;
         if (opSymbol === '*') opSymbol = '×';
@@ -2950,20 +2470,16 @@ function calculate(saveToHistory = true) {
         addToHistory(eqStr, resultStr);
         addTapeEntry(eqStr, resultStr, 'Розрахунок');
     }
-
     state.operationsCount++;
     state.currentInput = resultStr;
     state.operator = undefined;
     state.shouldResetDisplay = true;
-    updateDisplay();
-
-    // Ефект неонового підсвічування дисплея
+    updateDisplay();
     if (dom.display) {
         dom.display.classList.add('display-result-glow');
         setTimeout(() => dom.display.classList.remove('display-result-glow'), 600);
     }
 }
-
 function formatResult(num) {
     if (isNaN(num) || !isFinite(num)) return 'Помилка';
     if (state.precisionMode !== 'auto') {
@@ -2972,23 +2488,14 @@ function formatResult(num) {
     }
     return parseFloat(num.toFixed(12)).toString();
 }
-
-// --------------------------------------------------------------------------
-// Модуль 25: quadratic.js — Квадратні рівняння та дискримінант
-// --------------------------------------------------------------------------
-// ==========================================================================
-// Розв'язувач Квадратних Рівнянь
-// ==========================================================================
 function solveQuadraticEquation() {
     const a = parseFloat(document.getElementById('quad-a').value) || 0;
     const b = parseFloat(document.getElementById('quad-b').value) || 0;
     const c = parseFloat(document.getElementById('quad-c').value) || 0;
-
     const discEl = document.getElementById('quad-disc-val');
     const x1El = document.getElementById('quad-x1-val');
     const x2El = document.getElementById('quad-x2-val');
     const vertEl = document.getElementById('quad-vertex-info');
-
     if (a === 0) {
         if (discEl) discEl.innerText = 'a = 0 (Лінійне рівняння bx + c = 0)';
         if (b !== 0) {
@@ -3004,14 +2511,11 @@ function solveQuadraticEquation() {
         if (vertEl) vertEl.innerText = 'Вершина: не існує (пряма)';
         return;
     }
-
     const D = (b * b) - (4 * a * c);
     if (discEl) discEl.innerText = `D = ${D >= 0 ? D.toFixed(4) : D.toFixed(4) + ' (D < 0)'}`;
-
     const vx = -b / (2 * a);
     const vy = c - (b * b) / (4 * a);
     if (vertEl) vertEl.innerHTML = `Вершина параболи: <code>(${vx.toFixed(3)}; ${vy.toFixed(3)})</code>`;
-
     if (D > 0) {
         const sqrtD = Math.sqrt(D);
         const x1 = (-b + sqrtD) / (2 * a);
@@ -3035,7 +2539,6 @@ function solveQuadraticEquation() {
         if (x2El) x2El.innerText = state.quadRoots.x2;
     }
 }
-
 function insertQuadRootToCalc(idx) {
     audio.playAction();
     const val = idx === 1 ? state.quadRoots.x1 : state.quadRoots.x2;
@@ -3049,17 +2552,9 @@ function insertQuadRootToCalc(idx) {
         showToast('Комплексне число не підтримується у дійсній панелі', '⚠️');
     }
 }
-
-// --------------------------------------------------------------------------
-// Модуль 26: statistics.js — Статистичний аналіз даних
-// --------------------------------------------------------------------------
-// ==========================================================================
-// Статистичний Модуль
-// ==========================================================================
 function calculateStatistics() {
     const raw = document.getElementById('stats-data-input').value;
     const nums = raw.split(/[\s,;]+/).map(Number).filter(n => !isNaN(n) && isFinite(n));
-
     if (nums.length === 0) {
         document.getElementById('stat-mean').innerText = '0';
         document.getElementById('stat-median').innerText = '0';
@@ -3071,11 +2566,9 @@ function calculateStatistics() {
         document.getElementById('stat-max').innerText = '0';
         return;
     }
-
     const sum = nums.reduce((a, b) => a + b, 0);
     const mean = sum / nums.length;
     state.statMeanVal = mean.toFixed(4);
-
     const sorted = [...nums].sort((a, b) => a - b);
     let median;
     const mid = Math.floor(sorted.length / 2);
@@ -3084,7 +2577,6 @@ function calculateStatistics() {
     } else {
         median = sorted[mid];
     }
-
     const counts = {};
     nums.forEach(n => counts[n] = (counts[n] || 0) + 1);
     let maxFreq = 0;
@@ -3095,10 +2587,8 @@ function calculateStatistics() {
             mode = k;
         }
     }
-
     const variance = nums.reduce((acc, val) => acc + Math.pow(val - mean, 2), 0) / nums.length;
     const stdDev = Math.sqrt(variance);
-
     document.getElementById('stat-mean').innerText = mean.toFixed(4);
     document.getElementById('stat-median').innerText = median.toFixed(4);
     document.getElementById('stat-mode').innerText = `${mode} (x${maxFreq})`;
@@ -3108,7 +2598,6 @@ function calculateStatistics() {
     document.getElementById('stat-min').innerText = Math.min(...nums);
     document.getElementById('stat-max').innerText = Math.max(...nums);
 }
-
 function insertStatMeanToCalc() {
     audio.playAction();
     state.currentInput = state.statMeanVal;
@@ -3117,19 +2606,11 @@ function insertStatMeanToCalc() {
     closeModal('stats-modal');
     showToast(`Середнє (${state.statMeanVal}) вставлено`, '📊');
 }
-
 function clearStatsInput() {
     audio.playAction();
     document.getElementById('stats-data-input').value = '';
     calculateStatistics();
 }
-
-// --------------------------------------------------------------------------
-// Модуль 27: date-calc.js — Операції з датами та часом
-// --------------------------------------------------------------------------
-// ==========================================================================
-// Калькулятор Дат
-// ==========================================================================
 function switchDateTab(tab) {
     state.activeDateTab = tab;
     document.querySelectorAll('.date-tabs button').forEach(b => {
@@ -3138,47 +2619,33 @@ function switchDateTab(tab) {
     document.getElementById('date-section-diff').style.display = tab === 'diff' ? 'flex' : 'none';
     document.getElementById('date-section-add').style.display = tab === 'add' ? 'flex' : 'none';
 }
-
 function calculateDateDiff() {
     const d1 = new Date(document.getElementById('date-start').value);
     const d2 = new Date(document.getElementById('date-end').value);
     if (isNaN(d1.getTime()) || isNaN(d2.getTime())) return;
-
     const diffTime = Math.abs(d2.getTime() - d1.getTime());
     const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
     const weeks = (diffDays / 7).toFixed(1);
     const months = (diffDays / 30.44).toFixed(1);
-
     const resBox = document.getElementById('date-diff-result');
     if (resBox) {
         resBox.innerHTML = `<span>Різниця:</span> <strong>${diffDays} днів (~${weeks} тижнів / ~${months} міс.)</strong>`;
     }
 }
-
 function calculateDateAdd() {
     const base = new Date(document.getElementById('date-base').value);
     const days = parseInt(document.getElementById('date-days-count').value) || 0;
     if (isNaN(base.getTime())) return;
-
     const resultDate = new Date(base);
     resultDate.setDate(resultDate.getDate() + days);
-
     const formatted = resultDate.toLocaleDateString('uk-UA', { weekday: 'short', year: 'numeric', month: 'long', day: 'numeric' });
     const resBox = document.getElementById('date-add-result');
     if (resBox) {
         resBox.innerHTML = `<span>Отримана дата:</span> <strong>${formatted}</strong>`;
     }
 }
-
-// --------------------------------------------------------------------------
-// Модуль 28: settings.js — Налаштування користувача
-// --------------------------------------------------------------------------
-// ==========================================================================
-// Центр Налаштувань
-// ==========================================================================
 let volumeSaveTimer = null;
 let lastVolumeClickTime = 0;
-
 function syncSettingsControls() {
     const vSlider = document.getElementById('setting-volume');
     const vVal = document.getElementById('setting-vol-val');
@@ -3201,70 +2668,54 @@ function syncSettingsControls() {
     if (sPart) sPart.value = state.particlesEnabled ? 'on' : 'off';
     if (sFScale) sFScale.value = state.fontScale.toString();
 }
-
 function updateSettingsVolume(val) {
     state.soundVolume = parseFloat(val) / 100;
     const label = document.getElementById('setting-vol-val');
-    if (label) label.innerText = `${val}%`;
-
-    // oninput спрацьовує ~60 разів/сек під час перетягування на мобільних:
-    // обмежуємо частоту звуку і відкладаємо запис у localStorage,
-    // щоб не блокувати головний потік на кожен крок слайдера
+    if (label) label.innerText = `${val}%`;
     const now = performance.now();
     if (now - lastVolumeClickTime > 180) {
         lastVolumeClickTime = now;
         audio.playClick(750);
     }
-
     updateAudioUI();
-
     clearTimeout(volumeSaveTimer);
     volumeSaveTimer = setTimeout(() => {
         localStorage.setItem('calc_sound_vol', state.soundVolume.toString());
     }, 300);
 }
-
 function setSettingsSoundProfile(val) {
     state.soundProfile = val;
     localStorage.setItem('calc_sound_profile', val);
     audio.playAction();
     updateAudioUI();
 }
-
 function setSettingsSeparator(val) {
     state.thousandSeparator = val;
     localStorage.setItem('calc_separator', val);
     audio.playAction();
     updateDisplay();
 }
-
 function setSettingsPrecision(val) {
     state.precisionMode = val;
     localStorage.setItem('calc_precision', val);
     audio.playAction();
     updateDisplay();
 }
-
 function setSettingsDefaultAngle(val) {
     state.angleMode = val;
     localStorage.setItem('calc_angle_mode', val);
     audio.playAction();
     updateDisplay();
-}
-
-// Прозорість панелей керується атрибутом data-glass (див. mobile-perf.css 22.9):
-// лише колір фону, без backdrop-filter
+}
 function applyGlassIntensity(val = state.glassIntensity) {
     document.documentElement.setAttribute('data-glass', val);
 }
-
 function setSettingsGlassIntensity(val) {
     state.glassIntensity = val;
     localStorage.setItem('calc_glass', val);
     applyGlassIntensity(val);
     audio.playAction();
 }
-
 function resetAllSettings() {
     audio.playAction();
     localStorage.clear();
@@ -3279,7 +2730,6 @@ function resetAllSettings() {
     state.currentWallpaper = 'burgundy';
     state.memoryValue = 0;
     state.memorySlots = [0, 0, 0, 0];
-
     document.getElementById('setting-volume').value = 80;
     document.getElementById('setting-vol-val').innerText = '80%';
     document.getElementById('setting-sound-profile').value = 'classic';
@@ -3289,12 +2739,10 @@ function resetAllSettings() {
     document.getElementById('setting-glass').value = 'heavy';
     const setFontScaleEl = document.getElementById('setting-font-scale');
     if (setFontScaleEl) setFontScaleEl.value = '100';
-
     setFontScale(100, true);
     setFontFamily('font-inter');
     setTheme('bordeaux_luxury');
     setWallpaper('burgundy');
-
     state.perfMode = 'auto';
     applyMobilePerfOptimizations();
     applyGlassIntensity(state.glassIntensity);
@@ -3305,18 +2753,10 @@ function resetAllSettings() {
         stopParticlesCanvas();
     }
     syncSettingsControls();
-
     updateDisplay();
     closeModal('settings-modal');
     showToast('Всі налаштування скинуто до заводських', '🔁');
 }
-
-// --------------------------------------------------------------------------
-// Модуль 29: color-customizer.js — Кастомізація акцентних кольорів
-// --------------------------------------------------------------------------
-// ==========================================================================
-// Кастомізатор Кольорів
-// ==========================================================================
 function applyRealtimeColor(type, colorHex) {
     if (type === 'accent') {
         document.documentElement.style.setProperty('--accent-operator', colorHex);
@@ -3332,7 +2772,6 @@ function applyRealtimeColor(type, colorHex) {
         document.getElementById('hex-bg-color').value = colorHex;
     }
 }
-
 function resetCustomColors() {
     document.documentElement.style.removeProperty('--accent-operator');
     document.documentElement.style.removeProperty('--accent-equals');
@@ -3342,15 +2781,6 @@ function resetCustomColors() {
     document.documentElement.style.removeProperty('--bg-card');
     showToast('Кольори теми відновлено', '🎨');
 }
-
-// --------------------------------------------------------------------------
-// Модуль 30: fonts.js — Керування шрифтами та масштабом
-// --------------------------------------------------------------------------
-// ==========================================================================
-// Шрифти & Масштабування (Typography & Font Scale Controller)
-// ==========================================================================
-// Inter та JetBrains Mono підключені в <head>; решта шрифтів завантажуються
-// лише коли користувач їх обирає (або відкриває «Студію шрифтів»)
 const OPTIONAL_FONT_FAMILIES = {
     'font-orbitron': 'Orbitron:wght@500;700;900',
     'font-rajdhani': 'Rajdhani:wght@500;600;700',
@@ -3360,7 +2790,6 @@ const OPTIONAL_FONT_FAMILIES = {
     'font-firacode': 'Fira+Code:wght@400;500;700'
 };
 const loadedOptionalFonts = new Set();
-
 function ensureFontLoaded(fontClass) {
     const family = OPTIONAL_FONT_FAMILIES[fontClass];
     if (!family || loadedOptionalFonts.has(fontClass)) return;
@@ -3370,11 +2799,9 @@ function ensureFontLoaded(fontClass) {
     link.href = `https://fonts.googleapis.com/css2?family=${family}&display=swap`;
     document.head.appendChild(link);
 }
-
 function ensureAllFontsLoaded() {
     Object.keys(OPTIONAL_FONT_FAMILIES).forEach(ensureFontLoaded);
 }
-
 function setFontFamily(fontClass) {
     audio.playAction();
     ensureFontLoaded(fontClass);
@@ -3382,11 +2809,9 @@ function setFontFamily(fontClass) {
     document.body.classList.add(fontClass);
     state.currentFont = fontClass;
     localStorage.setItem('calc_font', fontClass);
-
     document.querySelectorAll('.font-card').forEach(c => {
         c.classList.toggle('active', c.getAttribute('data-font') === fontClass);
     });
-
     const fontNames = {
         'font-inter': 'Inter',
         'font-jetbrains': 'JetBrains Mono',
@@ -3397,53 +2822,38 @@ function setFontFamily(fontClass) {
         'font-outfit': 'Outfit Geometric',
         'font-firacode': 'Fira Code'
     };
-
     if (dom.currentFontChip) {
         dom.currentFontChip.innerText = fontNames[fontClass] || 'Inter';
     }
-
     showToast(`Встановлено шрифт: ${fontNames[fontClass]}`, '🔤');
 }
-
 function setFontScale(scale, isSilent = false) {
     const s = parseInt(scale, 10) || 100;
     state.fontScale = s;
-    localStorage.setItem('calc_font_scale', s);
-
-    // Встановлення глобальної CSS змінної масштабу
-    document.documentElement.style.setProperty('--font-scale', (s / 100).toString());
-
-    // Оновлення елементів інтерфейсу Студії Шрифтів
+    localStorage.setItem('calc_font_scale', s);
+    document.documentElement.style.setProperty('--font-scale', (s / 100).toString());
     const slider = document.getElementById('font-scale-slider');
     const displayVal = document.getElementById('font-scale-display-val');
     const previewText = document.getElementById('font-scale-preview-text');
     if (slider) slider.value = s;
     if (displayVal) displayVal.innerText = `${s}%`;
-    if (previewText) previewText.style.fontSize = `calc(1rem * ${s / 100})`;
-
-    // Оновлення активного стану кнопок-пресетів
+    if (previewText) previewText.style.fontSize = `calc(1rem * ${s / 100})`;
     document.querySelectorAll('.font-scale-preset-btn').forEach(btn => {
         const btnScale = parseInt(btn.getAttribute('data-scale'), 10);
         btn.classList.toggle('active', btnScale === s);
-    });
-
-    // Оновлення бейджа на дисплеї калькулятора
+    });
     const scaleBadge = document.getElementById('font-scale-badge');
     if (scaleBadge) {
         scaleBadge.innerText = `🔠 ${s}%`;
         scaleBadge.title = `Масштаб шрифтів: ${s}% (клік для циклічної зміни: 90% → 100% → 115% → 130% → 145%)`;
-    }
-
-    // Оновлення селектора у Центрі Налаштувань
+    }
     const settingSelect = document.getElementById('setting-font-scale');
     if (settingSelect) settingSelect.value = s.toString();
-
     if (!isSilent) {
         audio.playClick(620);
         showToast(`Масштаб шрифту встановлено: ${s}%`, '🔠');
     }
 }
-
 function cycleFontScale() {
     const presets = [90, 100, 115, 130, 145];
     let currentIndex = presets.indexOf(state.fontScale);
@@ -3457,35 +2867,23 @@ function cycleFontScale() {
     }
     setFontScale(presets[nextIndex]);
 }
-
-// --------------------------------------------------------------------------
-// Модуль 31: themes.js — Перемикання 32 авторських тем
-// --------------------------------------------------------------------------
-// ==========================================================================
-// Теми та Кольори (28 Themes)
-// ==========================================================================
 function setTheme(themeName) {
     audio.playAction();
     document.body.setAttribute('data-theme', themeName);
     state.currentTheme = themeName;
     localStorage.setItem('calc_theme', themeName);
-
     resetCustomColors();
-
     document.querySelectorAll('.theme-card').forEach(btn => {
         btn.classList.toggle('active', btn.getAttribute('data-theme') === themeName);
     });
-
     closeModal('theme-modal');
     showToast(`Тема: ${getThemeNameUA(themeName)}`, '🎨');
 }
-
 function setCustomAccent(colorHex, name) {
     audio.playAction();
     applyRealtimeColor('accent', colorHex);
     showToast(`Акцентний колір: ${name}`, '✨');
 }
-
 function getThemeNameUA(theme) {
     const names = {
         titanium_ruby: 'Titanium Ruby Master',
@@ -3523,26 +2921,16 @@ function getThemeNameUA(theme) {
     };
     return names[theme] || 'Bordeaux Imperial';
 }
-
-// --------------------------------------------------------------------------
-// Модуль 32: wallpaper.js — Керування шпалерами та розмиттям
-// --------------------------------------------------------------------------
-// ==========================================================================
-// Wallpaper Studio (12 HD Шпалер)
-// ==========================================================================
 function setWallpaper(wpName) {
     audio.playAction();
     state.currentWallpaper = wpName;
     localStorage.setItem('calc_wallpaper', wpName);
-
     document.querySelectorAll('.wallpaper-card').forEach(card => {
         card.classList.toggle('active', card.getAttribute('data-wp') === wpName);
     });
-
     applyWallpaperToDom();
     showToast(`Шпалери: ${getWallpaperNameUA(wpName)}`, '🖼️');
 }
-
 function getWallpaperNameUA(wp) {
     const map = {
         titanium_ruby: 'Titanium Ruby Laser',
@@ -3563,12 +2951,9 @@ function getWallpaperNameUA(wp) {
     };
     return map[wp] || 'Кастомні шпалери';
 }
-
 function applyWallpaperToDom() {
     if (!dom.bgWallpaper || !dom.bgOverlay) return;
-
     dom.bgWallpaper.className = 'bg-wallpaper-layer';
-
     if (state.currentWallpaper === 'titanium_ruby') {
         dom.bgWallpaper.style.backgroundImage = "url('images/titanium_ruby.jpg')";
     } else if (state.currentWallpaper === 'crimson_supernova') {
@@ -3599,60 +2984,37 @@ function applyWallpaperToDom() {
     } else if (state.currentWallpaper === 'grid') {
         dom.bgWallpaper.style.backgroundImage = 'none';
         dom.bgWallpaper.classList.add('wp-grid');
-    } else if (state.currentWallpaper === 'custom' && state.customWallpaperUrl) {
-        // Екрануємо лапки та бекслеші: URL з ')" інакше розривав би url(...)
-        // і дозволяв ін'єкцію довільних CSS-правил
+    } else if (state.currentWallpaper === 'custom' && state.customWallpaperUrl) {
         const safeWpUrl = state.customWallpaperUrl.replace(/["'\\]/g, '\\$&');
         dom.bgWallpaper.style.backgroundImage = `url("${safeWpUrl}")`;
     } else {
         dom.bgWallpaper.style.backgroundImage = 'none';
-    }
-
-    // Розмиття повноекранного шару — дорога операція GPU: у легкому режимі вимкнено
+    }
     const liteBg = document.documentElement.classList.contains('perf-lite');
     dom.bgWallpaper.style.filter = liteBg ? 'none' : `blur(${state.wallpaperBlur}px)`;
     dom.bgOverlay.style.backgroundColor = `rgba(0, 0, 0, ${state.wallpaperOverlay / 100})`;
 }
-
-// --------------------------------------------------------------------------
-// Модуль 33: vector-calc.js — 3D вектори, скалярний та векторний добутки
-// --------------------------------------------------------------------------
-// ==========================================================================
-// НОВЕ v1.8.5: 3D Векторний Калькулятор (3D Vector Math)
-// ==========================================================================
 function solveVectorMath() {
     const ux = parseFloat(document.getElementById('vec-u-x')?.value) || 0;
     const uy = parseFloat(document.getElementById('vec-u-y')?.value) || 0;
     const uz = parseFloat(document.getElementById('vec-u-z')?.value) || 0;
-
     const vx = parseFloat(document.getElementById('vec-v-x')?.value) || 0;
     const vy = parseFloat(document.getElementById('vec-v-y')?.value) || 0;
-    const vz = parseFloat(document.getElementById('vec-v-z')?.value) || 0;
-
-    // 1. Скалярний добуток (Dot product)
-    const dot = (ux * vx) + (uy * vy) + (uz * vz);
-
-    // 2. Векторний добуток (Cross product)
+    const vz = parseFloat(document.getElementById('vec-v-z')?.value) || 0;
+    const dot = (ux * vx) + (uy * vy) + (uz * vz);
     const cx = (uy * vz) - (uz * vy);
     const cy = (uz * vx) - (ux * vz);
-    const cz = (ux * vy) - (uy * vx);
-
-    // 3. Модулі (Довжини)
+    const cz = (ux * vy) - (uy * vx);
     const lenU = Math.sqrt(ux * ux + uy * uy + uz * uz);
-    const lenV = Math.sqrt(vx * vx + vy * vy + vz * vz);
-
-    // 4. Кут між векторами
+    const lenV = Math.sqrt(vx * vx + vy * vy + vz * vz);
     let angleDeg = 0;
     let angleRad = 0;
     if (lenU > 0 && lenV > 0) {
         const cosTheta = Math.max(-1, Math.min(1, dot / (lenU * lenV)));
         angleRad = Math.acos(cosTheta);
         angleDeg = angleRad * (180 / Math.PI);
-    }
-
-    // 5. Евклідова відстань
+    }
     const dist = Math.sqrt((vx - ux) ** 2 + (vy - uy) ** 2 + (vz - uz) ** 2);
-
     state.vectorResults = {
         dot: dot.toFixed(2),
         cross: `(${cx.toFixed(1)}, ${cy.toFixed(1)}, ${cz.toFixed(1)})`,
@@ -3661,14 +3023,12 @@ function solveVectorMath() {
         angle: `${angleDeg.toFixed(1)}° (${angleRad.toFixed(2)} rad)`,
         dist: dist.toFixed(3)
     };
-
     const dEl = document.getElementById('vec-res-dot');
     const cEl = document.getElementById('vec-res-cross');
     const uEl = document.getElementById('vec-res-len-u');
     const vEl = document.getElementById('vec-res-len-v');
     const aEl = document.getElementById('vec-res-angle');
     const distEl = document.getElementById('vec-res-dist');
-
     if (dEl) dEl.innerText = state.vectorResults.dot;
     if (cEl) cEl.innerText = state.vectorResults.cross;
     if (uEl) uEl.innerText = state.vectorResults.lenU;
@@ -3676,7 +3036,6 @@ function solveVectorMath() {
     if (aEl) aEl.innerText = state.vectorResults.angle;
     if (distEl) distEl.innerText = state.vectorResults.dist;
 }
-
 function insertVectorDotToCalc() {
     audio.playAction();
     state.currentInput = state.vectorResults.dot;
@@ -3685,7 +3044,6 @@ function insertVectorDotToCalc() {
     closeModal('vector-calc-modal');
     showToast(`Скалярний добуток u·v = ${state.vectorResults.dot} вставлено`, '📐');
 }
-
 function insertVectorMagUToCalc() {
     audio.playAction();
     state.currentInput = state.vectorResults.lenU;
@@ -3694,51 +3052,30 @@ function insertVectorMagUToCalc() {
     closeModal('vector-calc-modal');
     showToast(`Модуль |u| = ${state.vectorResults.lenU} вставлено`, '📐');
 }
-
-// --------------------------------------------------------------------------
-// Модуль 34: complex-calc.js — Комплексні числа ℂ та тригонометрична форма
-// --------------------------------------------------------------------------
-// ==========================================================================
-// НОВЕ v1.8.5: Комплексні Числа ℂ (Complex Numbers)
-// ==========================================================================
 function solveComplexMath() {
     const a = parseFloat(document.getElementById('cplx-a')?.value) || 0;
     const b = parseFloat(document.getElementById('cplx-b')?.value) || 0;
     const c = parseFloat(document.getElementById('cplx-c')?.value) || 0;
-    const d = parseFloat(document.getElementById('cplx-d')?.value) || 0;
-
-    // Сума (a+c) + (b+d)i
+    const d = parseFloat(document.getElementById('cplx-d')?.value) || 0;
     const sumR = a + c;
-    const sumI = b + d;
-
-    // Різниця (a-c) + (b-d)i
+    const sumI = b + d;
     const diffR = a - c;
-    const diffI = b - d;
-
-    // Добуток (ac - bd) + (ad + bc)i
+    const diffI = b - d;
     const mulR = (a * c) - (b * d);
-    const mulI = (a * d) + (b * c);
-
-    // Частка
+    const mulI = (a * d) + (b * c);
     const denom = (c * c) + (d * d);
     let divR = 0, divI = 0;
     if (denom !== 0) {
         divR = ((a * c) + (b * d)) / denom;
         divI = ((b * c) - (a * d)) / denom;
-    }
-
-    // Модуль |z1|
-    const mod1 = Math.sqrt(a * a + b * b);
-
-    // Аргумент arg(z1)
+    }
+    const mod1 = Math.sqrt(a * a + b * b);
     const arg1Rad = Math.atan2(b, a);
     const arg1Deg = arg1Rad * (180 / Math.PI);
-
     const fmtCplx = (r, i) => {
         const sign = i >= 0 ? '+' : '-';
         return `${r.toFixed(2)} ${sign} ${Math.abs(i).toFixed(2)}i`;
     };
-
     state.complexResults = {
         add: fmtCplx(sumR, sumI),
         sub: fmtCplx(diffR, diffI),
@@ -3747,14 +3084,12 @@ function solveComplexMath() {
         mod1: mod1.toFixed(3),
         arg1: `${arg1Deg.toFixed(1)}° (${arg1Rad.toFixed(2)} rad)`
     };
-
     const addEl = document.getElementById('cplx-res-add');
     const subEl = document.getElementById('cplx-res-sub');
     const mulEl = document.getElementById('cplx-res-mul');
     const divEl = document.getElementById('cplx-res-div');
     const modEl = document.getElementById('cplx-res-mod1');
     const argEl = document.getElementById('cplx-res-arg1');
-
     if (addEl) addEl.innerText = state.complexResults.add;
     if (subEl) subEl.innerText = state.complexResults.sub;
     if (mulEl) mulEl.innerText = state.complexResults.mul;
@@ -3762,7 +3097,6 @@ function solveComplexMath() {
     if (modEl) modEl.innerText = state.complexResults.mod1;
     if (argEl) argEl.innerText = state.complexResults.arg1;
 }
-
 function insertComplexModToCalc() {
     audio.playAction();
     state.currentInput = state.complexResults.mod1;
@@ -3771,13 +3105,6 @@ function insertComplexModToCalc() {
     closeModal('complex-calc-modal');
     showToast(`Модуль |z₁| = ${state.complexResults.mod1} вставлено`, '⚛️');
 }
-
-// --------------------------------------------------------------------------
-// Модуль 35: math-ref.js — Математичний довідник та шпаргалка
-// --------------------------------------------------------------------------
-// ==========================================================================
-// НОВЕ v1.8.5: Інтерактивний Математичний Довідник Формул
-// ==========================================================================
 function switchMathRefTab(tabKey) {
     audio.playClick(600);
     state.activeMathRefTab = tabKey;
@@ -3786,14 +3113,11 @@ function switchMathRefTab(tabKey) {
     });
     renderMathRefList();
 }
-
 function renderMathRefList() {
     const container = document.getElementById('math-ref-container');
     if (!container) return;
-
     const list = MATH_REFERENCE_DATA[state.activeMathRefTab] || [];
     container.innerHTML = '';
-
     list.forEach(item => {
         const card = document.createElement('div');
         card.className = 'math-ref-item';
@@ -3807,32 +3131,22 @@ function renderMathRefList() {
         container.appendChild(card);
     });
 }
-
 function copyFormulaText(formula) {
     audio.playAction();
     navigator.clipboard.writeText(formula).then(() => {
         showToast(`Формулу скопійовано: ${formula}`, '📋');
     });
 }
-
-// --------------------------------------------------------------------------
-// Модуль 36: mobile.js — Мобільні жести та адаптивна поведінка
-// --------------------------------------------------------------------------
-// ==========================================================================
-// Мобільна навігація та профіль продуктивності
-// ==========================================================================
 const mobilePerf = {
     isMobile: false,
     isTouch: false,
     isCoarse: false,
     prefersReducedMotion: false,
     saveData: false,
-    weakDevice: false,
-    // Фактичний режим після розв'язання 'auto': 'lite' | 'balanced' | 'full'
+    weakDevice: false,
     mode: 'balanced',
     liteMode: false
 };
-
 function detectMobilePerfProfile() {
     mobilePerf.isMobile = window.matchMedia('(max-width: 768px)').matches;
     mobilePerf.isCoarse = window.matchMedia('(pointer: coarse)').matches;
@@ -3840,7 +3154,6 @@ function detectMobilePerfProfile() {
     mobilePerf.prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     mobilePerf.saveData = navigator.connection?.saveData === true;
     mobilePerf.weakDevice = (navigator.hardwareConcurrency || 8) <= 2 || (navigator.deviceMemory || 8) <= 2;
-
     const pref = state.perfMode;
     if (pref === 'lite' || pref === 'full') {
         mobilePerf.mode = pref;
@@ -3852,29 +3165,21 @@ function detectMobilePerfProfile() {
     mobilePerf.liteMode = mobilePerf.mode === 'lite';
     return mobilePerf;
 }
-
 function applyMobilePerfOptimizations() {
     const profile = detectMobilePerfProfile();
     const root = document.documentElement;
-
     root.classList.toggle('is-mobile', profile.isMobile);
     root.classList.toggle('is-touch', profile.isTouch);
     root.classList.toggle('reduced-motion', profile.prefersReducedMotion);
     root.classList.toggle('perf-lite', profile.mode === 'lite');
-    root.classList.toggle('perf-full', profile.mode === 'full');
-
-    // Частинки: у легкому режимі вимкнені, інакше — за вибором користувача
-    state.particlesEnabled = profile.mode !== 'lite' && localStorage.getItem('calc_particles') !== 'off';
-
-    // Прозорість панелей: у легкому режимі за замовчуванням суцільний колір
+    root.classList.toggle('perf-full', profile.mode === 'full');
+    state.particlesEnabled = profile.mode !== 'lite' && localStorage.getItem('calc_particles') !== 'off';
     state.glassIntensity = localStorage.getItem('calc_glass') || (profile.mode === 'lite' ? 'solid' : 'heavy');
 }
-
 function setPerfMode(val) {
     if (val !== 'auto' && val !== 'lite' && val !== 'full') val = 'auto';
     state.perfMode = val;
     localStorage.setItem('calc_perf_mode', val);
-
     applyMobilePerfOptimizations();
     applyGlassIntensity(state.glassIntensity);
     applyWallpaperToDom();
@@ -3885,7 +3190,6 @@ function setPerfMode(val) {
     }
     syncSettingsControls();
     audio.playAction();
-
     const names = {
         auto: mobilePerf.mode === 'lite' ? 'Авто (зараз: Легкий)' : 'Авто (зараз: Збалансований)',
         lite: 'Легкий',
@@ -3893,16 +3197,13 @@ function setPerfMode(val) {
     };
     showToast(`Режим продуктивності: ${names[val]}`, '⚡');
 }
-
 function shouldDrawParticleConnections() {
     return mobilePerf.mode === 'full';
 }
-
 function getParticleCountLimit() {
     if (mobilePerf.mode === 'full') return 60;
     return 20;
 }
-
 function toggleMobileSidebar() {
     const sidebar = document.getElementById('app-sidebar');
     const backdrop = document.getElementById('sidebar-backdrop');
@@ -3916,7 +3217,6 @@ function toggleMobileSidebar() {
         audio.playClick(650);
     });
 }
-
 function adjustWallpaperBlur(val) {
     state.wallpaperBlur = parseInt(val, 10);
     localStorage.setItem('calc_wp_blur', String(state.wallpaperBlur));
@@ -3924,7 +3224,6 @@ function adjustWallpaperBlur(val) {
     if (label) label.innerText = `${state.wallpaperBlur}px`;
     applyWallpaperToDom();
 }
-
 function adjustWallpaperOverlay(val) {
     state.wallpaperOverlay = parseInt(val);
     localStorage.setItem('calc_wp_overlay', val);
@@ -3932,7 +3231,6 @@ function adjustWallpaperOverlay(val) {
     if (label) label.innerText = `${val}%`;
     applyWallpaperToDom();
 }
-
 function handleWallpaperUpload(event) {
     const file = event.target.files && event.target.files[0];
     if (!file) return;
@@ -3947,7 +3245,6 @@ function handleWallpaperUpload(event) {
     };
     reader.readAsDataURL(file);
 }
-
 function applyWallpaperUrl() {
     const input = document.getElementById('wallpaper-url-input');
     if (!input || !input.value.trim()) return;
@@ -3958,7 +3255,6 @@ function applyWallpaperUrl() {
     applyWallpaperToDom();
     showToast('Шпалери за URL встановлено', '🌐');
 }
-
 function resetWallpaper() {
     setWallpaper('burgundy');
     adjustWallpaperBlur(12);
@@ -3969,25 +3265,16 @@ function resetWallpaper() {
     if (oSlider) oSlider.value = 60;
     showToast('Фон скинуто до початкового', '🧹');
 }
-
-// --------------------------------------------------------------------------
-// Модуль 37: graph.js — Побудова 2D графіків функцій на Canvas
-// --------------------------------------------------------------------------
-// ==========================================================================
-// 2D Графік Функцій
-// ==========================================================================
 function plotFunction(funcName) {
     state.activeGraphFunc = funcName;
     audio.playAction();
     const canvas = document.getElementById('function-canvas');
     const label = document.getElementById('graph-current-func');
     if (!canvas) return;
-
     const ctx = canvas.getContext('2d');
     const w = canvas.width;
     const h = canvas.height;
     ctx.clearRect(0, 0, w, h);
-
     const names = {
         sin: 'y = sin(x)',
         cos: 'y = cos(x)',
@@ -3999,7 +3286,6 @@ function plotFunction(funcName) {
         inv: 'y = 1/x'
     };
     if (label) label.innerHTML = `Функція: <strong>${names[funcName] || funcName}</strong>`;
-
     ctx.strokeStyle = 'rgba(255, 255, 255, 0.08)';
     ctx.lineWidth = 1;
     for (let x = 0; x <= w; x += 30) {
@@ -4008,27 +3294,21 @@ function plotFunction(funcName) {
     for (let y = 0; y <= h; y += 30) {
         ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(w, y); ctx.stroke();
     }
-
     const cx = w / 2;
     const cy = h / 2;
     ctx.strokeStyle = 'rgba(255, 255, 255, 0.35)';
     ctx.lineWidth = 1.5;
-
     ctx.beginPath(); ctx.moveTo(0, cy); ctx.lineTo(w, cy); ctx.stroke();
     ctx.beginPath(); ctx.moveTo(cx, 0); ctx.lineTo(cx, h); ctx.stroke();
-
     ctx.strokeStyle = getComputedStyle(document.documentElement).getPropertyValue('--accent-operator') || '#8b1538';
     ctx.lineWidth = 2.5;
     ctx.beginPath();
-
     const scaleX = 25;
     const scaleY = 25;
     let isDrawing = false;
-
     for (let px = 0; px < w; px++) {
         const x = (px - cx) / scaleX;
         let y;
-
         switch (funcName) {
             case 'sin': y = Math.sin(x); break;
             case 'cos': y = Math.cos(x); break;
@@ -4039,13 +3319,11 @@ function plotFunction(funcName) {
             case 'ln': if (x <= 0) { isDrawing = false; continue; } y = Math.log(x); break;
             case 'inv': if (Math.abs(x) < 0.08) { isDrawing = false; continue; } y = 1 / x; break;
         }
-
         const py = cy - y * scaleY;
         if (py < 0 || py > h) {
             isDrawing = false;
             continue;
         }
-
         if (!isDrawing) {
             ctx.moveTo(px, py);
             isDrawing = true;
@@ -4055,34 +3333,23 @@ function plotFunction(funcName) {
     }
     ctx.stroke();
 }
-
 function resetGraphZoom() {
     plotFunction(state.activeGraphFunc);
 }
-
-// --------------------------------------------------------------------------
-// Модуль 38: finance.js — Фінансові розрахунки та складні відсотки
-// --------------------------------------------------------------------------
-// ==========================================================================
-// Фінансовий Калькулятор
-// ==========================================================================
 function calculateFinance() {
     const amount = parseFloat(document.getElementById('fin-amount').value) || 0;
     const discount = parseFloat(document.getElementById('fin-discount').value) || 0;
     const tax = parseFloat(document.getElementById('fin-tax').value) || 0;
     const tip = parseFloat(document.getElementById('fin-tip').value) || 0;
-
     const discounted = amount - (amount * (discount / 100));
     const taxVal = discounted * (tax / 100);
     const tipVal = discounted * (tip / 100);
     const total = discounted + taxVal + tipVal;
-
     document.getElementById('fin-discounted-val').innerText = `${discounted.toFixed(2)} ₴`;
     document.getElementById('fin-tax-val').innerText = `+ ${taxVal.toFixed(2)} ₴`;
     document.getElementById('fin-tip-val').innerText = `+ ${tipVal.toFixed(2)} ₴`;
     document.getElementById('fin-total-val').innerText = `${total.toFixed(2)} ₴`;
 }
-
 function insertFinanceToCalc() {
     audio.playAction();
     const amount = parseFloat(document.getElementById('fin-amount').value) || 0;
@@ -4091,14 +3358,12 @@ function insertFinanceToCalc() {
     const tip = parseFloat(document.getElementById('fin-tip').value) || 0;
     const discounted = amount - (amount * (discount / 100));
     const total = (discounted + discounted * (tax / 100) + discounted * (tip / 100)).toFixed(2);
-
     state.currentInput = total.toString();
     state.shouldResetDisplay = true;
     updateDisplay();
     closeModal('finance-modal');
     showToast(`Суму ${total} ₴ вставлено`, '💰');
 }
-
 function copyFinanceTotal() {
     const totalEl = document.getElementById('fin-total-val');
     if (totalEl) {
@@ -4107,13 +3372,6 @@ function copyFinanceTotal() {
         showToast(`Скопійовано: ${totalEl.innerText}`, '📋');
     }
 }
-
-// --------------------------------------------------------------------------
-// Модуль 39: rng.js — Генератор випадкових чисел та кубик
-// --------------------------------------------------------------------------
-// ==========================================================================
-// RNG & Кубики
-// ==========================================================================
 function generateRandomNumber() {
     audio.playAction();
     const min = parseInt(document.getElementById('rng-min').value) || 1;
@@ -4127,7 +3385,6 @@ function generateRandomNumber() {
     if (el) el.innerText = res;
     showToast(`Згенеровано: ${res}`, '🎲');
 }
-
 function rollDice(sides) {
     audio.playAction();
     const res = Math.floor(Math.random() * sides) + 1;
@@ -4135,7 +3392,6 @@ function rollDice(sides) {
     if (el) el.innerText = `d${sides}: ${res}`;
     showToast(`Кидок d${sides}: ${res}`, '🎲');
 }
-
 function flipCoin() {
     audio.playAction();
     const res = Math.random() < 0.5 ? '🪙 Орел' : '🪙 Решка';
@@ -4143,7 +3399,6 @@ function flipCoin() {
     if (el) el.innerText = res;
     showToast(`Результат: ${res}`, '🪙');
 }
-
 function insertRngToCalc() {
     audio.playAction();
     const el = document.getElementById('rng-result');
@@ -4158,13 +3413,6 @@ function insertRngToCalc() {
         }
     }
 }
-
-// --------------------------------------------------------------------------
-// Модуль 40: converter.js — Універсальний конвертер одиниць вимірювання
-// --------------------------------------------------------------------------
-// ==========================================================================
-// Універсальний Конвертер Величин
-// ==========================================================================
 const convUnits = {
     length: {
         units: ['m', 'km', 'cm', 'mm', 'mi', 'yd', 'ft', 'in'],
@@ -4196,50 +3444,40 @@ const convUnits = {
         toBase: { s: 1, min: 60, hr: 3600, day: 86400, week: 604800, yr: 31536000 }
     }
 };
-
 let currentConvCat = 'length';
-
 function switchConverterCategory(cat) {
     currentConvCat = cat;
     document.querySelectorAll('.conv-tab').forEach(t => {
         t.classList.toggle('active', t.getAttribute('data-cat') === cat);
     });
-
     const fromSel = document.getElementById('conv-from-unit');
     const toSel = document.getElementById('conv-to-unit');
     if (!fromSel || !toSel) return;
-
     fromSel.innerHTML = '';
     toSel.innerHTML = '';
-
     const catData = convUnits[cat];
     catData.units.forEach((u) => {
         const o1 = document.createElement('option');
         o1.value = u;
         o1.innerText = catData.names[u];
         fromSel.appendChild(o1);
-
         const o2 = document.createElement('option');
         o2.value = u;
         o2.innerText = catData.names[u];
         toSel.appendChild(o2);
     });
-
     if (catData.units.length > 1) toSel.selectedIndex = 1;
     runConversion('from');
 }
-
 function runConversion(direction = 'from') {
     const fromSel = document.getElementById('conv-from-unit');
     const toSel = document.getElementById('conv-to-unit');
     const fromInput = document.getElementById('conv-from-val');
     const toInput = document.getElementById('conv-to-val');
     if (!fromSel || !toSel || !fromInput || !toInput) return;
-
     const uFrom = fromSel.value;
     const uTo = toSel.value;
     const catData = convUnits[currentConvCat];
-
     if (currentConvCat === 'temp') {
         if (direction === 'from') {
             const val = parseFloat(fromInput.value) || 0;
@@ -4247,7 +3485,6 @@ function runConversion(direction = 'from') {
             if (uFrom === 'C') c = val;
             else if (uFrom === 'F') c = (val - 32) * (5 / 9);
             else if (uFrom === 'K') c = val - 273.15;
-
             let res;
             if (uTo === 'C') res = c;
             else if (uTo === 'F') res = (c * (9 / 5)) + 32;
@@ -4259,7 +3496,6 @@ function runConversion(direction = 'from') {
             if (uTo === 'C') c = val;
             else if (uTo === 'F') c = (val - 32) * (5 / 9);
             else if (uTo === 'K') c = val - 273.15;
-
             let res;
             if (uFrom === 'C') res = c;
             else if (uFrom === 'F') res = (c * (9 / 5)) + 32;
@@ -4281,7 +3517,6 @@ function runConversion(direction = 'from') {
         }
     }
 }
-
 function swapConverterUnits() {
     audio.playAction();
     const fromSel = document.getElementById('conv-from-unit');
@@ -4292,7 +3527,6 @@ function swapConverterUnits() {
     toSel.value = temp;
     runConversion('from');
 }
-
 function insertConvertedToCalc() {
     audio.playAction();
     const toInput = document.getElementById('conv-to-val');
@@ -4304,7 +3538,6 @@ function insertConvertedToCalc() {
         showToast(`Значення ${toInput.value} вставлено`, '📥');
     }
 }
-
 function copyConvertedVal() {
     const toInput = document.getElementById('conv-to-val');
     if (toInput && toInput.value) {
@@ -4313,13 +3546,6 @@ function copyConvertedVal() {
         showToast(`Скопійовано: ${toInput.value}`, '📋');
     }
 }
-
-// --------------------------------------------------------------------------
-// Модуль 41: programmer.js — Програмістський режим (HEX/DEC/OCT/BIN)
-// --------------------------------------------------------------------------
-// ==========================================================================
-// Програмістські Системи Числення
-// ==========================================================================
 function syncProgrammerBase(sourceBase, value) {
     const val = value.trim();
     if (!val) {
@@ -4329,38 +3555,31 @@ function syncProgrammerBase(sourceBase, value) {
         document.getElementById('prog-bin').value = '';
         return;
     }
-
     let num = 0;
     try {
         if (sourceBase === 'DEC') num = parseInt(val, 10);
         else if (sourceBase === 'HEX') num = parseInt(val, 16);
         else if (sourceBase === 'OCT') num = parseInt(val, 8);
         else if (sourceBase === 'BIN') num = parseInt(val, 2);
-
         if (isNaN(num)) return;
-
         if (sourceBase !== 'DEC') document.getElementById('prog-dec').value = num.toString(10);
         if (sourceBase !== 'HEX') document.getElementById('prog-hex').value = num.toString(16).toUpperCase();
         if (sourceBase !== 'OCT') document.getElementById('prog-oct').value = num.toString(8);
         if (sourceBase !== 'BIN') document.getElementById('prog-bin').value = num.toString(2);
     } catch (e) { }
 }
-
 function progBitwise(op) {
     audio.playAction();
     const decInput = document.getElementById('prog-dec');
     let num = parseInt(decInput.value, 10) || 0;
     let res = num;
-
     if (op === 'NOT') res = ~num;
     else if (op === 'SHL') res = num << 1;
     else if (op === 'SHR') res = num >> 1;
-
     syncProgrammerBase('DEC', res.toString(10));
     decInput.value = res.toString(10);
     showToast(`Побітова дія ${op}: ${res}`, '💻');
 }
-
 function insertProgValToCalc() {
     audio.playAction();
     const decInput = document.getElementById('prog-dec');
@@ -4372,13 +3591,6 @@ function insertProgValToCalc() {
         showToast(`Значення ${decInput.value} вставлено`, '📥');
     }
 }
-
-// --------------------------------------------------------------------------
-// Модуль 42: history.js — Журнал історії розрахунків та експорт
-// --------------------------------------------------------------------------
-// ==========================================================================
-// Історія та Експорт
-// ==========================================================================
 function addToHistory(equation, result) {
     const item = {
         equation,
@@ -4390,14 +3602,12 @@ function addToHistory(equation, result) {
     localStorage.setItem('calc_history', JSON.stringify(state.history));
     renderHistory();
 }
-
 function renderHistory(items = state.history) {
     if (!dom.historyList) return;
     if (items.length === 0) {
         dom.historyList.innerHTML = '<li style="text-align:center; color: var(--text-muted); padding: 20px;">Історія порожня</li>';
         return;
     }
-
     dom.historyList.innerHTML = '';
     items.forEach(item => {
         const li = document.createElement('li');
@@ -4420,7 +3630,6 @@ function renderHistory(items = state.history) {
         dom.historyList.appendChild(li);
     });
 }
-
 function filterHistory(query) {
     const q = query.trim().toLowerCase();
     if (!q) { renderHistory(); return; }
@@ -4430,7 +3639,6 @@ function filterHistory(query) {
     );
     renderHistory(filtered);
 }
-
 function clearHistory() {
     audio.playAction();
     state.history = [];
@@ -4438,19 +3646,16 @@ function clearHistory() {
     renderHistory();
     showToast('Історію очищено', '🗑️');
 }
-
 function exportHistoryFormat(format) {
     audio.playAction();
     if (state.history.length === 0) {
         showToast('Історія порожня для експорту', '⚠️');
         return;
     }
-
     let content = '';
     let mimeType = 'text/plain;charset=utf-8';
     let fileExt = 'txt';
     const dateStr = new Date().toISOString().slice(0, 10);
-
     if (format === 'csv') {
         mimeType = 'text/csv;charset=utf-8';
         fileExt = 'csv';
@@ -4474,13 +3679,11 @@ function exportHistoryFormat(format) {
         content += `  Дата експорту: ${new Date().toLocaleString('uk-UA')}\n`;
         content += `  Автор: MaxNT Official, 2026\n`;
         content += `====================================================\n\n`;
-
         state.history.forEach((item, index) => {
             content += `[${item.time || '00:00'}] ${index + 1}. ${item.equation} = ${item.result}\n`;
         });
         content += `\nВсього операцій: ${state.history.length}\n`;
     }
-
     const blob = new Blob([content], { type: mimeType });
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
@@ -4490,11 +3693,9 @@ function exportHistoryFormat(format) {
     a.click();
     document.body.removeChild(a);
     URL.revokeObjectURL(url);
-
     closeModal('export-modal');
     showToast(`Історію експортовано у формат .${fileExt}`, '📥');
 }
-
 function copyToClipboard() {
     if (isNaN(parseFloat(state.currentInput))) return;
     audio.playAction();
@@ -4509,13 +3710,10 @@ function copyToClipboard() {
         showToast('Не вдалося скопіювати', '❌');
     });
 }
-
 function showToast(message, icon = 'ℹ️') {
     if (!dom.toastContainer) return;
     const toast = document.createElement('div');
-    toast.className = 'toast';
-    // textContent замість innerHTML: повідомлення часто містить дані
-    // користувача (вирази, результати, назви записів)
+    toast.className = 'toast';
     const iconSpan = document.createElement('span');
     iconSpan.textContent = icon;
     const msgSpan = document.createElement('span');
@@ -4526,15 +3724,6 @@ function showToast(message, icon = 'ℹ️') {
     dom.toastContainer.appendChild(toast);
     setTimeout(() => { if (toast.parentNode) toast.parentNode.removeChild(toast); }, 2400);
 }
-
-// --------------------------------------------------------------------------
-// Модуль 43: perf-debug.js — Діагностика швидкості відкриття розділів (?perf=1)
-// --------------------------------------------------------------------------
-// ==========================================================================
-// Діагностика швидкості відкриття розділів: додайте ?perf=1 до адреси
-// (?perf=0 — вимкнути). На екрані з'являється панель з часом кожної фази
-// відкриття у мс; кнопка «copy» копіює результати для надсилання.
-// ==========================================================================
 const perfDebug = {
   enabled: false,
   rows: [],
@@ -4542,16 +3731,12 @@ const perfDebug = {
   panel: null,
   body: null,
   longTasks: { count: 0, max: 0 },
-
   init() {
     const m = /[?&]perf=([01])\b/.exec(location.search);
     if (m) localStorage.setItem('calc_perf_debug', m[1]);
     this.enabled = localStorage.getItem('calc_perf_debug') === '1';
     if (!this.enabled) return;
-
-    // Момент відпускання пальця: від нього міряємо «тап → відкриття»
     document.addEventListener('pointerup', e => { this.tapTs = e.timeStamp; }, { capture: true, passive: true });
-
     try {
       new PerformanceObserver(list => {
         list.getEntries().forEach(en => {
@@ -4561,7 +3746,6 @@ const perfDebug = {
         this.render();
       }).observe({ entryTypes: ['longtask'] });
     } catch (e) { /* longtask не підтримується */ }
-
     const panel = document.createElement('div');
     panel.style.cssText = 'position:fixed;left:0;right:0;top:0;z-index:10001;max-height:42vh;overflow:hidden;' +
       'background:rgba(0,0,0,.88);color:#7CFC8A;font:10px/1.35 monospace;padding:4px 6px;pointer-events:none;';
@@ -4582,29 +3766,24 @@ const perfDebug = {
     this.body = body;
     this.render();
   },
-
   record(row) {
     this.rows.push(row);
     if (this.rows.length > 40) this.rows.shift();
     console.log('[perf]', this.line(row));
     this.render();
   },
-
   f(v) { return v == null ? '-' : v.toFixed(1); },
-
   line(r) {
     return r.id.replace('-modal', '') + ' | tap>' + this.f(r.tap) + ' mount ' + this.f(r.mount) +
       ' pre ' + this.f(r.pre) + ' wait ' + this.f(r.wait) + ' frame ' + this.f(r.frame) +
       ' prep ' + this.f(r.prepare) + ' | total ' + this.f(r.total);
   },
-
   text() {
     const ua = navigator.userAgent + ' cores=' + navigator.hardwareConcurrency + ' mem=' + navigator.deviceMemory +
       ' perfMode=' + state.perfMode + ' lite=' + document.documentElement.classList.contains('perf-lite');
     return ua + '\n' + this.rows.map(r => this.line(r)).join('\n') +
       '\nlongtasks: ' + this.longTasks.count + ' (max ' + this.f(this.longTasks.max) + ' ms)';
   },
-
   render() {
     if (!this.body) return;
     const last = this.rows.slice(-8).map(r => this.line(r)).join('\n');
@@ -4612,28 +3791,14 @@ const perfDebug = {
       ' max=' + this.f(this.longTasks.max) + '\n' + last;
   }
 };
-
 perfDebug.init();
-
-// --------------------------------------------------------------------------
-// Модуль 44: modals.js — Керування відкриттям/закриттям модалок
-// --------------------------------------------------------------------------
-// ==========================================================================
-// Керування модальними вікнами
-// ==========================================================================
 const RENDER_ONCE = new Set([
   "math-ref-modal",
   "constants-search-modal",
   "formula-solver-modal",
   "bitmask-modal",
 ]);
-
-const rendered = new Set();
-
-// Lazy-модалки лежать у <template data-modal="id"> (див. build.js) і вставляються
-// в DOM при першому відкритті: стартова сторінка легша, браузеру не треба
-// стилізувати й компонувати розмітку розділів, які ніхто не відкривав.
-// Повертає true, якщо вікно є в DOM (вже було або щойно змонтоване)
+const rendered = new Set();
 function ensureModalMounted(modalId) {
   if (document.getElementById(modalId)) return true;
   const tpl = document.querySelector('template[data-modal="' + modalId + '"]');
@@ -4641,29 +3806,22 @@ function ensureModalMounted(modalId) {
   tpl.replaceWith(tpl.content);
   return true;
 }
-
 function openModal(modalId) {
   const t0 = performance.now();
   const dbg = typeof perfDebug !== "undefined" && perfDebug.enabled;
   const tap = dbg && perfDebug.tapTs && t0 - perfDebug.tapTs < 1500 ? t0 - perfDebug.tapTs : null;
-
   if (!ensureModalMounted(modalId)) return;
   const modal = document.getElementById(modalId);
   if (!modal) return;
-  const t1 = performance.now();
-
-  // Дешеві розрахунки — ДО показу: один layout з фінальними значеннями,
-  // без «стрибка» посеред відкриття
+  const t1 = performance.now();
   if (modalId === "settings-modal") syncSettingsControls();
   if (modalId === "vector-calc-modal") solveVectorMath();
   if (modalId === "complex-calc-modal") solveComplexMath();
   const t2 = performance.now();
-
   document.documentElement.classList.add("modal-open");
   requestAnimationFrame(() => {
     const t3 = performance.now();
-    modal.classList.add("active");
-    // Важка частина (рендер списків, графіки) — після першого кадру
+    modal.classList.add("active");
     requestAnimationFrame(() => {
       const t4 = performance.now();
       setTimeout(() => {
@@ -4686,19 +3844,15 @@ function openModal(modalId) {
       }, 0);
     });
   });
-
   requestAnimationFrame(() => audio.playClick(700));
 }
-
 function prepareModal(modalId) {
   const modal = document.getElementById(modalId);
   if (!modal) return;
-
   if (RENDER_ONCE.has(modalId)) {
     if (rendered.has(modalId)) return;
     rendered.add(modalId);
   }
-
   if (modal) {
     if (modalId === "math-ref-modal") {
       renderMathRefList();
@@ -4727,8 +3881,36 @@ function prepareModal(modalId) {
       renderBookmarks();
     }
     if (modalId === "history-modal") {
+      dom.historyList = document.getElementById('history-list');
+      dom.historySearch = document.getElementById('history-search');
       if (dom.historySearch) dom.historySearch.value = "";
       renderHistory();
+    }
+    if (modalId === "theme-modal") {
+      document.querySelectorAll('.theme-card').forEach(btn => {
+        btn.classList.toggle('active', btn.getAttribute('data-theme') === state.currentTheme);
+      });
+    }
+    if (modalId === "font-modal") {
+      document.querySelectorAll('.font-card').forEach(c => {
+        c.classList.toggle('active', c.getAttribute('data-font') === state.currentFont);
+      });
+    }
+    if (modalId === "memory-modal") {
+      updateMemorySlotsUI();
+    }
+    if (modalId === "wallpaper-modal") {
+      const bSlider = document.getElementById('wp-blur-slider');
+      const oSlider = document.getElementById('wp-opacity-slider');
+      const bLabel = document.getElementById('wp-blur-val');
+      const oLabel = document.getElementById('wp-opacity-val');
+      if (bSlider) bSlider.value = state.wallpaperBlur;
+      if (oSlider) oSlider.value = state.wallpaperOverlay;
+      if (bLabel) bLabel.innerText = `${state.wallpaperBlur}px`;
+      if (oLabel) oLabel.innerText = `${state.wallpaperOverlay}%`;
+      document.querySelectorAll('.wallpaper-card').forEach(card => {
+        card.classList.toggle('active', card.getAttribute('data-wp') === state.currentWallpaper);
+      });
     }
     if (modalId === "tape-modal") {
       renderTapeRoll();
@@ -4800,7 +3982,6 @@ function prepareModal(modalId) {
     }
   }
 }
-
 function closeModal(modalId) {
   const modal = document.getElementById(modalId);
   if (modal) modal.classList.remove("active");
@@ -4809,38 +3990,22 @@ function closeModal(modalId) {
   }
   requestAnimationFrame(() => audio.playClick(450));
 }
-
 window.onclick = function (event) {
   if (event.target.classList.contains("modal-overlay")) {
     closeModal(event.target.id);
   }
 };
-
-// --------------------------------------------------------------------------
-// Модуль 45: footer-tap.js — Швидкий тап по кнопках футера на сенсорних екранах
-// --------------------------------------------------------------------------
-// ==========================================================================
-// Швидкий тап по кнопках футера (сенсорні екрани)
-// pointerdown: миттєва візуальна реакція кнопки + попереднє монтування вікна
-//              з <template> (вартість монтування «ховається» під час тапу);
-// pointerup:   відкриття розділу без очікування синтетичного click.
-// Якщо палець зсунувся (>10px) або браузер почав скрол (pointercancel) —
-// розділ не відкривається, тож прокрутка сторінки не викликає випадкових відкриттів.
-// ==========================================================================
 (function initFooterFastTap() {
   const footer = document.querySelector('.footer');
   if (!footer || !window.PointerEvent) return;
-
   const OPEN_RE = /openModal\('([^']+)'\)/;
   let press = null;
   let suppressBtn = null;
   let suppressUntil = 0;
-
   function clearPress() {
     if (press) press.btn.classList.remove('is-pressed');
     press = null;
   }
-
   footer.addEventListener('pointerdown', e => {
     if (e.pointerType === 'mouse') return;
     const btn = e.target.closest('.footer-btn');
@@ -4851,7 +4016,6 @@ window.onclick = function (event) {
     ensureModalMounted(m[1]);
     press = { btn, id: m[1], x: e.clientX, y: e.clientY, pointerId: e.pointerId };
   }, { passive: true });
-
   footer.addEventListener('pointerup', e => {
     if (!press || e.pointerId !== press.pointerId) return;
     const p = press;
@@ -4861,10 +4025,7 @@ window.onclick = function (event) {
     suppressUntil = performance.now() + 700;
     openModal(p.id);
   });
-
   footer.addEventListener('pointercancel', clearPress);
-
-  // Синтетичний click після вже виконаного відкриття не повинен відкрити вікно вдруге
   footer.addEventListener('click', e => {
     if (suppressBtn && performance.now() < suppressUntil && suppressBtn.contains(e.target)) {
       e.stopImmediatePropagation();
@@ -4873,29 +4034,17 @@ window.onclick = function (event) {
     suppressBtn = null;
   }, true);
 })();
-
-// --------------------------------------------------------------------------
-// Модуль 46: keyboard.js — Обробка гарячих клавіш клавіатури
-// --------------------------------------------------------------------------
-// ==========================================================================
-// Клавіатурна навігація
-// ==========================================================================
-document.addEventListener('keydown', (event) => {
-    // Command Palette (Ctrl+K / ⌘K)
+document.addEventListener('keydown', (event) => {
     if ((event.ctrlKey || event.metaKey) && (event.key === 'k' || event.key === 'K' || event.key === 'л' || event.key === 'Л')) {
         event.preventDefault();
         openCommandPalette();
         return;
-    }
-
-    // Довідник клавіш (F1 або ?)
+    }
     if (event.key === 'F1' || (event.key === '?' && document.activeElement.tagName !== 'INPUT')) {
         event.preventDefault();
         openModal('shortcuts-modal');
         return;
-    }
-
-    // Навігація всередині відкритого Command Palette
+    }
     const paletteModal = document.getElementById('command-palette-modal');
     if (paletteModal && paletteModal.classList.contains('active')) {
         if (event.key === 'ArrowDown') {
@@ -4924,7 +4073,6 @@ document.addEventListener('keydown', (event) => {
             return;
         }
     }
-
     if (event.key === 'Escape') {
         const activeModal = document.querySelector('.modal-overlay.active');
         if (activeModal) {
@@ -4934,38 +4082,32 @@ document.addEventListener('keydown', (event) => {
         clearDisplay();
         return;
     }
-
     if (event.key === 'F11') {
         event.preventDefault();
         toggleFullScreen();
         return;
     }
-
     if (event.key >= '0' && event.key <= '9') {
         appendNumber(event.key);
         triggerKeyEffect(event.key);
         return;
     }
-
     if (event.key === '.' || event.key === ',') {
         appendNumber('.');
         triggerKeyEffect('.');
         return;
     }
-
     if (event.key === '=' || event.key === 'Enter') {
         event.preventDefault();
         calculate();
         triggerKeyEffect('=');
         return;
     }
-
     if (event.key === 'Backspace') {
         backspace();
         triggerKeyEffect('⌫');
         return;
     }
-
     if (event.key === '+' || event.key === '-') {
         appendOperator(event.key);
         triggerKeyEffect(event.key === '-' ? '−' : '+');
@@ -4992,7 +4134,6 @@ document.addEventListener('keydown', (event) => {
         triggerKeyEffect(event.key);
         return;
     }
-
     if (event.key === 's' || event.key === 'S' || event.key === 'і' || event.key === 'І') {
         if (!event.ctrlKey && !event.metaKey && document.activeElement.tagName !== 'INPUT') {
             toggleSecondMode();
@@ -5017,7 +4158,6 @@ document.addEventListener('keydown', (event) => {
             return;
         }
     }
-
     if ((event.ctrlKey || event.metaKey) && (event.key === 'v' || event.key === 'V')) {
         navigator.clipboard.readText().then(text => {
             const clean = text.trim().replace(',', '.').replace(/\s/g, '');
@@ -5030,13 +4170,11 @@ document.addEventListener('keydown', (event) => {
         }).catch(() => { });
         return;
     }
-
     if ((event.ctrlKey || event.metaKey) && (event.key === 'c' || event.key === 'C')) {
         copyToClipboard();
         return;
     }
 });
-
 function triggerKeyEffect(label) {
     const buttons = document.querySelectorAll('.buttons button');
     buttons.forEach(btn => {
@@ -5045,16 +4183,74 @@ function triggerKeyEffect(label) {
             setTimeout(() => btn.classList.remove('is-pressed'), 140);
         }
     });
+}
+function setKeyboardMode(mode, silent = false) {
+    if (!['basic', 'scientific', 'programmer'].includes(mode)) mode = 'basic';
+    state.keyboardMode = mode;
+    localStorage.setItem('calc_kbd_mode', mode);
+    const calcEl = document.querySelector('.calculator');
+    if (calcEl) {
+        calcEl.setAttribute('data-kbd-mode', mode);
+    }
+    document.querySelectorAll('.calc-mode-tab').forEach(tab => {
+        tab.classList.toggle('active', tab.getAttribute('data-mode') === mode);
+    });
+    if (!silent) {
+        audio.playAction();
+        const modeNames = {
+            basic: 'Базовий (5 рядів)',
+            scientific: 'Інженерний',
+            programmer: 'Програміст'
+        };
+        showToast(`Режим клавіатури: ${modeNames[mode]}`, '🧮');
+    }
 }
-
-// --------------------------------------------------------------------------
-// Модуль 47: command-palette.js — Палітра команд Command Palette (Ctrl+K)
-// --------------------------------------------------------------------------
-// ==========================================================================
-// 20. Command Palette Engine (Ctrl+K / ⌘K)
-// ==========================================================================
-let commandPaletteItems = [
-    // Інструменти
+function handleProgBaseQuick(targetBase) {
+    audio.playAction();
+    const currentNum = parseInt(state.currentInput, 10);
+    if (isNaN(currentNum)) {
+        showToast('Введіть ціле число для конвертації', '⚠️');
+        return;
+    }
+    let converted = '';
+    if (targetBase === 'HEX') converted = currentNum.toString(16).toUpperCase();
+    else if (targetBase === 'OCT') converted = currentNum.toString(8);
+    else if (targetBase === 'BIN') converted = currentNum.toString(2);
+    else converted = currentNum.toString(10);
+    showToast(`${targetBase}: ${converted}`, '💻');
+}
+function handleProgBitwiseOp(op) {
+    audio.playAction();
+    const num = parseInt(state.currentInput, 10) || 0;
+    if (op === 'NOT') {
+        const res = ~num;
+        state.currentInput = res.toString(10);
+        state.shouldResetDisplay = true;
+        updateDisplay();
+        showToast(`NOT: ${res}`, '💻');
+        return;
+    }
+    if (op === 'SHL') {
+        const res = num << 1;
+        state.currentInput = res.toString(10);
+        state.shouldResetDisplay = true;
+        updateDisplay();
+        showToast(`<< 1: ${res}`, '💻');
+        return;
+    }
+    if (op === 'SHR') {
+        const res = num >> 1;
+        state.currentInput = res.toString(10);
+        state.shouldResetDisplay = true;
+        updateDisplay();
+        showToast(`>> 1: ${res}`, '💻');
+        return;
+    }
+    if (op === 'AND' || op === 'OR' || op === 'XOR') {
+        appendOperator(op);
+    }
+}
+let commandPaletteItems = [
     { id: 'vector', title: '3D Векторний калькулятор', desc: 'Скалярний, векторний добуток, кут, модулі', icon: '📐', cat: 'Інструменти', action: () => openModal('vector-calc-modal') },
     { id: 'complex', title: 'Комплексні числа ℂ', desc: 'Дії з комплексними числами a + bi, модуль, аргумент', icon: '⚛️', cat: 'Інструменти', action: () => openModal('complex-calc-modal') },
     { id: 'math-ref', title: 'Математичний довідник', desc: 'Формули тригонометрії, алгебри, похідних', icon: '📖', cat: 'Довідка', action: () => openModal('math-ref-modal') },
@@ -5085,34 +4281,26 @@ let commandPaletteItems = [
     { id: 'settings', title: 'Центр налаштувань', desc: 'Точність, звук, розділювачі, скло', icon: '⚙️', cat: 'Система', action: () => openModal('settings-modal') },
     { id: 'advisor', title: 'Математичний порадник', desc: 'Довідка щодо заборонених математичних дій', icon: '🧠', cat: 'Довідка', action: () => openModal('advisor-modal') },
     { id: 'shortcuts', title: 'Гарячі клавіші (F1 / ?)', desc: 'Список всіх клавіатурних скорочень', icon: '⌨️', cat: 'Довідка', action: () => openModal('shortcuts-modal') },
-    { id: 'about', title: 'Про Calculator Pro', desc: 'Інформація про реліз v1.8.6 та автора', icon: 'ℹ️', cat: 'Система', action: () => openModal('about-modal') },
-
-    // Стилі та дизайн
+    { id: 'about', title: 'Про Calculator Pro', desc: 'Інформація про реліз v1.8.6 та автора', icon: 'ℹ️', cat: 'Система', action: () => openModal('about-modal') },
     { id: 'theme-bordeaux', title: 'Тема: Bordeaux Luxury', desc: 'Флагманська бордова палітра Redstone 4.0', icon: '🍷', cat: 'Теми', action: () => setTheme('bordeaux_luxury') },
     { id: 'theme-titanium-ruby', title: 'Тема: Titanium Ruby Master', desc: 'Темний титан з рубіновим неоном', icon: '💎', cat: 'Теми', action: () => setTheme('titanium_ruby_master') },
     { id: 'theme-crimson', title: 'Тема: Crimson Supernova', desc: 'Яскравий малиново-червоний градієнт', icon: '✨', cat: 'Теми', action: () => setTheme('crimson_supernova') },
     { id: 'theme-cyberpunk', title: 'Тема: Cyberpunk Neon Bordeaux', desc: 'Неоновий кіберпанк бордо', icon: '🌆', cat: 'Теми', action: () => setTheme('cyberpunk_neon') },
     { id: 'theme-emerald', title: 'Тема: Emerald Platinum', desc: 'Смарагдовий з платиновими акцентами', icon: '❇️', cat: 'Теми', action: () => setTheme('emerald_platinum') },
     { id: 'theme-midnight', title: 'Тема: Midnight OLED', desc: 'Глибокий чорний OLED для заощадження енергії', icon: '🌑', cat: 'Теми', action: () => setTheme('midnight_oled') },
-    { id: 'theme-matrix', title: 'Тема: Cyber Matrix', desc: 'Зелений кібер-стиль Matrix', icon: '🟩', cat: 'Теми', action: () => setTheme('matrix_cyber') },
-
-    // Шпалери
+    { id: 'theme-matrix', title: 'Тема: Cyber Matrix', desc: 'Зелений кібер-стиль Matrix', icon: '🟩', cat: 'Теми', action: () => setTheme('matrix_cyber') },
     { id: 'wp-titanium-ruby', title: 'Шпалери: Titanium Ruby', desc: 'HD Титаново-рубіновий кристал', icon: '🖼️', cat: 'Шпалери', action: () => setWallpaper('titanium_ruby') },
     { id: 'wp-crimson', title: 'Шпалери: Crimson Supernova', desc: 'HD Космічна малинова наднова', icon: '🖼️', cat: 'Шпалери', action: () => setWallpaper('crimson_supernova') },
     { id: 'wp-cyberpunk', title: 'Шпалери: Cyberpunk Bordeaux', desc: 'HD Неонове нічне місто бордо', icon: '🖼️', cat: 'Шпалери', action: () => setWallpaper('cyberpunk_bordeaux') },
     { id: 'wp-burgundy', title: 'Шпалери: Burgundy Velvet', desc: 'HD Бордовий шовковий оксамит', icon: '🖼️', cat: 'Шпалери', action: () => setWallpaper('burgundy') },
-    { id: 'wp-particles', title: 'Шпалери: Неоновий пил', desc: 'Динамічні частинки Aurora', icon: '✨', cat: 'Шпалери', action: () => setWallpaper('particles') },
-
-    // Дії
+    { id: 'wp-particles', title: 'Шпалери: Неоновий пил', desc: 'Динамічні частинки Aurora', icon: '✨', cat: 'Шпалери', action: () => setWallpaper('particles') },
     { id: 'act-voice', title: 'Озвучити результат голосом', desc: 'Синтез мови для поточного числа', icon: '🗣️', cat: 'Дії', action: () => speakCurrentResult() },
     { id: 'act-copy', title: 'Скопіювати число в буфер', desc: 'Ctrl + C', icon: '📋', cat: 'Дії', action: () => copyToClipboard() },
     { id: 'act-fullscreen', title: 'Повноекранний режим', desc: 'F11 / Focus Mode', icon: '⛶', cat: 'Дії', action: () => toggleFullScreen() },
     { id: 'act-clear', title: 'Очистити все', desc: 'Скинути дисплей калькулятора (C)', icon: '🗑️', cat: 'Дії', action: () => clearDisplay() }
 ];
-
 let selectedCommandIndex = 0;
 let filteredCommandItems = [];
-
 function openCommandPalette() {
     audio.playAction();
     openModal('command-palette-modal');
@@ -5123,26 +4311,21 @@ function openCommandPalette() {
     }
     filterCommandPalette('');
 }
-
 function filterCommandPalette(query) {
     const listEl = document.getElementById('command-results-list');
     if (!listEl) return;
-
     const q = (query || '').toLowerCase().trim();
     filteredCommandItems = commandPaletteItems.filter(item =>
         item.title.toLowerCase().includes(q) ||
         item.desc.toLowerCase().includes(q) ||
         item.cat.toLowerCase().includes(q)
     );
-
     selectedCommandIndex = 0;
     renderCommandPaletteList();
 }
-
 function renderCommandPaletteList() {
     const listEl = document.getElementById('command-results-list');
     if (!listEl) return;
-
     if (filteredCommandItems.length === 0) {
         listEl.innerHTML = `
             <div style="text-align:center; padding:20px; color:var(--text-muted); font-size:0.88rem;">
@@ -5152,7 +4335,6 @@ function renderCommandPaletteList() {
         `;
         return;
     }
-
     listEl.innerHTML = filteredCommandItems.map((item, idx) => `
         <div class="command-item ${idx === selectedCommandIndex ? 'selected' : ''}" onclick="executeCommandPaletteItem(${idx})" onmouseenter="selectCommandIndex(${idx})">
             <span class="command-item-icon">${item.icon}</span>
@@ -5164,7 +4346,6 @@ function renderCommandPaletteList() {
         </div>
     `).join('');
 }
-
 function selectCommandIndex(idx) {
     selectedCommandIndex = idx;
     const items = document.querySelectorAll('.command-item');
@@ -5172,14 +4353,12 @@ function selectCommandIndex(idx) {
         el.classList.toggle('selected', i === idx);
     });
 }
-
 function scrollSelectedCommandIntoView() {
     const items = document.querySelectorAll('.command-item');
     if (items[selectedCommandIndex]) {
         items[selectedCommandIndex].scrollIntoView({ block: 'nearest', behavior: 'smooth' });
     }
 }
-
 function executeCommandPaletteItem(idx) {
     const item = filteredCommandItems[idx];
     if (item && item.action) {
@@ -5187,25 +4366,15 @@ function executeCommandPaletteItem(idx) {
         setTimeout(() => item.action(), 120);
     }
 }
-
-// --------------------------------------------------------------------------
-// Модуль 48: init.js — Ініціалізація застосунку та запуск при завантаженні
-// --------------------------------------------------------------------------
-// ==========================================================================
-// Ініціалізація (DOM Ready)
-// ==========================================================================
 document.addEventListener('DOMContentLoaded', () => {
     applyMobilePerfOptimizations();
-
-    // Тема
+    setKeyboardMode(state.keyboardMode, true);
     if (state.currentTheme) {
         document.body.setAttribute('data-theme', state.currentTheme);
         document.querySelectorAll('.theme-card').forEach(btn => {
             btn.classList.toggle('active', btn.getAttribute('data-theme') === state.currentTheme);
         });
-    }
-
-    // Шрифт
+    }
     if (state.currentFont) {
         document.body.className = document.body.className.replace(/\bfont-\w+\b/g, '');
         document.body.classList.add(state.currentFont);
@@ -5224,16 +4393,10 @@ document.addEventListener('DOMContentLoaded', () => {
         };
         if (dom.currentFontChip) dom.currentFontChip.innerText = fontNames[state.currentFont] || 'Inter';
         ensureFontLoaded(state.currentFont);
-    }
-
-    // Масштаб шрифту (Font Scale)
-    setFontScale(state.fontScale, true);
-
-    // Застосування шпалер
+    }
+    setFontScale(state.fontScale, true);
     applyWallpaperToDom();
-    applyGlassIntensity(state.glassIntensity);
-
-    // Слайдери
+    applyGlassIntensity(state.glassIntensity);
     const bSlider = document.getElementById('wp-blur-slider');
     const oSlider = document.getElementById('wp-opacity-slider');
     const bLabel = document.getElementById('wp-blur-val');
@@ -5241,21 +4404,15 @@ document.addEventListener('DOMContentLoaded', () => {
     if (bSlider) bSlider.value = state.wallpaperBlur;
     if (oSlider) oSlider.value = state.wallpaperOverlay;
     if (bLabel) bLabel.innerText = `${state.wallpaperBlur}px`;
-    if (oLabel) oLabel.innerText = `${state.wallpaperOverlay}%`;
-
-    // Оновлення дисплею
+    if (oLabel) oLabel.innerText = `${state.wallpaperOverlay}%`;
     updateDisplay();
     renderHistory();
     renderTapeRoll();
     renderBookmarks();
-    updateMemorySlotsUI();
-
-    // Запуск фонових частинок Canvas
+    updateMemorySlotsUI();
     if (state.particlesEnabled) {
         initParticlesCanvas();
-    }
-
-    // Безпечне розблокування AudioContext при першому натисканні
+    }
     window.addEventListener('pointerdown', () => {
         if (audio && audio.ctx && audio.ctx.state === 'suspended') {
             audio.ctx.resume().catch(() => { });
@@ -5263,9 +4420,7 @@ document.addEventListener('DOMContentLoaded', () => {
             audio.init();
         }
     }, { once: true });
-
     console.log('%c 🛡️ Calculator Pro v1.8.6 (Build 204) Redstone 4.0 Bordeaux Titanium Ultra Loaded %c',
         'background: linear-gradient(90deg, #e11d48, #8b1538, #f43f5e); color: #fff; font-weight: bold; font-size: 13px; padding: 6px 14px; border-radius: 8px;',
         '');
 });
-

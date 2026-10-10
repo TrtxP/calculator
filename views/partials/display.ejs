@@ -3,23 +3,9 @@
                         <div class="display-badges">
                             <span class="display-led-status" title="Калькулятор активний"></span>
                             <span class="command-badge" id="command-badge" onclick="event.stopPropagation(); openCommandPalette();" title="Швидкий пошук інструментів (Ctrl+K)">⚡ Пошук</span>
-                            <span class="shortcuts-badge" id="shortcuts-badge" onclick="event.stopPropagation(); openModal('shortcuts-modal');" title="Гарячі клавіші (F1 або ?)">⌨️ F1</span>
                             <span class="mode-badge" id="mode-badge" onclick="event.stopPropagation(); toggleAngleMode();" title="Натисніть для зміни DEG / RAD / GRAD">DEG</span>
                             <span class="secondary-badge" id="secondary-badge" onclick="event.stopPropagation(); toggleSecondMode();" title="Режим додаткових функцій (2nd / Shift)">2nd</span>
                             <span class="memory-badge" id="memory-badge" onclick="event.stopPropagation(); openModal('memory-modal');" title="Матриця пам'яті M1-M4">M</span>
-                            <span class="vector-badge" id="vector-badge" onclick="event.stopPropagation(); openModal('vector-calc-modal');" title="3D Вектори">📐 Вектори</span>
-                            <span class="complex-badge" id="complex-badge" onclick="event.stopPropagation(); openModal('complex-calc-modal');" title="Комплексні числа">ℂ Числа</span>
-                            <span class="math-ref-badge" id="math-ref-badge" onclick="event.stopPropagation(); openModal('math-ref-modal');" title="Довідник формул">📖 Довідник</span>
-                            <span class="trig-circle-badge" id="trig-circle-badge" onclick="event.stopPropagation(); openModal('trig-circle-modal');" title="Тригонометричне коло">⭕ Коло</span>
-                            <span class="formula-badge" id="formula-badge" onclick="event.stopPropagation(); openModal('formula-solver-modal');" title="Фізичні формули">⚡ Формули</span>
-                            <span class="triangle-badge" id="triangle-badge" onclick="event.stopPropagation(); openModal('triangle-solver-modal');" title="Розв'язувач трикутників">📐 Трикутник</span>
-                            <span class="loan-badge" id="loan-badge" onclick="event.stopPropagation(); openModal('loan-calc-modal');" title="Кредитний калькулятор">🏦 Кредит</span>
-                            <span class="bookmarks-badge" id="bookmarks-badge" onclick="event.stopPropagation(); openModal('bookmarks-modal');" title="Збережені вирази">🔖 Блокнот</span>
-                            <span class="speech-badge" id="speech-badge" onclick="event.stopPropagation(); speakCurrentResult();" title="Озвучити результат голосом">🗣️</span>
-                            <span class="advisor-badge" id="advisor-badge" onclick="event.stopPropagation(); openModal('advisor-modal');" title="Математичний порадник">🧠</span>
-                            <span class="settings-badge" id="settings-badge" onclick="event.stopPropagation(); openModal('settings-modal');" title="Налаштування калькулятора">⚙️</span>
-                            <span class="fullscreen-badge" id="fullscreen-badge" onclick="event.stopPropagation(); toggleFullScreen();" title="Повноекранний режим (F11)">⛶</span>
-                            <span class="font-scale-badge" id="font-scale-badge" onclick="event.stopPropagation(); cycleFontScale();" title="Масштаб шрифту (клік для циклічного збільшення: 90% → 100% → 115% → 130% → 145%)">🔠 100%</span>
                             <span class="audio-badge" id="audio-badge" onclick="event.stopPropagation(); cycleSoundProfile();" title="Перемкнути профіль звуку">🔊</span>
                         </div>
                         <div class="history-line" id="history-line"></div>

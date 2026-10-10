@@ -122,18 +122,9 @@ const MODALS = [
     'command-palette', 'shortcuts', 'home', 'about', 'help'
 ];
 
-// Модалки, що вставляються в DOM лише при першому відкритті (<template>).
-// Сюди входять лише ті, чиї елементи не потрібні на старті сторінки
-// (див. ensureModalMounted у js/modals.js).
-const LAZY_MODALS = new Set([
-    'vector-calc', 'complex-calc', 'math-ref', 'trig-circle',
-    'constants-search', 'formula-solver', 'triangle-solver', 'loan-calc',
-    'bookmarks', 'tape', 'prime-gcd', 'deal-calc',
-    'func-eval', 'matrix', 'bitmask', 'percent',
-    'currency', 'settings', 'color-studio', 'quadratic',
-    'stats', 'date', 'finance', 'rng',
-    'converter', 'programmer', 'graph'
-]);
+// Усі 41 модальне вікно монтуються ліниво (<template data-modal="...">)
+// для надшвидкого першого рендеру та мінімального споживання пам'яті
+const LAZY_MODALS = new Set(MODALS);
 
 console.log('🚀 Початок процесу збирання Calculator Pro v1.8.6...\n');
 
@@ -155,9 +146,22 @@ CSS_MODULES.forEach((mod, idx) => {
     combinedCss += content + '\n\n';
 });
 
-fs.writeFileSync(OUTPUT_CSS, combinedCss, 'utf8');
+function minifyCss(css) {
+    return css
+        .replace(/\/\*[\s\S]*?\*\//g, '')
+        .replace(/[ \t]+/g, ' ')
+        .replace(/\r?\n+/g, '\n')
+        .replace(/\s*([{};,])\s*/g, '$1')
+        .replace(/:\s+/g, ':')
+        .replace(/;\}/g, '}')
+        .trim();
+}
+
+const minifiedCss = minifyCss(combinedCss);
+fs.writeFileSync(OUTPUT_CSS, minifiedCss, 'utf8');
+const cssRawSize = (Buffer.byteLength(combinedCss, 'utf8') / 1024).toFixed(1);
 const cssSize = (fs.statSync(OUTPUT_CSS).size / 1024).toFixed(1);
-console.log(`🎨 [1/3] style.css згенеровано: ${cssSize} KB (${CSS_MODULES.length} модулів)`);
+console.log(`🎨 [1/3] style.css згенеровано: ${cssSize} KB (зменшено з ${cssRawSize} KB, ${CSS_MODULES.length} модулів)`);
 
 // ============================================================================
 // 2. Збирання app.js з js/
@@ -179,9 +183,18 @@ JS_MODULES.forEach((mod, idx) => {
     combinedJs += content + '\n\n';
 });
 
-fs.writeFileSync(OUTPUT_JS, combinedJs, 'utf8');
+function cleanJs(js) {
+    return js
+        .replace(/^\s*\/\/[^\n\r]*$/gm, '')
+        .replace(/\n\s*\n+/g, '\n')
+        .trim();
+}
+
+const cleanedJs = cleanJs(combinedJs);
+fs.writeFileSync(OUTPUT_JS, cleanedJs, 'utf8');
+const jsRawSize = (Buffer.byteLength(combinedJs, 'utf8') / 1024).toFixed(1);
 const jsSize = (fs.statSync(OUTPUT_JS).size / 1024).toFixed(1);
-console.log(`⚡ [2/3] app.js згенеровано: ${jsSize} KB (${JS_MODULES.length} модулів)`);
+console.log(`⚡ [2/3] app.js згенеровано: ${jsSize} KB (зменшено з ${jsRawSize} KB, ${JS_MODULES.length} модулів)`);
 
 // ============================================================================
 // 3. Збирання index.html з views/

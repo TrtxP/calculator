@@ -168,3 +168,79 @@ function triggerKeyEffect(label) {
     });
 }
 
+// ==========================================================================
+// Перемикання режимів клавіатури (Базовий / Інженерний / Програміст)
+// ==========================================================================
+function setKeyboardMode(mode, silent = false) {
+    if (!['basic', 'scientific', 'programmer'].includes(mode)) mode = 'basic';
+    state.keyboardMode = mode;
+    localStorage.setItem('calc_kbd_mode', mode);
+
+    const calcEl = document.querySelector('.calculator');
+    if (calcEl) {
+        calcEl.setAttribute('data-kbd-mode', mode);
+    }
+
+    document.querySelectorAll('.calc-mode-tab').forEach(tab => {
+        tab.classList.toggle('active', tab.getAttribute('data-mode') === mode);
+    });
+
+    if (!silent) {
+        audio.playAction();
+        const modeNames = {
+            basic: 'Базовий (5 рядів)',
+            scientific: 'Інженерний',
+            programmer: 'Програміст'
+        };
+        showToast(`Режим клавіатури: ${modeNames[mode]}`, '🧮');
+    }
+}
+
+function handleProgBaseQuick(targetBase) {
+    audio.playAction();
+    const currentNum = parseInt(state.currentInput, 10);
+    if (isNaN(currentNum)) {
+        showToast('Введіть ціле число для конвертації', '⚠️');
+        return;
+    }
+    let converted = '';
+    if (targetBase === 'HEX') converted = currentNum.toString(16).toUpperCase();
+    else if (targetBase === 'OCT') converted = currentNum.toString(8);
+    else if (targetBase === 'BIN') converted = currentNum.toString(2);
+    else converted = currentNum.toString(10);
+
+    showToast(`${targetBase}: ${converted}`, '💻');
+}
+
+function handleProgBitwiseOp(op) {
+    audio.playAction();
+    const num = parseInt(state.currentInput, 10) || 0;
+    if (op === 'NOT') {
+        const res = ~num;
+        state.currentInput = res.toString(10);
+        state.shouldResetDisplay = true;
+        updateDisplay();
+        showToast(`NOT: ${res}`, '💻');
+        return;
+    }
+    if (op === 'SHL') {
+        const res = num << 1;
+        state.currentInput = res.toString(10);
+        state.shouldResetDisplay = true;
+        updateDisplay();
+        showToast(`<< 1: ${res}`, '💻');
+        return;
+    }
+    if (op === 'SHR') {
+        const res = num >> 1;
+        state.currentInput = res.toString(10);
+        state.shouldResetDisplay = true;
+        updateDisplay();
+        showToast(`>> 1: ${res}`, '💻');
+        return;
+    }
+    if (op === 'AND' || op === 'OR' || op === 'XOR') {
+        appendOperator(op);
+    }
+}
+

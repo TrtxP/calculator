@@ -47,6 +47,7 @@ const state = {
     thousandSeparator: localStorage.getItem('calc_separator') || 'space', // 'space', 'comma', 'none'
     glassIntensity: localStorage.getItem('calc_glass') || 'heavy',
     perfMode: localStorage.getItem('calc_perf_mode') || 'auto', // 'auto' | 'lite' | 'full'
+    keyboardMode: localStorage.getItem('calc_kbd_mode') || 'basic', // 'basic' | 'scientific' | 'programmer'
     activeGraphFunc: 'sin',
     activeDateTab: 'diff',
     activeTriangleMode: 'sss', // 'sss', 'sas', 'asa'

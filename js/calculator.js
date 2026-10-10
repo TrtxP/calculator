@@ -49,6 +49,15 @@ function calculate(saveToHistory = true) {
             }
             computation = prev % current;
             break;
+        case 'AND':
+            computation = (prev | 0) & (current | 0);
+            break;
+        case 'OR':
+            computation = (prev | 0) | (current | 0);
+            break;
+        case 'XOR':
+            computation = (prev | 0) ^ (current | 0);
+            break;
         default:
             return;
     }

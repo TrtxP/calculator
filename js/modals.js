@@ -107,8 +107,36 @@ function prepareModal(modalId) {
       renderBookmarks();
     }
     if (modalId === "history-modal") {
+      dom.historyList = document.getElementById('history-list');
+      dom.historySearch = document.getElementById('history-search');
       if (dom.historySearch) dom.historySearch.value = "";
       renderHistory();
+    }
+    if (modalId === "theme-modal") {
+      document.querySelectorAll('.theme-card').forEach(btn => {
+        btn.classList.toggle('active', btn.getAttribute('data-theme') === state.currentTheme);
+      });
+    }
+    if (modalId === "font-modal") {
+      document.querySelectorAll('.font-card').forEach(c => {
+        c.classList.toggle('active', c.getAttribute('data-font') === state.currentFont);
+      });
+    }
+    if (modalId === "memory-modal") {
+      updateMemorySlotsUI();
+    }
+    if (modalId === "wallpaper-modal") {
+      const bSlider = document.getElementById('wp-blur-slider');
+      const oSlider = document.getElementById('wp-opacity-slider');
+      const bLabel = document.getElementById('wp-blur-val');
+      const oLabel = document.getElementById('wp-opacity-val');
+      if (bSlider) bSlider.value = state.wallpaperBlur;
+      if (oSlider) oSlider.value = state.wallpaperOverlay;
+      if (bLabel) bLabel.innerText = `${state.wallpaperBlur}px`;
+      if (oLabel) oLabel.innerText = `${state.wallpaperOverlay}%`;
+      document.querySelectorAll('.wallpaper-card').forEach(card => {
+        card.classList.toggle('active', card.getAttribute('data-wp') === state.currentWallpaper);
+      });
     }
     if (modalId === "tape-modal") {
       renderTapeRoll();
