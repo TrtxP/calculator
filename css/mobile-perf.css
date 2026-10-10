@@ -24,20 +24,30 @@
     }
 }
 
-/* 22.2 Відкриття розділу лише на композиторі GPU: попередня промоція
-       шару для активної модалки усуває ре-растеризацію в перших кадрах
-       анімацій sheetSlideUp / fadeIn (видимі мікрозатримки на телефонах).
-       Модалки поза .active мають display:none і шар не аллокують,
-       тому will-change коштує лише для одного відкритого вікна */
+/* 22.2 Відкриття розділу без анімації: на телефоні вікно показується
+        миттєво (display:flex) — немає ні fadeIn, ні sheetSlideUp, а отже
+        немає й потреби в окремому GPU-шарі (will-change/translateZ), який
+        для довгих вікон (Опції, Кольори, Формули) сам коштував кадрів */
 @media (max-width: 768px), (pointer: coarse) {
-    .modal-overlay.active {
-        will-change: opacity;
+    .modal-overlay,
+    .modal-overlay .modal-content,
+    #command-palette-modal .modal-content {
+        animation: none !important;
     }
+}
 
-    .modal-overlay.active .modal-content {
-        will-change: transform;
-        transform: translateZ(0);
-        backface-visibility: hidden;
+/* 22.2b Миттєвий відгук кнопки футера на дотик (див. js/footer-tap.js) */
+.footer-btn.is-pressed {
+    transform: scale(0.95);
+    filter: brightness(1.3);
+}
+
+/* 22.2c Опції: групи налаштувань поза в'юпортом не стилізуються й не
+         компонуються, доки не наблизяться при скролі */
+@media (max-width: 768px) {
+    .settings-group {
+        content-visibility: auto;
+        contain-intrinsic-size: auto 170px;
     }
 }
 

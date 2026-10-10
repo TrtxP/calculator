@@ -1,7 +1,7 @@
 /**
  * ==========================================================================
  * Calculator Pro v1.8.6 (Build 204) Redstone 4.0 Titanium Ultra Edition
- * Master Application Script (Згенеровано автоматично з 46 модулів у папці js/)
+ * Master Application Script (Згенеровано автоматично з 48 модулів у папці js/)
  * Author: MaxNT Official, 2026
  * ==========================================================================
  */
@@ -4528,7 +4528,95 @@ function showToast(message, icon = 'ℹ️') {
 }
 
 // --------------------------------------------------------------------------
-// Модуль 43: modals.js — Керування відкриттям/закриттям модалок
+// Модуль 43: perf-debug.js — Діагностика швидкості відкриття розділів (?perf=1)
+// --------------------------------------------------------------------------
+// ==========================================================================
+// Діагностика швидкості відкриття розділів: додайте ?perf=1 до адреси
+// (?perf=0 — вимкнути). На екрані з'являється панель з часом кожної фази
+// відкриття у мс; кнопка «copy» копіює результати для надсилання.
+// ==========================================================================
+const perfDebug = {
+  enabled: false,
+  rows: [],
+  tapTs: 0,
+  panel: null,
+  body: null,
+  longTasks: { count: 0, max: 0 },
+
+  init() {
+    const m = /[?&]perf=([01])\b/.exec(location.search);
+    if (m) localStorage.setItem('calc_perf_debug', m[1]);
+    this.enabled = localStorage.getItem('calc_perf_debug') === '1';
+    if (!this.enabled) return;
+
+    // Момент відпускання пальця: від нього міряємо «тап → відкриття»
+    document.addEventListener('pointerup', e => { this.tapTs = e.timeStamp; }, { capture: true, passive: true });
+
+    try {
+      new PerformanceObserver(list => {
+        list.getEntries().forEach(en => {
+          this.longTasks.count++;
+          this.longTasks.max = Math.max(this.longTasks.max, en.duration);
+        });
+        this.render();
+      }).observe({ entryTypes: ['longtask'] });
+    } catch (e) { /* longtask не підтримується */ }
+
+    const panel = document.createElement('div');
+    panel.style.cssText = 'position:fixed;left:0;right:0;top:0;z-index:10001;max-height:42vh;overflow:hidden;' +
+      'background:rgba(0,0,0,.88);color:#7CFC8A;font:10px/1.35 monospace;padding:4px 6px;pointer-events:none;';
+    const btn = document.createElement('button');
+    btn.textContent = 'copy';
+    btn.style.cssText = 'position:absolute;right:4px;top:4px;pointer-events:auto;font:11px monospace;padding:2px 8px;';
+    btn.onclick = () => {
+      const txt = this.text();
+      if (navigator.clipboard) navigator.clipboard.writeText(txt).catch(() => {});
+      console.log(txt);
+    };
+    const body = document.createElement('pre');
+    body.style.cssText = 'margin:0;white-space:pre-wrap;';
+    panel.appendChild(btn);
+    panel.appendChild(body);
+    document.body.appendChild(panel);
+    this.panel = panel;
+    this.body = body;
+    this.render();
+  },
+
+  record(row) {
+    this.rows.push(row);
+    if (this.rows.length > 40) this.rows.shift();
+    console.log('[perf]', this.line(row));
+    this.render();
+  },
+
+  f(v) { return v == null ? '-' : v.toFixed(1); },
+
+  line(r) {
+    return r.id.replace('-modal', '') + ' | tap>' + this.f(r.tap) + ' mount ' + this.f(r.mount) +
+      ' pre ' + this.f(r.pre) + ' wait ' + this.f(r.wait) + ' frame ' + this.f(r.frame) +
+      ' prep ' + this.f(r.prepare) + ' | total ' + this.f(r.total);
+  },
+
+  text() {
+    const ua = navigator.userAgent + ' cores=' + navigator.hardwareConcurrency + ' mem=' + navigator.deviceMemory +
+      ' perfMode=' + state.perfMode + ' lite=' + document.documentElement.classList.contains('perf-lite');
+    return ua + '\n' + this.rows.map(r => this.line(r)).join('\n') +
+      '\nlongtasks: ' + this.longTasks.count + ' (max ' + this.f(this.longTasks.max) + ' ms)';
+  },
+
+  render() {
+    if (!this.body) return;
+    const last = this.rows.slice(-8).map(r => this.line(r)).join('\n');
+    this.body.textContent = 'PERF (мс) mode=' + state.perfMode + ' longtasks=' + this.longTasks.count +
+      ' max=' + this.f(this.longTasks.max) + '\n' + last;
+  }
+};
+
+perfDebug.init();
+
+// --------------------------------------------------------------------------
+// Модуль 44: modals.js — Керування відкриттям/закриттям модалок
 // --------------------------------------------------------------------------
 // ==========================================================================
 // Керування модальними вікнами
@@ -4542,22 +4630,61 @@ const RENDER_ONCE = new Set([
 
 const rendered = new Set();
 
-function openModal(modalId) {
-  const modal = document.getElementById(modalId);
+// Lazy-модалки лежать у <template data-modal="id"> (див. build.js) і вставляються
+// в DOM при першому відкритті: стартова сторінка легша, браузеру не треба
+// стилізувати й компонувати розмітку розділів, які ніхто не відкривав.
+// Повертає true, якщо вікно є в DOM (вже було або щойно змонтоване)
+function ensureModalMounted(modalId) {
+  if (document.getElementById(modalId)) return true;
+  const tpl = document.querySelector('template[data-modal="' + modalId + '"]');
+  if (!tpl) return false;
+  tpl.replaceWith(tpl.content);
+  return true;
+}
 
+function openModal(modalId) {
+  const t0 = performance.now();
+  const dbg = typeof perfDebug !== "undefined" && perfDebug.enabled;
+  const tap = dbg && perfDebug.tapTs && t0 - perfDebug.tapTs < 1500 ? t0 - perfDebug.tapTs : null;
+
+  if (!ensureModalMounted(modalId)) return;
+  const modal = document.getElementById(modalId);
   if (!modal) return;
+  const t1 = performance.now();
 
   // Дешеві розрахунки — ДО показу: один layout з фінальними значеннями,
-  // без «стрибка» посеред анімації відкриття
+  // без «стрибка» посеред відкриття
   if (modalId === "settings-modal") syncSettingsControls();
   if (modalId === "vector-calc-modal") solveVectorMath();
   if (modalId === "complex-calc-modal") solveComplexMath();
+  const t2 = performance.now();
 
   document.documentElement.classList.add("modal-open");
   requestAnimationFrame(() => {
+    const t3 = performance.now();
     modal.classList.add("active");
-    // Важка частина (рендер списків, графіки) — після першого кадру анімації
-    requestAnimationFrame(() => setTimeout(() => prepareModal(modalId), 0));
+    // Важка частина (рендер списків, графіки) — після першого кадру
+    requestAnimationFrame(() => {
+      const t4 = performance.now();
+      setTimeout(() => {
+        const t5 = performance.now();
+        prepareModal(modalId);
+        if (dbg) {
+          const t6 = performance.now();
+          perfDebug.record({
+            id: modalId,
+            tap,
+            mount: t1 - t0,
+            pre: t2 - t1,
+            wait: t3 - t2,
+            frame: t4 - t3,
+            idle: t5 - t4,
+            prepare: t6 - t5,
+            total: t6 - t0
+          });
+        }
+      }, 0);
+    });
   });
 
   requestAnimationFrame(() => audio.playClick(700));
@@ -4690,7 +4817,65 @@ window.onclick = function (event) {
 };
 
 // --------------------------------------------------------------------------
-// Модуль 44: keyboard.js — Обробка гарячих клавіш клавіатури
+// Модуль 45: footer-tap.js — Швидкий тап по кнопках футера на сенсорних екранах
+// --------------------------------------------------------------------------
+// ==========================================================================
+// Швидкий тап по кнопках футера (сенсорні екрани)
+// pointerdown: миттєва візуальна реакція кнопки + попереднє монтування вікна
+//              з <template> (вартість монтування «ховається» під час тапу);
+// pointerup:   відкриття розділу без очікування синтетичного click.
+// Якщо палець зсунувся (>10px) або браузер почав скрол (pointercancel) —
+// розділ не відкривається, тож прокрутка сторінки не викликає випадкових відкриттів.
+// ==========================================================================
+(function initFooterFastTap() {
+  const footer = document.querySelector('.footer');
+  if (!footer || !window.PointerEvent) return;
+
+  const OPEN_RE = /openModal\('([^']+)'\)/;
+  let press = null;
+  let suppressBtn = null;
+  let suppressUntil = 0;
+
+  function clearPress() {
+    if (press) press.btn.classList.remove('is-pressed');
+    press = null;
+  }
+
+  footer.addEventListener('pointerdown', e => {
+    if (e.pointerType === 'mouse') return;
+    const btn = e.target.closest('.footer-btn');
+    if (!btn) return;
+    const m = OPEN_RE.exec(btn.getAttribute('onclick') || '');
+    if (!m) return;
+    btn.classList.add('is-pressed');
+    ensureModalMounted(m[1]);
+    press = { btn, id: m[1], x: e.clientX, y: e.clientY, pointerId: e.pointerId };
+  }, { passive: true });
+
+  footer.addEventListener('pointerup', e => {
+    if (!press || e.pointerId !== press.pointerId) return;
+    const p = press;
+    clearPress();
+    if (Math.hypot(e.clientX - p.x, e.clientY - p.y) > 10) return;
+    suppressBtn = p.btn;
+    suppressUntil = performance.now() + 700;
+    openModal(p.id);
+  });
+
+  footer.addEventListener('pointercancel', clearPress);
+
+  // Синтетичний click після вже виконаного відкриття не повинен відкрити вікно вдруге
+  footer.addEventListener('click', e => {
+    if (suppressBtn && performance.now() < suppressUntil && suppressBtn.contains(e.target)) {
+      e.stopImmediatePropagation();
+      e.preventDefault();
+    }
+    suppressBtn = null;
+  }, true);
+})();
+
+// --------------------------------------------------------------------------
+// Модуль 46: keyboard.js — Обробка гарячих клавіш клавіатури
 // --------------------------------------------------------------------------
 // ==========================================================================
 // Клавіатурна навігація
@@ -4863,7 +5048,7 @@ function triggerKeyEffect(label) {
 }
 
 // --------------------------------------------------------------------------
-// Модуль 45: command-palette.js — Палітра команд Command Palette (Ctrl+K)
+// Модуль 47: command-palette.js — Палітра команд Command Palette (Ctrl+K)
 // --------------------------------------------------------------------------
 // ==========================================================================
 // 20. Command Palette Engine (Ctrl+K / ⌘K)
@@ -5004,7 +5189,7 @@ function executeCommandPaletteItem(idx) {
 }
 
 // --------------------------------------------------------------------------
-// Модуль 46: init.js — Ініціалізація застосунку та запуск при завантаженні
+// Модуль 48: init.js — Ініціалізація застосунку та запуск при завантаженні
 // --------------------------------------------------------------------------
 // ==========================================================================
 // Ініціалізація (DOM Ready)

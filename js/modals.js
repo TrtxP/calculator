@@ -10,22 +10,61 @@ const RENDER_ONCE = new Set([
 
 const rendered = new Set();
 
-function openModal(modalId) {
-  const modal = document.getElementById(modalId);
+// Lazy-модалки лежать у <template data-modal="id"> (див. build.js) і вставляються
+// в DOM при першому відкритті: стартова сторінка легша, браузеру не треба
+// стилізувати й компонувати розмітку розділів, які ніхто не відкривав.
+// Повертає true, якщо вікно є в DOM (вже було або щойно змонтоване)
+function ensureModalMounted(modalId) {
+  if (document.getElementById(modalId)) return true;
+  const tpl = document.querySelector('template[data-modal="' + modalId + '"]');
+  if (!tpl) return false;
+  tpl.replaceWith(tpl.content);
+  return true;
+}
 
+function openModal(modalId) {
+  const t0 = performance.now();
+  const dbg = typeof perfDebug !== "undefined" && perfDebug.enabled;
+  const tap = dbg && perfDebug.tapTs && t0 - perfDebug.tapTs < 1500 ? t0 - perfDebug.tapTs : null;
+
+  if (!ensureModalMounted(modalId)) return;
+  const modal = document.getElementById(modalId);
   if (!modal) return;
+  const t1 = performance.now();
 
   // Дешеві розрахунки — ДО показу: один layout з фінальними значеннями,
-  // без «стрибка» посеред анімації відкриття
+  // без «стрибка» посеред відкриття
   if (modalId === "settings-modal") syncSettingsControls();
   if (modalId === "vector-calc-modal") solveVectorMath();
   if (modalId === "complex-calc-modal") solveComplexMath();
+  const t2 = performance.now();
 
   document.documentElement.classList.add("modal-open");
   requestAnimationFrame(() => {
+    const t3 = performance.now();
     modal.classList.add("active");
-    // Важка частина (рендер списків, графіки) — після першого кадру анімації
-    requestAnimationFrame(() => setTimeout(() => prepareModal(modalId), 0));
+    // Важка частина (рендер списків, графіки) — після першого кадру
+    requestAnimationFrame(() => {
+      const t4 = performance.now();
+      setTimeout(() => {
+        const t5 = performance.now();
+        prepareModal(modalId);
+        if (dbg) {
+          const t6 = performance.now();
+          perfDebug.record({
+            id: modalId,
+            tap,
+            mount: t1 - t0,
+            pre: t2 - t1,
+            wait: t3 - t2,
+            frame: t4 - t3,
+            idle: t5 - t4,
+            prepare: t6 - t5,
+            total: t6 - t0
+          });
+        }
+      }, 0);
+    });
   });
 
   requestAnimationFrame(() => audio.playClick(700));

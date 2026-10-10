@@ -425,7 +425,8 @@
          Модальні вікна (Modals)
          ========================================================================== -->
     
-    <!-- Modal: vector-calc -->
+    <!-- Modal (lazy): vector-calc -->
+    <template data-modal="vector-calc-modal">
         <div class="modal-overlay" id="vector-calc-modal">
         <div class="modal-content" style="max-width: 680px;">
             <h3>📐 3D Векторний Калькулятор (Vector Math 3D)</h3>
@@ -508,8 +509,10 @@
             <button class="close-btn" onclick="closeModal('vector-calc-modal')">Закрити</button>
         </div>
     </div>
+    </template>
 
-    <!-- Modal: complex-calc -->
+    <!-- Modal (lazy): complex-calc -->
+    <template data-modal="complex-calc-modal">
         <div class="modal-overlay" id="complex-calc-modal">
         <div class="modal-content" style="max-width: 680px;">
             <h3>⚛️ Комплексні Числа ℂ (z = a + bi)</h3>
@@ -575,8 +578,10 @@
             <button class="close-btn" onclick="closeModal('complex-calc-modal')">Закрити</button>
         </div>
     </div>
+    </template>
 
-    <!-- Modal: math-ref -->
+    <!-- Modal (lazy): math-ref -->
+    <template data-modal="math-ref-modal">
         <div class="modal-overlay" id="math-ref-modal">
         <div class="modal-content" style="max-width: 680px;">
             <h3>📖 Інтерактивний Математичний Довідник Формул</h3>
@@ -595,8 +600,10 @@
             <button class="close-btn" onclick="closeModal('math-ref-modal')">Закрити</button>
         </div>
     </div>
+    </template>
 
-    <!-- Modal: trig-circle -->
+    <!-- Modal (lazy): trig-circle -->
+    <template data-modal="trig-circle-modal">
         <div class="modal-overlay" id="trig-circle-modal">
         <div class="modal-content" style="max-width: 680px;">
             <h3>⭕ Інтерактивне Тригонометричне Коло (Unit Circle)</h3>
@@ -678,8 +685,10 @@
             <button class="close-btn" onclick="closeModal('trig-circle-modal')">Закрити</button>
         </div>
     </div>
+    </template>
 
-    <!-- Modal: constants-search -->
+    <!-- Modal (lazy): constants-search -->
+    <template data-modal="constants-search-modal">
         <div class="modal-overlay" id="constants-search-modal">
         <div class="modal-content" style="max-width: 680px;">
             <h3>⚛️ Розширена База Наукових Констант (40+ Величин)</h3>
@@ -707,8 +716,10 @@
             <button class="close-btn" onclick="closeModal('constants-search-modal')">Закрити</button>
         </div>
     </div>
+    </template>
 
-    <!-- Modal: formula-solver -->
+    <!-- Modal (lazy): formula-solver -->
+    <template data-modal="formula-solver-modal">
         <div class="modal-overlay" id="formula-solver-modal">
         <div class="modal-content" style="max-width: 680px;">
             <h3>⚡ Фізико-Математичний Формулатор</h3>
@@ -877,8 +888,10 @@
             <button class="close-btn" onclick="closeModal('formula-solver-modal')">Закрити</button>
         </div>
     </div>
+    </template>
 
-    <!-- Modal: triangle-solver -->
+    <!-- Modal (lazy): triangle-solver -->
+    <template data-modal="triangle-solver-modal">
         <div class="modal-overlay" id="triangle-solver-modal">
         <div class="modal-content" style="max-width: 650px;">
             <h3>📐 Геометричний Розв'язувач Трикутників</h3>
@@ -939,8 +952,10 @@
             <button class="close-btn" onclick="closeModal('triangle-solver-modal')">Закрити</button>
         </div>
     </div>
+    </template>
 
-    <!-- Modal: loan-calc -->
+    <!-- Modal (lazy): loan-calc -->
+    <template data-modal="loan-calc-modal">
         <div class="modal-overlay" id="loan-calc-modal">
         <div class="modal-content" style="max-width: 680px;">
             <h3>🏦 Іпотечний та Кредитний Калькулятор</h3>
@@ -1014,8 +1029,10 @@
             <button class="close-btn" onclick="closeModal('loan-calc-modal')">Закрити</button>
         </div>
     </div>
+    </template>
 
-    <!-- Modal: bookmarks -->
+    <!-- Modal (lazy): bookmarks -->
+    <template data-modal="bookmarks-modal">
         <div class="modal-overlay" id="bookmarks-modal">
         <div class="modal-content bookmarks-modal-content">
             <h3>🔖 Блокнот Обраних Виразів та Констант</h3>
@@ -1039,8 +1056,10 @@
             </div>
         </div>
     </div>
+    </template>
 
-    <!-- Modal: tape -->
+    <!-- Modal (lazy): tape -->
+    <template data-modal="tape-modal">
         <div class="modal-overlay" id="tape-modal">
         <div class="modal-content tape-modal-content">
             <h3>📜 Розрахункова Стрічка (Paper Tape Roll)</h3>
@@ -1069,8 +1088,10 @@
             <button class="close-btn" onclick="closeModal('tape-modal')">Закрити</button>
         </div>
     </div>
+    </template>
 
-    <!-- Modal: prime-gcd -->
+    <!-- Modal (lazy): prime-gcd -->
+    <template data-modal="prime-gcd-modal">
         <div class="modal-overlay" id="prime-gcd-modal">
         <div class="modal-content prime-gcd-modal-content">
             <h3>🔢 НСД, НСК та Розклад на Прості Множники</h3>
@@ -1137,8 +1158,10 @@
             <button class="close-btn" onclick="closeModal('prime-gcd-modal')">Закрити</button>
         </div>
     </div>
+    </template>
 
-    <!-- Modal: deal-calc -->
+    <!-- Modal (lazy): deal-calc -->
+    <template data-modal="deal-calc-modal">
         <div class="modal-overlay" id="deal-calc-modal">
         <div class="modal-content deal-modal-content">
             <h3>⚖️ Порівняння Вигідності Цін за Одиницю (1 кг / 1 л / 1 шт)</h3>
@@ -1202,8 +1225,10 @@
             <button class="close-btn" onclick="closeModal('deal-calc-modal')">Закрити</button>
         </div>
     </div>
+    </template>
 
-    <!-- Modal: func-eval -->
+    <!-- Modal (lazy): func-eval -->
+    <template data-modal="func-eval-modal">
         <div class="modal-overlay" id="func-eval-modal">
         <div class="modal-content func-eval-content">
             <h3>📈 Обчислювач Функцій f(x) та Таблиця Значень</h3>
@@ -1261,8 +1286,10 @@
             <button class="close-btn" onclick="closeModal('func-eval-modal')">Закрити</button>
         </div>
     </div>
+    </template>
 
-    <!-- Modal: matrix -->
+    <!-- Modal (lazy): matrix -->
+    <template data-modal="matrix-modal">
         <div class="modal-overlay" id="matrix-modal">
         <div class="modal-content matrix-modal-content">
             <h3>🧮 Матричний Калькулятор (2x2 та 3x3)</h3>
@@ -1311,8 +1338,10 @@
             <button class="close-btn" onclick="closeModal('matrix-modal')">Закрити</button>
         </div>
     </div>
+    </template>
 
-    <!-- Modal: bitmask -->
+    <!-- Modal (lazy): bitmask -->
+    <template data-modal="bitmask-modal">
         <div class="modal-overlay" id="bitmask-modal">
         <div class="modal-content bitmask-modal-content">
             <h3>👾 Інтерактивний Бітовий Інспектор</h3>
@@ -1350,8 +1379,10 @@
             <button class="close-btn" onclick="closeModal('bitmask-modal')">Закрити</button>
         </div>
     </div>
+    </template>
 
-    <!-- Modal: percent -->
+    <!-- Modal (lazy): percent -->
+    <template data-modal="percent-modal">
         <div class="modal-overlay" id="percent-modal">
         <div class="modal-content percent-modal-content">
             <h3>📊 Розширений Калькулятор Відсотків Pro</h3>
@@ -1403,8 +1434,10 @@
             <button class="close-btn" onclick="closeModal('percent-modal')">Закрити</button>
         </div>
     </div>
+    </template>
 
-    <!-- Modal: currency -->
+    <!-- Modal (lazy): currency -->
+    <template data-modal="currency-modal">
         <div class="modal-overlay" id="currency-modal">
         <div class="modal-content currency-modal-content">
             <h3>💱 Конвертер Валют та Криптовалют</h3>
@@ -1460,8 +1493,10 @@
             <button class="close-btn" onclick="closeModal('currency-modal')">Закрити</button>
         </div>
     </div>
+    </template>
 
-    <!-- Modal: settings -->
+    <!-- Modal (lazy): settings -->
+    <template data-modal="settings-modal">
         <div class="modal-overlay" id="settings-modal">
         <div class="modal-content settings-modal-content">
             <h3>⚙️ Центр Налаштувань Калькулятора</h3>
@@ -1569,8 +1604,10 @@
             </div>
         </div>
     </div>
+    </template>
 
-    <!-- Modal: color-studio -->
+    <!-- Modal (lazy): color-studio -->
+    <template data-modal="color-studio-modal">
         <div class="modal-overlay" id="color-studio-modal">
         <div class="modal-content color-studio-content">
             <h3>🌈 Кастомізатор Кольорів Інтерфейсу</h3>
@@ -1641,8 +1678,10 @@
             </div>
         </div>
     </div>
+    </template>
 
-    <!-- Modal: quadratic -->
+    <!-- Modal (lazy): quadratic -->
+    <template data-modal="quadratic-modal">
         <div class="modal-overlay" id="quadratic-modal">
         <div class="modal-content quadratic-modal-content">
             <h3>📐 Розв'язувач Квадратних Рівнянь</h3>
@@ -1693,8 +1732,10 @@
             <button class="close-btn" onclick="closeModal('quadratic-modal')">Закрити</button>
         </div>
     </div>
+    </template>
 
-    <!-- Modal: stats -->
+    <!-- Modal (lazy): stats -->
+    <template data-modal="stats-modal">
         <div class="modal-overlay" id="stats-modal">
         <div class="modal-content stats-modal-content">
             <h3>📊 Статистичний Аналізатор Даних</h3>
@@ -1747,8 +1788,10 @@
             <button class="close-btn" onclick="closeModal('stats-modal')">Закрити</button>
         </div>
     </div>
+    </template>
 
-    <!-- Modal: date -->
+    <!-- Modal (lazy): date -->
+    <template data-modal="date-modal">
         <div class="modal-overlay" id="date-modal">
         <div class="modal-content date-modal-content">
             <h3>📅 Калькулятор Дат та Часу</h3>
@@ -1789,6 +1832,7 @@
             <button class="close-btn" onclick="closeModal('date-modal')">Закрити</button>
         </div>
     </div>
+    </template>
 
     <!-- Modal: memory -->
         <div class="modal-overlay" id="memory-modal">
@@ -1997,7 +2041,8 @@
         </div>
     </div>
 
-    <!-- Modal: graph -->
+    <!-- Modal (lazy): graph -->
+    <template data-modal="graph-modal">
         <div class="modal-overlay" id="graph-modal">
         <div class="modal-content graph-modal-content">
             <h3>📈 Інтерактивний 2D Графік Функцій</h3>
@@ -2025,6 +2070,7 @@
             <button class="close-btn" onclick="closeModal('graph-modal')">Закрити</button>
         </div>
     </div>
+    </template>
 
     <!-- Modal: wallpaper -->
         <div class="modal-overlay" id="wallpaper-modal">
@@ -2142,7 +2188,8 @@
         </div>
     </div>
 
-    <!-- Modal: finance -->
+    <!-- Modal (lazy): finance -->
+    <template data-modal="finance-modal">
         <div class="modal-overlay" id="finance-modal">
         <div class="modal-content finance-modal-content">
             <h3>💰 Фінансовий Калькулятор (Знижки & Чайові & Податки)</h3>
@@ -2192,8 +2239,10 @@
             <button class="close-btn" onclick="closeModal('finance-modal')">Закрити</button>
         </div>
     </div>
+    </template>
 
-    <!-- Modal: rng -->
+    <!-- Modal (lazy): rng -->
+    <template data-modal="rng-modal">
         <div class="modal-overlay" id="rng-modal">
         <div class="modal-content rng-modal-content">
             <h3>🎲 Генератор Випадкових Чисел та Кубики</h3>
@@ -2235,6 +2284,7 @@
             <button class="close-btn" onclick="closeModal('rng-modal')">Закрити</button>
         </div>
     </div>
+    </template>
 
     <!-- Modal: theme -->
         <div class="modal-overlay" id="theme-modal">
@@ -2386,7 +2436,8 @@
         </div>
     </div>
 
-    <!-- Modal: converter -->
+    <!-- Modal (lazy): converter -->
+    <template data-modal="converter-modal">
         <div class="modal-overlay" id="converter-modal">
         <div class="modal-content converter-modal-content">
             <h3>🔄 Універсальний Конвертер Одиниць</h3>
@@ -2430,8 +2481,10 @@
             <button class="close-btn" onclick="closeModal('converter-modal')">Закрити</button>
         </div>
     </div>
+    </template>
 
-    <!-- Modal: programmer -->
+    <!-- Modal (lazy): programmer -->
+    <template data-modal="programmer-modal">
         <div class="modal-overlay" id="programmer-modal">
         <div class="modal-content programmer-modal-content">
             <h3>💻 Програмістські Системи Числення</h3>
@@ -2470,6 +2523,7 @@
             </div>
         </div>
     </div>
+    </template>
 
     <!-- Modal: history -->
         <div class="modal-overlay" id="history-modal">

@@ -5,7 +5,7 @@
  * Збирає:
  *  1. index.html - з views/partials/ та views/modals/
  *  2. style.css  - з 17 CSS модулів у папці css/
- *  3. app.js     - з 46 JS модулів у папці js/
+ *  3. app.js     - з 48 JS модулів у папці js/
  * 
  * Використання: node build.js
  */
@@ -56,7 +56,7 @@ const CSS_MODULES = [
     { file: 'mobile-perf', desc: 'Мобільна продуктивність: композитор, paint-контейнери, touch-лаг' }
 ];
 
-// 46 JS модулів у строгому порядку залежностей
+// 48 JS модулів у строгому порядку залежностей
 const JS_MODULES = [
     { file: 'state', desc: 'Глобальний стан та робота з LocalStorage' },
     { file: 'audio', desc: 'Звуковий рушій Web Audio API' },
@@ -100,7 +100,9 @@ const JS_MODULES = [
     { file: 'converter', desc: 'Універсальний конвертер одиниць вимірювання' },
     { file: 'programmer', desc: 'Програмістський режим (HEX/DEC/OCT/BIN)' },
     { file: 'history', desc: 'Журнал історії розрахунків та експорт' },
+    { file: 'perf-debug', desc: 'Діагностика швидкості відкриття розділів (?perf=1)' },
     { file: 'modals', desc: 'Керування відкриттям/закриттям модалок' },
+    { file: 'footer-tap', desc: 'Швидкий тап по кнопках футера на сенсорних екранах' },
     { file: 'keyboard', desc: 'Обробка гарячих клавіш клавіатури' },
     { file: 'command-palette', desc: 'Палітра команд Command Palette (Ctrl+K)' },
     { file: 'init', desc: 'Ініціалізація застосунку та запуск при завантаженні' }
@@ -119,6 +121,19 @@ const MODALS = [
     'programmer', 'history', 'export', 'hotkeys',
     'command-palette', 'shortcuts', 'home', 'about', 'help'
 ];
+
+// Модалки, що вставляються в DOM лише при першому відкритті (<template>).
+// Сюди входять лише ті, чиї елементи не потрібні на старті сторінки
+// (див. ensureModalMounted у js/modals.js).
+const LAZY_MODALS = new Set([
+    'vector-calc', 'complex-calc', 'math-ref', 'trig-circle',
+    'constants-search', 'formula-solver', 'triangle-solver', 'loan-calc',
+    'bookmarks', 'tape', 'prime-gcd', 'deal-calc',
+    'func-eval', 'matrix', 'bitmask', 'percent',
+    'currency', 'settings', 'color-studio', 'quadratic',
+    'stats', 'date', 'finance', 'rng',
+    'converter', 'programmer', 'graph'
+]);
 
 console.log('🚀 Початок процесу збирання Calculator Pro v1.8.6...\n');
 
@@ -150,7 +165,7 @@ console.log(`🎨 [1/3] style.css згенеровано: ${cssSize} KB (${CSS_M
 let combinedJs = `/**
  * ==========================================================================
  * Calculator Pro v1.8.6 (Build 204) Redstone 4.0 Titanium Ultra Edition
- * Master Application Script (Згенеровано автоматично з 46 модулів у папці js/)
+ * Master Application Script (Згенеровано автоматично з 48 модулів у папці js/)
  * Author: MaxNT Official, 2026
  * ==========================================================================
  */\n\n`;
@@ -172,7 +187,13 @@ console.log(`⚡ [2/3] app.js згенеровано: ${jsSize} KB (${JS_MODULES
 // 3. Збирання index.html з views/
 // ============================================================================
 const modalsHtml = MODALS.map(m => {
-    return `    <!-- Modal: ${m} -->\n    ${readView(`modals/${m}.html`)}`;
+    const html = readView(`modals/${m}.html`);
+    if (LAZY_MODALS.has(m)) {
+        const idMatch = html.match(/^\s*<div class="modal-overlay"[^>]*\sid="([^"]+)"/);
+        if (!idMatch) throw new Error(`Модалка ${m}: не знайдено id кореневого .modal-overlay`);
+        return `    <!-- Modal (lazy): ${m} -->\n    <template data-modal="${idMatch[1]}">\n    ${html}\n    </template>`;
+    }
+    return `    <!-- Modal: ${m} -->\n    ${html}`;
 }).join('\n\n');
 
 const html = `<!DOCTYPE html>
