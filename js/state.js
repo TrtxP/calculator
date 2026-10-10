@@ -46,6 +46,7 @@ const state = {
     precisionMode: localStorage.getItem('calc_precision') || 'auto', // 'auto', '0', '2', '4', '6', '8', '10', '12'
     thousandSeparator: localStorage.getItem('calc_separator') || 'space', // 'space', 'comma', 'none'
     glassIntensity: localStorage.getItem('calc_glass') || 'heavy',
+    perfMode: localStorage.getItem('calc_perf_mode') || 'auto', // 'auto' | 'lite' | 'full'
     activeGraphFunc: 'sin',
     activeDateTab: 'diff',
     activeTriangleMode: 'sss', // 'sss', 'sas', 'asa'

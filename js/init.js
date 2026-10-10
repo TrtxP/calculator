@@ -30,6 +30,7 @@ document.addEventListener('DOMContentLoaded', () => {
             'font-firacode': 'Fira Code'
         };
         if (dom.currentFontChip) dom.currentFontChip.innerText = fontNames[state.currentFont] || 'Inter';
+        ensureFontLoaded(state.currentFont);
     }
 
     // Масштаб шрифту (Font Scale)

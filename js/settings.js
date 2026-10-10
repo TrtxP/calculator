@@ -14,6 +14,8 @@ function syncSettingsControls() {
     const sGlass = document.getElementById('setting-glass');
     const sPart = document.getElementById('setting-particles');
     const sFScale = document.getElementById('setting-font-scale');
+    const sPerf = document.getElementById('setting-perf-mode');
+    if (sPerf) sPerf.value = state.perfMode;
     if (vSlider) vSlider.value = Math.round(state.soundVolume * 100);
     if (vVal) vVal.innerText = `${Math.round(state.soundVolume * 100)}%`;
     if (sProf) sProf.value = state.soundProfile;
@@ -75,17 +77,10 @@ function setSettingsDefaultAngle(val) {
     updateDisplay();
 }
 
+// Прозорість панелей керується атрибутом data-glass (див. mobile-perf.css 22.9):
+// лише колір фону, без backdrop-filter
 function applyGlassIntensity(val = state.glassIntensity) {
-    const card = document.querySelector('.app-container');
-    if (!card) return;
-    if (document.documentElement.classList.contains('perf-lite') || val === 'solid') {
-        card.style.backdropFilter = 'none';
-        card.style.webkitBackdropFilter = 'none';
-        return;
-    }
-    if (val === 'ultra') card.style.backdropFilter = 'blur(40px)';
-    else if (val === 'subtle') card.style.backdropFilter = 'blur(10px)';
-    else card.style.backdropFilter = 'blur(24px)';
+    document.documentElement.setAttribute('data-glass', val);
 }
 
 function setSettingsGlassIntensity(val) {
@@ -124,6 +119,18 @@ function resetAllSettings() {
     setFontFamily('font-inter');
     setTheme('bordeaux_luxury');
     setWallpaper('burgundy');
+
+    state.perfMode = 'auto';
+    applyMobilePerfOptimizations();
+    applyGlassIntensity(state.glassIntensity);
+    applyWallpaperToDom();
+    if (state.particlesEnabled) {
+        initParticlesCanvas();
+    } else {
+        stopParticlesCanvas();
+    }
+    syncSettingsControls();
+
     updateDisplay();
     closeModal('settings-modal');
     showToast('Всі налаштування скинуто до заводських', '🔁');

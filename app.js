@@ -57,6 +57,7 @@ const state = {
     precisionMode: localStorage.getItem('calc_precision') || 'auto', // 'auto', '0', '2', '4', '6', '8', '10', '12'
     thousandSeparator: localStorage.getItem('calc_separator') || 'space', // 'space', 'comma', 'none'
     glassIntensity: localStorage.getItem('calc_glass') || 'heavy',
+    perfMode: localStorage.getItem('calc_perf_mode') || 'auto', // 'auto' | 'lite' | 'full'
     activeGraphFunc: 'sin',
     activeDateTab: 'diff',
     activeTriangleMode: 'sss', // 'sss', 'sas', 'asa'
@@ -533,21 +534,35 @@ window.addEventListener('resize', () => {
     resizeTimer = setTimeout(() => initParticlesCanvas(), 180);
 });
 
+function stopParticlesCanvas() {
+    if (animFrameId) {
+        cancelAnimationFrame(animFrameId);
+        animFrameId = null;
+    }
+    if (dom.bgParticlesCanvas) {
+        const ctx = dom.bgParticlesCanvas.getContext('2d');
+        ctx.clearRect(0, 0, dom.bgParticlesCanvas.width, dom.bgParticlesCanvas.height);
+    }
+}
+
 function toggleParticlesSetting(val) {
+    // У легкому режимі частинки недоступні: запам'ятовуємо побажання
+    // і вмикаємо їх лише коли користувач перейде на режим «Повний»
+    if (val === 'on' && document.documentElement.classList.contains('perf-lite')) {
+        localStorage.setItem('calc_particles', 'on');
+        state.particlesEnabled = false;
+        stopParticlesCanvas();
+        syncSettingsControls();
+        showToast('Частинки доступні у режимі «Повний» (Опції → Режим продуктивності)', '⚡');
+        return;
+    }
     state.particlesEnabled = val === 'on';
     localStorage.setItem('calc_particles', val);
     if (state.particlesEnabled) {
         initParticlesCanvas();
         showToast('Живі частинки увімкнено', '✨');
     } else {
-        if (animFrameId) {
-            cancelAnimationFrame(animFrameId);
-            animFrameId = null;
-        }
-        if (dom.bgParticlesCanvas) {
-            const ctx = dom.bgParticlesCanvas.getContext('2d');
-            ctx.clearRect(0, 0, dom.bgParticlesCanvas.width, dom.bgParticlesCanvas.height);
-        }
+        stopParticlesCanvas();
         showToast('Фонові частинки вимкнено', '⏸️');
     }
 }
@@ -3174,6 +3189,8 @@ function syncSettingsControls() {
     const sGlass = document.getElementById('setting-glass');
     const sPart = document.getElementById('setting-particles');
     const sFScale = document.getElementById('setting-font-scale');
+    const sPerf = document.getElementById('setting-perf-mode');
+    if (sPerf) sPerf.value = state.perfMode;
     if (vSlider) vSlider.value = Math.round(state.soundVolume * 100);
     if (vVal) vVal.innerText = `${Math.round(state.soundVolume * 100)}%`;
     if (sProf) sProf.value = state.soundProfile;
@@ -3235,17 +3252,10 @@ function setSettingsDefaultAngle(val) {
     updateDisplay();
 }
 
+// Прозорість панелей керується атрибутом data-glass (див. mobile-perf.css 22.9):
+// лише колір фону, без backdrop-filter
 function applyGlassIntensity(val = state.glassIntensity) {
-    const card = document.querySelector('.app-container');
-    if (!card) return;
-    if (document.documentElement.classList.contains('perf-lite') || val === 'solid') {
-        card.style.backdropFilter = 'none';
-        card.style.webkitBackdropFilter = 'none';
-        return;
-    }
-    if (val === 'ultra') card.style.backdropFilter = 'blur(40px)';
-    else if (val === 'subtle') card.style.backdropFilter = 'blur(10px)';
-    else card.style.backdropFilter = 'blur(24px)';
+    document.documentElement.setAttribute('data-glass', val);
 }
 
 function setSettingsGlassIntensity(val) {
@@ -3284,6 +3294,18 @@ function resetAllSettings() {
     setFontFamily('font-inter');
     setTheme('bordeaux_luxury');
     setWallpaper('burgundy');
+
+    state.perfMode = 'auto';
+    applyMobilePerfOptimizations();
+    applyGlassIntensity(state.glassIntensity);
+    applyWallpaperToDom();
+    if (state.particlesEnabled) {
+        initParticlesCanvas();
+    } else {
+        stopParticlesCanvas();
+    }
+    syncSettingsControls();
+
     updateDisplay();
     closeModal('settings-modal');
     showToast('Всі налаштування скинуто до заводських', '🔁');
@@ -3327,8 +3349,35 @@ function resetCustomColors() {
 // ==========================================================================
 // Шрифти & Масштабування (Typography & Font Scale Controller)
 // ==========================================================================
+// Inter та JetBrains Mono підключені в <head>; решта шрифтів завантажуються
+// лише коли користувач їх обирає (або відкриває «Студію шрифтів»)
+const OPTIONAL_FONT_FAMILIES = {
+    'font-orbitron': 'Orbitron:wght@500;700;900',
+    'font-rajdhani': 'Rajdhani:wght@500;600;700',
+    'font-spacegrotesk': 'Space+Grotesk:wght@400;600;700',
+    'font-silkscreen': 'Silkscreen:wght@400;700',
+    'font-outfit': 'Outfit:wght@400;600;700;800',
+    'font-firacode': 'Fira+Code:wght@400;500;700'
+};
+const loadedOptionalFonts = new Set();
+
+function ensureFontLoaded(fontClass) {
+    const family = OPTIONAL_FONT_FAMILIES[fontClass];
+    if (!family || loadedOptionalFonts.has(fontClass)) return;
+    loadedOptionalFonts.add(fontClass);
+    const link = document.createElement('link');
+    link.rel = 'stylesheet';
+    link.href = `https://fonts.googleapis.com/css2?family=${family}&display=swap`;
+    document.head.appendChild(link);
+}
+
+function ensureAllFontsLoaded() {
+    Object.keys(OPTIONAL_FONT_FAMILIES).forEach(ensureFontLoaded);
+}
+
 function setFontFamily(fontClass) {
     audio.playAction();
+    ensureFontLoaded(fontClass);
     document.body.className = document.body.className.replace(/\bfont-\w+\b/g, '');
     document.body.classList.add(fontClass);
     state.currentFont = fontClass;
@@ -3559,7 +3608,9 @@ function applyWallpaperToDom() {
         dom.bgWallpaper.style.backgroundImage = 'none';
     }
 
-    dom.bgWallpaper.style.filter = `blur(${state.wallpaperBlur}px)`;
+    // Розмиття повноекранного шару — дорога операція GPU: у легкому режимі вимкнено
+    const liteBg = document.documentElement.classList.contains('perf-lite');
+    dom.bgWallpaper.style.filter = liteBg ? 'none' : `blur(${state.wallpaperBlur}px)`;
     dom.bgOverlay.style.backgroundColor = `rgba(0, 0, 0, ${state.wallpaperOverlay / 100})`;
 }
 
@@ -3773,17 +3824,32 @@ function copyFormulaText(formula) {
 const mobilePerf = {
     isMobile: false,
     isTouch: false,
+    isCoarse: false,
     prefersReducedMotion: false,
     saveData: false,
+    weakDevice: false,
+    // Фактичний режим після розв'язання 'auto': 'lite' | 'balanced' | 'full'
+    mode: 'balanced',
     liteMode: false
 };
 
 function detectMobilePerfProfile() {
     mobilePerf.isMobile = window.matchMedia('(max-width: 768px)').matches;
-    mobilePerf.isTouch = window.matchMedia('(pointer: coarse)').matches || 'ontouchstart' in window;
+    mobilePerf.isCoarse = window.matchMedia('(pointer: coarse)').matches;
+    mobilePerf.isTouch = mobilePerf.isCoarse || 'ontouchstart' in window;
     mobilePerf.prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     mobilePerf.saveData = navigator.connection?.saveData === true;
-    mobilePerf.liteMode = mobilePerf.isMobile || mobilePerf.prefersReducedMotion || mobilePerf.saveData;
+    mobilePerf.weakDevice = (navigator.hardwareConcurrency || 8) <= 2 || (navigator.deviceMemory || 8) <= 2;
+
+    const pref = state.perfMode;
+    if (pref === 'lite' || pref === 'full') {
+        mobilePerf.mode = pref;
+    } else {
+        const needsLite = mobilePerf.isMobile || mobilePerf.isCoarse ||
+            mobilePerf.prefersReducedMotion || mobilePerf.saveData || mobilePerf.weakDevice;
+        mobilePerf.mode = needsLite ? 'lite' : 'balanced';
+    }
+    mobilePerf.liteMode = mobilePerf.mode === 'lite';
     return mobilePerf;
 }
 
@@ -3794,35 +3860,47 @@ function applyMobilePerfOptimizations() {
     root.classList.toggle('is-mobile', profile.isMobile);
     root.classList.toggle('is-touch', profile.isTouch);
     root.classList.toggle('reduced-motion', profile.prefersReducedMotion);
-    root.classList.toggle('perf-lite', profile.liteMode);
+    root.classList.toggle('perf-lite', profile.mode === 'lite');
+    root.classList.toggle('perf-full', profile.mode === 'full');
 
-    if (!profile.liteMode) return;
+    // Частинки: у легкому режимі вимкнені, інакше — за вибором користувача
+    state.particlesEnabled = profile.mode !== 'lite' && localStorage.getItem('calc_particles') !== 'off';
 
-    const particlesPref = localStorage.getItem('calc_particles');
-    if (particlesPref !== 'on') {
-        state.particlesEnabled = false;
+    // Прозорість панелей: у легкому режимі за замовчуванням суцільний колір
+    state.glassIntensity = localStorage.getItem('calc_glass') || (profile.mode === 'lite' ? 'solid' : 'heavy');
+}
+
+function setPerfMode(val) {
+    if (val !== 'auto' && val !== 'lite' && val !== 'full') val = 'auto';
+    state.perfMode = val;
+    localStorage.setItem('calc_perf_mode', val);
+
+    applyMobilePerfOptimizations();
+    applyGlassIntensity(state.glassIntensity);
+    applyWallpaperToDom();
+    if (state.particlesEnabled) {
+        initParticlesCanvas();
+    } else {
+        stopParticlesCanvas();
     }
+    syncSettingsControls();
+    audio.playAction();
 
-    if (profile.isMobile) {
-        if (!localStorage.getItem('calc_glass')) {
-            state.glassIntensity = 'solid';
-        }
-    }
-
-    if (profile.prefersReducedMotion && particlesPref !== 'on') {
-        state.particlesEnabled = false;
-    }
+    const names = {
+        auto: mobilePerf.mode === 'lite' ? 'Авто (зараз: Легкий)' : 'Авто (зараз: Збалансований)',
+        lite: 'Легкий',
+        full: 'Повний'
+    };
+    showToast(`Режим продуктивності: ${names[val]}`, '⚡');
 }
 
 function shouldDrawParticleConnections() {
-    return !document.documentElement.classList.contains('perf-lite');
+    return mobilePerf.mode === 'full';
 }
 
 function getParticleCountLimit() {
-    if (document.documentElement.classList.contains('perf-lite')) {
-        return mobilePerf.isMobile ? 12 : 20;
-    }
-    return 60;
+    if (mobilePerf.mode === 'full') return 60;
+    return 20;
 }
 
 function toggleMobileSidebar() {
@@ -4468,6 +4546,9 @@ function openModal(modalId) {
   const modal = document.getElementById(modalId);
 
   if (!modal) return;
+
+  // Дешеві розрахунки — ДО показу: один layout з фінальними значеннями,
+  // без «стрибка» посеред анімації відкриття
   if (modalId === "settings-modal") syncSettingsControls();
   if (modalId === "vector-calc-modal") solveVectorMath();
   if (modalId === "complex-calc-modal") solveComplexMath();
@@ -4475,39 +4556,28 @@ function openModal(modalId) {
   document.documentElement.classList.add("modal-open");
   requestAnimationFrame(() => {
     modal.classList.add("active");
-    setTimeout(() => prepareModal(modalId), 0);
+    // Важка частина (рендер списків, графіки) — після першого кадру анімації
+    requestAnimationFrame(() => setTimeout(() => prepareModal(modalId), 0));
   });
 
   requestAnimationFrame(() => audio.playClick(700));
 }
 
 function prepareModal(modalId) {
+  const modal = document.getElementById(modalId);
+  if (!modal) return;
+
   if (RENDER_ONCE.has(modalId)) {
     if (rendered.has(modalId)) return;
     rendered.add(modalId);
   }
 
   if (modal) {
-    // Синхронізуємо контроли налаштувань ДО показу модалки: один layout
-    // з фінальними значеннями замість повторного layout посеред анімації
-    // (помітно на мобільних при відкритті «Опцій»)
-    if (modalId === "settings-modal") {
-      syncSettingsControls();
-    }
-
-    requestAnimationFrame(() => modal.classList.add("active"));
-
-    if (modalId === "vector-calc-modal") {
-      solveVectorMath();
-    }
-    if (modalId === "complex-calc-modal") {
-      solveComplexMath();
-    }
     if (modalId === "math-ref-modal") {
       renderMathRefList();
     }
     if (modalId === "trig-circle-modal") {
-      setTimeout(() => updateTrigCircle(state.trigAngleDeg), 300);
+      updateTrigCircle(state.trigAngleDeg);
     }
     if (modalId === "constants-search-modal") {
       renderExtendedConstants();
@@ -4598,6 +4668,7 @@ function prepareModal(modalId) {
       runCurrencyConversion("from");
     }
     if (modalId === "font-modal") {
+      ensureAllFontsLoaded();
       setFontScale(state.fontScale, true);
     }
   }
@@ -4967,6 +5038,7 @@ document.addEventListener('DOMContentLoaded', () => {
             'font-firacode': 'Fira Code'
         };
         if (dom.currentFontChip) dom.currentFontChip.innerText = fontNames[state.currentFont] || 'Inter';
+        ensureFontLoaded(state.currentFont);
     }
 
     // Масштаб шрифту (Font Scale)

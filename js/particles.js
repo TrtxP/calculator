@@ -166,21 +166,35 @@ window.addEventListener('resize', () => {
     resizeTimer = setTimeout(() => initParticlesCanvas(), 180);
 });
 
+function stopParticlesCanvas() {
+    if (animFrameId) {
+        cancelAnimationFrame(animFrameId);
+        animFrameId = null;
+    }
+    if (dom.bgParticlesCanvas) {
+        const ctx = dom.bgParticlesCanvas.getContext('2d');
+        ctx.clearRect(0, 0, dom.bgParticlesCanvas.width, dom.bgParticlesCanvas.height);
+    }
+}
+
 function toggleParticlesSetting(val) {
+    // У легкому режимі частинки недоступні: запам'ятовуємо побажання
+    // і вмикаємо їх лише коли користувач перейде на режим «Повний»
+    if (val === 'on' && document.documentElement.classList.contains('perf-lite')) {
+        localStorage.setItem('calc_particles', 'on');
+        state.particlesEnabled = false;
+        stopParticlesCanvas();
+        syncSettingsControls();
+        showToast('Частинки доступні у режимі «Повний» (Опції → Режим продуктивності)', '⚡');
+        return;
+    }
     state.particlesEnabled = val === 'on';
     localStorage.setItem('calc_particles', val);
     if (state.particlesEnabled) {
         initParticlesCanvas();
         showToast('Живі частинки увімкнено', '✨');
     } else {
-        if (animFrameId) {
-            cancelAnimationFrame(animFrameId);
-            animFrameId = null;
-        }
-        if (dom.bgParticlesCanvas) {
-            const ctx = dom.bgParticlesCanvas.getContext('2d');
-            ctx.clearRect(0, 0, dom.bgParticlesCanvas.width, dom.bgParticlesCanvas.height);
-        }
+        stopParticlesCanvas();
         showToast('Фонові частинки вимкнено', '⏸️');
     }
 }

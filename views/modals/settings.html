@@ -71,13 +71,21 @@
                 </div>
 
                 <div class="settings-group">
-                    <h4>🪟 Візуальні Ефекти Скла & Анімації</h4>
+                    <h4>⚡ Візуальні Ефекти & Продуктивність</h4>
                     <div class="settings-row">
-                        <label>Інтенсивність скла:</label>
+                        <label>Режим продуктивності:</label>
+                        <select id="setting-perf-mode" onchange="setPerfMode(this.value)">
+                            <option value="auto">Авто (Легкий на телефонах і слабких ПК) — Рекомендовано</option>
+                            <option value="lite">Легкий (без частинок, розмиття фону й анімацій)</option>
+                            <option value="full">Повний (усі ефекти, частинки з лініями)</option>
+                        </select>
+                    </div>
+                    <div class="settings-row">
+                        <label>Прозорість панелей:</label>
                         <select id="setting-glass" onchange="setSettingsGlassIntensity(this.value)">
-                            <option value="heavy">Глибоке матове скло (Рекомендовано)</option>
-                            <option value="ultra">Ultra Glass (Максимальна прозорість)</option>
-                            <option value="subtle">Легке скло (Subtle)</option>
+                            <option value="heavy">Напівпрозора панель (Рекомендовано)</option>
+                            <option value="ultra">Прозора панель (Максимальна прозорість)</option>
+                            <option value="subtle">Щільна панель</option>
                             <option value="solid">Суцільний непрозорий колір</option>
                         </select>
                     </div>

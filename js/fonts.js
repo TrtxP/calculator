@@ -1,8 +1,35 @@
 // ==========================================================================
 // Шрифти & Масштабування (Typography & Font Scale Controller)
 // ==========================================================================
+// Inter та JetBrains Mono підключені в <head>; решта шрифтів завантажуються
+// лише коли користувач їх обирає (або відкриває «Студію шрифтів»)
+const OPTIONAL_FONT_FAMILIES = {
+    'font-orbitron': 'Orbitron:wght@500;700;900',
+    'font-rajdhani': 'Rajdhani:wght@500;600;700',
+    'font-spacegrotesk': 'Space+Grotesk:wght@400;600;700',
+    'font-silkscreen': 'Silkscreen:wght@400;700',
+    'font-outfit': 'Outfit:wght@400;600;700;800',
+    'font-firacode': 'Fira+Code:wght@400;500;700'
+};
+const loadedOptionalFonts = new Set();
+
+function ensureFontLoaded(fontClass) {
+    const family = OPTIONAL_FONT_FAMILIES[fontClass];
+    if (!family || loadedOptionalFonts.has(fontClass)) return;
+    loadedOptionalFonts.add(fontClass);
+    const link = document.createElement('link');
+    link.rel = 'stylesheet';
+    link.href = `https://fonts.googleapis.com/css2?family=${family}&display=swap`;
+    document.head.appendChild(link);
+}
+
+function ensureAllFontsLoaded() {
+    Object.keys(OPTIONAL_FONT_FAMILIES).forEach(ensureFontLoaded);
+}
+
 function setFontFamily(fontClass) {
     audio.playAction();
+    ensureFontLoaded(fontClass);
     document.body.className = document.body.className.replace(/\bfont-\w+\b/g, '');
     document.body.classList.add(fontClass);
     state.currentFont = fontClass;

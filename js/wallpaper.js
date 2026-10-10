@@ -79,7 +79,9 @@ function applyWallpaperToDom() {
         dom.bgWallpaper.style.backgroundImage = 'none';
     }
 
-    dom.bgWallpaper.style.filter = `blur(${state.wallpaperBlur}px)`;
+    // Розмиття повноекранного шару — дорога операція GPU: у легкому режимі вимкнено
+    const liteBg = document.documentElement.classList.contains('perf-lite');
+    dom.bgWallpaper.style.filter = liteBg ? 'none' : `blur(${state.wallpaperBlur}px)`;
     dom.bgOverlay.style.backgroundColor = `rgba(0, 0, 0, ${state.wallpaperOverlay / 100})`;
 }
 

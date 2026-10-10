@@ -79,7 +79,9 @@
         -webkit-overflow-scrolling: touch;
     }
 
-    body:has(.modal-overlay.active) {
+    /* html.modal-open ставиться в openModal(): дешевше за body:has(...),
+       що змушував браузер перераховувати стилі при кожній зміні класів */
+    html.modal-open body {
         overflow: hidden;
     }
 }
@@ -105,4 +107,31 @@
     .command-item {
         transition-property: transform, opacity, background-color, border-color, filter;
     }
+}
+
+/* 22.8 Режим «Легкий» (perf-lite): без розмиття фону, без дрібних анімацій.
+        Вмикається автоматично на телефонах/слабких пристроях або вручну
+        (Опції → Режим продуктивності) */
+html.perf-lite .bg-wallpaper-layer {
+    filter: none !important;
+    transform: none;
+    transition: none;
+}
+
+html.perf-lite .btn-ripple-wave {
+    display: none !important;
+}
+
+/* 22.9 Прозорість панелей (замінила backdrop-filter, що не потрібен
+        нікому з GPU): лише колір фону, без блюру задньої сторінки */
+html[data-glass="solid"] .app-container {
+    background: var(--bg-body);
+}
+
+html[data-glass="subtle"] .app-container {
+    background: color-mix(in srgb, var(--bg-body) 94%, transparent);
+}
+
+html[data-glass="ultra"] .app-container {
+    background: color-mix(in srgb, var(--bg-card) 70%, transparent);
 }

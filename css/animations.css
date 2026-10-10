@@ -15,8 +15,6 @@
 .toast {
     background: var(--bg-card);
     border: 1px solid var(--accent-operator);
-    backdrop-filter: blur(16px);
-    -webkit-backdrop-filter: blur(16px);
     color: var(--text-primary);
     padding: 10px 16px;
     border-radius: 12px;

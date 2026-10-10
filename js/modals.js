@@ -14,6 +14,9 @@ function openModal(modalId) {
   const modal = document.getElementById(modalId);
 
   if (!modal) return;
+
+  // Дешеві розрахунки — ДО показу: один layout з фінальними значеннями,
+  // без «стрибка» посеред анімації відкриття
   if (modalId === "settings-modal") syncSettingsControls();
   if (modalId === "vector-calc-modal") solveVectorMath();
   if (modalId === "complex-calc-modal") solveComplexMath();
@@ -21,39 +24,28 @@ function openModal(modalId) {
   document.documentElement.classList.add("modal-open");
   requestAnimationFrame(() => {
     modal.classList.add("active");
-    setTimeout(() => prepareModal(modalId), 0);
+    // Важка частина (рендер списків, графіки) — після першого кадру анімації
+    requestAnimationFrame(() => setTimeout(() => prepareModal(modalId), 0));
   });
 
   requestAnimationFrame(() => audio.playClick(700));
 }
 
 function prepareModal(modalId) {
+  const modal = document.getElementById(modalId);
+  if (!modal) return;
+
   if (RENDER_ONCE.has(modalId)) {
     if (rendered.has(modalId)) return;
     rendered.add(modalId);
   }
 
   if (modal) {
-    // Синхронізуємо контроли налаштувань ДО показу модалки: один layout
-    // з фінальними значеннями замість повторного layout посеред анімації
-    // (помітно на мобільних при відкритті «Опцій»)
-    if (modalId === "settings-modal") {
-      syncSettingsControls();
-    }
-
-    requestAnimationFrame(() => modal.classList.add("active"));
-
-    if (modalId === "vector-calc-modal") {
-      solveVectorMath();
-    }
-    if (modalId === "complex-calc-modal") {
-      solveComplexMath();
-    }
     if (modalId === "math-ref-modal") {
       renderMathRefList();
     }
     if (modalId === "trig-circle-modal") {
-      setTimeout(() => updateTrigCircle(state.trigAngleDeg), 300);
+      updateTrigCircle(state.trigAngleDeg);
     }
     if (modalId === "constants-search-modal") {
       renderExtendedConstants();
@@ -144,6 +136,7 @@ function prepareModal(modalId) {
       runCurrencyConversion("from");
     }
     if (modalId === "font-modal") {
+      ensureAllFontsLoaded();
       setFontScale(state.fontScale, true);
     }
   }

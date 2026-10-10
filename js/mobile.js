@@ -4,17 +4,32 @@
 const mobilePerf = {
     isMobile: false,
     isTouch: false,
+    isCoarse: false,
     prefersReducedMotion: false,
     saveData: false,
+    weakDevice: false,
+    // Фактичний режим після розв'язання 'auto': 'lite' | 'balanced' | 'full'
+    mode: 'balanced',
     liteMode: false
 };
 
 function detectMobilePerfProfile() {
     mobilePerf.isMobile = window.matchMedia('(max-width: 768px)').matches;
-    mobilePerf.isTouch = window.matchMedia('(pointer: coarse)').matches || 'ontouchstart' in window;
+    mobilePerf.isCoarse = window.matchMedia('(pointer: coarse)').matches;
+    mobilePerf.isTouch = mobilePerf.isCoarse || 'ontouchstart' in window;
     mobilePerf.prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     mobilePerf.saveData = navigator.connection?.saveData === true;
-    mobilePerf.liteMode = mobilePerf.isMobile || mobilePerf.prefersReducedMotion || mobilePerf.saveData;
+    mobilePerf.weakDevice = (navigator.hardwareConcurrency || 8) <= 2 || (navigator.deviceMemory || 8) <= 2;
+
+    const pref = state.perfMode;
+    if (pref === 'lite' || pref === 'full') {
+        mobilePerf.mode = pref;
+    } else {
+        const needsLite = mobilePerf.isMobile || mobilePerf.isCoarse ||
+            mobilePerf.prefersReducedMotion || mobilePerf.saveData || mobilePerf.weakDevice;
+        mobilePerf.mode = needsLite ? 'lite' : 'balanced';
+    }
+    mobilePerf.liteMode = mobilePerf.mode === 'lite';
     return mobilePerf;
 }
 
@@ -25,35 +40,47 @@ function applyMobilePerfOptimizations() {
     root.classList.toggle('is-mobile', profile.isMobile);
     root.classList.toggle('is-touch', profile.isTouch);
     root.classList.toggle('reduced-motion', profile.prefersReducedMotion);
-    root.classList.toggle('perf-lite', profile.liteMode);
+    root.classList.toggle('perf-lite', profile.mode === 'lite');
+    root.classList.toggle('perf-full', profile.mode === 'full');
 
-    if (!profile.liteMode) return;
+    // Частинки: у легкому режимі вимкнені, інакше — за вибором користувача
+    state.particlesEnabled = profile.mode !== 'lite' && localStorage.getItem('calc_particles') !== 'off';
 
-    const particlesPref = localStorage.getItem('calc_particles');
-    if (particlesPref !== 'on') {
-        state.particlesEnabled = false;
+    // Прозорість панелей: у легкому режимі за замовчуванням суцільний колір
+    state.glassIntensity = localStorage.getItem('calc_glass') || (profile.mode === 'lite' ? 'solid' : 'heavy');
+}
+
+function setPerfMode(val) {
+    if (val !== 'auto' && val !== 'lite' && val !== 'full') val = 'auto';
+    state.perfMode = val;
+    localStorage.setItem('calc_perf_mode', val);
+
+    applyMobilePerfOptimizations();
+    applyGlassIntensity(state.glassIntensity);
+    applyWallpaperToDom();
+    if (state.particlesEnabled) {
+        initParticlesCanvas();
+    } else {
+        stopParticlesCanvas();
     }
+    syncSettingsControls();
+    audio.playAction();
 
-    if (profile.isMobile) {
-        if (!localStorage.getItem('calc_glass')) {
-            state.glassIntensity = 'solid';
-        }
-    }
-
-    if (profile.prefersReducedMotion && particlesPref !== 'on') {
-        state.particlesEnabled = false;
-    }
+    const names = {
+        auto: mobilePerf.mode === 'lite' ? 'Авто (зараз: Легкий)' : 'Авто (зараз: Збалансований)',
+        lite: 'Легкий',
+        full: 'Повний'
+    };
+    showToast(`Режим продуктивності: ${names[val]}`, '⚡');
 }
 
 function shouldDrawParticleConnections() {
-    return !document.documentElement.classList.contains('perf-lite');
+    return mobilePerf.mode === 'full';
 }
 
 function getParticleCountLimit() {
-    if (document.documentElement.classList.contains('perf-lite')) {
-        return mobilePerf.isMobile ? 12 : 20;
-    }
-    return 60;
+    if (mobilePerf.mode === 'full') return 60;
+    return 20;
 }
 
 function toggleMobileSidebar() {
